@@ -2,6 +2,12 @@
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
 # Getting Started
+First make sure you're in the correct branch
+```
+git branch -a
+git checkout PBI-3002
+```
+Next, change the working directory to frontend and run the npm scripts
 ```
 cd frontend
 npm install
