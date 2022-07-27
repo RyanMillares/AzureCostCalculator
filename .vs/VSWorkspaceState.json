@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\database",
+    "\\frontend",
+    "\\frontend\\public"
+  ],
+  "SelectedNode": "\\database\\create-tables.sql",
+  "PreviewInSolutionExplorer": false
+}
