@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "iPaDtX8tl0CjFyJJRSr4qibCl1gUkmNG2IdnGKIwtUY=",
+  "Source": "AzureCostCalculatorAPI",
+  "BasePath": "_content/AzureCostCalculatorAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
