@@ -6,11 +6,11 @@ namespace AzureCostCalculatorAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CalulatorController : ControllerBase
+    public class WebController : ControllerBase
     {
         private string appSize;
         private int numServers;
-        public CalulatorController()
+        public WebController()
         {
             this.appSize = "Small";
         }
@@ -81,31 +81,6 @@ namespace AzureCostCalculatorAPI.Controllers
             "D4s_v3 CPU: 4 , RAM: 16 , Storage: 32, Price: $54"
             };
             //return new List<string> { "IaaS", "PaaS" };
-        }
-
-        // GET api/<CalulatorController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<CalulatorController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CalulatorController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CalulatorController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
