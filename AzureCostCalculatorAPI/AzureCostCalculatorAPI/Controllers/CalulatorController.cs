@@ -23,9 +23,9 @@ namespace AzureCostCalculatorAPI.Controllers
             List<string> plan = new List<string>();
             if (numServers == 3)
             {
-                plan.Add("Web: VM Configuration: ")
+                plan.Add("Web: VM Configuration: ");
             }
-
+            return plan;
             /*this.appSize = appSize;
             this.numServers = numServers;
             int numTiers = numServers / 3; 
@@ -43,7 +43,7 @@ namespace AzureCostCalculatorAPI.Controllers
 
         // Returns list of types to be displayed
         [HttpGet("type")]
-        public List<string> GetType()
+        public List<string> GetServiceType()
         {
             return new List<string> { "IaaS" };
             //return new List<string> { "IaaS", "PaaS" };
