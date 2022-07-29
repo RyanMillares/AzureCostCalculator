@@ -1,12 +1,12 @@
-s3, Small, 3
-s6, Small, 6
-s9, Small, 9
-m12, Medium, 12
-m15, Medium, 15
-m18, Medium, 18
-l21, Large, 21
-l24, Large, 24
-l27, Large, 27
-x30, XL, 30
-x33, XL, 33
-x36, XL, 36
+default, Small,3
+default, Small,6
+default, Small,9
+default, Medium,12
+default, Medium,15
+default, Medium,18
+default, Large,21
+default, Large,24
+default, Large,27
+default, XL,30
+default, XL,33
+default, XL,36
