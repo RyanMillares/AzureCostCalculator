@@ -16,6 +16,9 @@ import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
 
 const tiers = [
   {
@@ -100,21 +103,33 @@ function PricingContent() {
           </Toolbar>
         </AppBar>
         {/* Hero unit */}
-        <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
-          <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="text.primary"
-            gutterBottom
-            >
-            Pricing
-          </Typography>
-          <Typography variant="h5" align="center" color="text.secondary" component="p">
-            Quickly build an effective pricing table for your potential customers with
-            this layout. It&apos;s built with default MUI components with little
-            customization.
-          </Typography>
+        <Container disableGutters maxWidth="md" component="main" sx={{ pt: 8, pb: 6 }}>
+          <Grid container spacing={5}>
+            <Grid item>
+              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Age"
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item>
+              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Age"
+                >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </Grid>
+          </Grid>
         </Container>
         {/* End hero unit */}
         <Container maxWidth="md" component="main">
