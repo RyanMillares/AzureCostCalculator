@@ -19,6 +19,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 const tiers = [
   {
@@ -103,31 +104,46 @@ function PricingContent() {
           </Toolbar>
         </AppBar>
         {/* Hero unit */}
-        <Container disableGutters maxWidth="md" component="main" sx={{ pt: 8, pb: 6 }}>
-          <Grid container spacing={5}>
-            <Grid item>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Age"
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
+        <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 6 }}>
+          <Grid container spacing={4}>
+            <Grid item xs={4}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                <Select
+                  label="App Size"
+                  variant="outlined"
+                  >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
-            <Grid item>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Age"
-                >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
+            <Grid item xs={4}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
+                <Select
+                  label="Number of Servers"
+                  variant="outlined"
+                  >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={4}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Tier</InputLabel>
+                <Select
+                  label="Tier"
+                  variant="outlined"
+                  >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
         </Container>
