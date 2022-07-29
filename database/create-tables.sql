@@ -1,7 +1,11 @@
--- Using Schema in the OneNote
--- Likely do not need to specify BEGIN TRANSACTION
--- TODO: Write tests to check dropping behavior. 
--- TODO: before production, optimize sizes of fields; DECIMAL(10,2) vs INT for servers, that kind of thing
+-- Purpose: Creating the table schemas used.
+-- Author: Andrey Risukhin
+-- Backlog:
+-- > asap, have this run automatically when user loads the website
+-- > before production, optimize fields and their sizes (storing as INT vs DECIMAL(10,2), that kind of thing)
+-- Notes: 
+-- > Using schema in the OneNote
+-- > Likely do not need to specify BEGIN TRANSACTION
 
 
 -- Stores number of servers and the app size, rarely modified, mainly read from.
@@ -13,7 +17,8 @@ CREATE TABLE ServerSizes (
 	servers INT -- TODO check this is not a protected keyword
 );
 
--- These tables are often read from, sometimes writted to (updated costs via web API)
+-- The following tables are often read from, sometimes writted to (updated costs via web API)
+
 DROP TABLE IF EXISTS IaaS_Web;
 CREATE TABLE IaaS_Web (
 	iwid UNIQUEIDENTIFIER PRIMARY KEY default NEWID(),

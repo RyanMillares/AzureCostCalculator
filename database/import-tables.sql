@@ -1,9 +1,13 @@
--- Importing the data
+-- Purpose: Importing the data for the first time into a table.
+-- Author: Andrey Risukhin
+-- Backlog:
+-- > asap, have this run automatically when user loads the website
+-- > Eventually update using API to website
+-- > Soon, use .csv files to initialize, hardcoded imports is icky
+-- Notes: 
+-- > "default" is to generate the GUID for each row, can be overwritten
 
--- TODO: Eventually update using API to website
--- TODO: Soon, use .csv files to initialize, hardcoded imports is icky
-
--- NOTE: "default" is to generate the GUID for each row, can be overwritten
+-- v0 Hardcoded Values
 
 -- Insert default VM sizes + server counts
 INSERT INTO ServerSizes VALUES (default, 'Small', 3);
@@ -51,7 +55,7 @@ INSERT INTO IaaS_DB VALUES (default, 'F64s_v2', 64, 128, 512, 40)
 INSERT INTO IaaS_DB VALUES (default, 'F72s_v2', 72, 144, 576, 45) 
 
 
--- OLD ATTEMPT
+-- OLD ATTEMPT, for reference on .csv work
 --.mode csv
 --.import "serversizes.csv" ServerSizes
 --.import "iaasweb.csv" IaaS_Web
