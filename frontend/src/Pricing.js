@@ -139,7 +139,8 @@ function PricingContent() {
                   </Box>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth>
+                  <Button fullWidth variant="contained">
+                    Button
                   </Button>
                 </CardActions>
               </Card>
@@ -174,7 +175,8 @@ function PricingContent() {
                   </Box>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth>
+                  <Button fullWidth variant="outlined">
+                    Button
                   </Button>
                 </CardActions>
               </Card>
