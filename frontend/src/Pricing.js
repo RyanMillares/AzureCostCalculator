@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -18,6 +17,12 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 
 const theme = createTheme({
@@ -107,7 +112,7 @@ function PricingContent() {
           </Grid>
         </Container>
         {/* End hero unit */}
-        <Container maxWidth="md" component="main">
+        <Container maxWidth="xl" component="main">
           <Grid container spacing={5}>
             <Grid item xs={12} md={6}>
               <Card>
@@ -125,18 +130,38 @@ function PricingContent() {
                   }}
                   />
                 <CardContent>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'baseline',
-                      mb: 2,
-                    }}
-                    >
-                    <Typography component="h2" variant="h3" color="text.primary">
-                      Body of Text
-                    </Typography>
-                  </Box>
+                  <TableContainer>
+                    <Table aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ID</TableCell>
+                          <TableCell>VM</TableCell>
+                          <TableCell>CPU</TableCell>
+                          <TableCell>RAM</TableCell>
+                          <TableCell>Storage</TableCell>
+                          <TableCell>Cost</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>1</TableCell>
+                          <TableCell>15</TableCell>
+                          <TableCell>i7-7700K</TableCell>
+                          <TableCell>8GB</TableCell>
+                          <TableCell>256 GB</TableCell>
+                          <TableCell>$97.34</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>2</TableCell>
+                          <TableCell>17</TableCell>
+                          <TableCell>i9-9900K</TableCell>
+                          <TableCell>16GB</TableCell>
+                          <TableCell>512 GB</TableCell>
+                          <TableCell>$111.34</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
                 </CardContent>
                 <CardActions>
                   <Button fullWidth variant="contained">
@@ -161,18 +186,38 @@ function PricingContent() {
                   }}
                   />
                 <CardContent>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'baseline',
-                      mb: 2,
-                    }}
-                    >
-                    <Typography component="h2" variant="h3" color="text.primary">
-                      Body of Text
-                    </Typography>
-                  </Box>
+                <TableContainer>
+                    <Table aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ID</TableCell>
+                          <TableCell>VM</TableCell>
+                          <TableCell>CPU</TableCell>
+                          <TableCell>RAM</TableCell>
+                          <TableCell>Storage</TableCell>
+                          <TableCell>Cost</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>1</TableCell>
+                          <TableCell>15</TableCell>
+                          <TableCell>i7-7700K</TableCell>
+                          <TableCell>8GB</TableCell>
+                          <TableCell>256 GB</TableCell>
+                          <TableCell>$97.34</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>2</TableCell>
+                          <TableCell>17</TableCell>
+                          <TableCell>i9-9900K</TableCell>
+                          <TableCell>16GB</TableCell>
+                          <TableCell>512 GB</TableCell>
+                          <TableCell>$111.34</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
                 </CardContent>
                 <CardActions>
                   <Button fullWidth variant="outlined">
