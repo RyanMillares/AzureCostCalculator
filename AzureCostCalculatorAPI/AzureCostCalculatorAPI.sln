@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureCostCalculatorAPI", "A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{23F22F4D-54EB-4E2D-838E-F8071C2F1D4A}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AzureResources", "AzureResources\AzureResources.sqlproj", "{0BBDAE9A-6AB0-4C4B-B421-C68CFA21A940}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,12 @@ Global
 		{BB372CED-F41F-418E-87EE-1931D954E23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB372CED-F41F-418E-87EE-1931D954E23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB372CED-F41F-418E-87EE-1931D954E23C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBDAE9A-6AB0-4C4B-B421-C68CFA21A940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBDAE9A-6AB0-4C4B-B421-C68CFA21A940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBDAE9A-6AB0-4C4B-B421-C68CFA21A940}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0BBDAE9A-6AB0-4C4B-B421-C68CFA21A940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBDAE9A-6AB0-4C4B-B421-C68CFA21A940}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBDAE9A-6AB0-4C4B-B421-C68CFA21A940}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

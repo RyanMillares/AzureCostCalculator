@@ -24,7 +24,7 @@ namespace AzureCostCalculatorAPI.Controllers
         // GET api/<DatabaseController>/5
         [HttpGet("{id}")]
         // Returns a list of server numbers associated with given size ('small', etc)
-        public Task<List<int>> Get(string serverSize)
+        public async Task<List<int>> Get(string serverSize)
         {
             using IDbConnection conn = new SqlConnection("Server=WHAT.database.windows.net;User=WHAT;Password=WHAT;Database=WHAT;");
             var serverData = await conn.QueryAsync<int>("select * from ServerSizes where size = @serverSize", new { serverSize });
