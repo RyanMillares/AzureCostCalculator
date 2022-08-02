@@ -2,6 +2,7 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using AzureCostCalculatorAPI.Contract;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,7 +17,7 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns a list of all the server sizes (objects include 'small' and '3')
         public async Task<List<ServerSize>> Get()
         {
-            using IDbConnection conn = new SqlConnection("Server=WHAT.database.windows.net;User=WHAT;Password=WHAT;Database=WHAT;");
+            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
             var serverData = await conn.QueryAsync<ServerSize>("select * from ServerSizes");
             return serverData.ToList();
         }
@@ -24,9 +25,9 @@ namespace AzureCostCalculatorAPI.Controllers
         // GET api/<DatabaseController>/5
         [HttpGet("{id}")]
         // Returns a list of server numbers associated with given size ('small', etc)
-        public Task<List<int>> Get(string serverSize)
+        public async Task<List<int>> Get(string serverSize)
         {
-            using IDbConnection conn = new SqlConnection("Server=WHAT.database.windows.net;User=WHAT;Password=WHAT;Database=WHAT;");
+            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
             var serverData = await conn.QueryAsync<int>("select * from ServerSizes where size = @serverSize", new { serverSize });
             return serverData.ToList();
         }
