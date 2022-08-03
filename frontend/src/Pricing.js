@@ -26,6 +26,9 @@ import TableRow from '@mui/material/TableRow';
 
 
 const theme = createTheme({
+  typography: {
+    fontFamily: ['"Segoe UI Light"']
+  },
   palette: {
     primary: {
       main: '#ff5200',
@@ -59,11 +62,15 @@ function PricingContent() {
                 href="#"
                 sx={{ my: 1, mx: 1.5 }}
                 >
-                Support
+                  <Typography>
+                    Support
+                  </Typography>
               </Link>
             </nav>
             <Button href="#" variant="outlined" color="secondary" sx={{ my: 1, mx: 1.5 }}>
-              Login
+              <Typography>
+                Login
+              </Typography>
             </Button>
           </Toolbar>
         </AppBar>
