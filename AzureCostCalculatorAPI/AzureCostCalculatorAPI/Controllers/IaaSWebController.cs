@@ -10,7 +10,7 @@ namespace AzureCostCalculatorAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IaaSController : ControllerBase
+    public class IaaSWebController : ControllerBase
     {
         // GET: api/<DatabaseController>
         [HttpGet]
@@ -22,7 +22,7 @@ namespace AzureCostCalculatorAPI.Controllers
             return IaaSWebData.ToList();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{webID}")]
         // Returns the IaaS web plan associated with the given GUID
         public async Task<IaaSWebPlan> Get(Guid id)
         {
@@ -30,8 +30,5 @@ namespace AzureCostCalculatorAPI.Controllers
             var plan = await conn.QuerySingleAsync<IaaSWebPlan>("select * from IaaS_Web where iwid = @id", new { id });
             return plan;
         }
-
-        
-
     }
 }

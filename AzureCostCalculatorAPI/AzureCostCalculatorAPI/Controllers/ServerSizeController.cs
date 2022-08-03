@@ -22,6 +22,15 @@ namespace AzureCostCalculatorAPI.Controllers
             return serverData.ToList();
         }
 
+        [HttpGet("{size}")]
+        // Returns a list of distinct sizes: small, medium, large, XL
+        public async Task<List<string>> GetDistinctSize()
+        {
+            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
+            var sizeData = await conn.QueryAsync<string>("SELECT DISTINCT SIZE FROM dbo.ServerSizes");
+            return sizeData.ToList();
+        }
+
         // GET api/<DatabaseController>/5
         [HttpGet("{id}")]
         // Returns a list of server numbers associated with given size ('small', etc)
