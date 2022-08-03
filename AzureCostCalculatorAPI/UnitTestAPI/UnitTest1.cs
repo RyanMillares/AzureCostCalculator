@@ -1,6 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
+using AzureCostCalculatorAPI.Controllers;
+
+// using AzureCostCalculatorAPI;
+
 namespace UnitTestAPI
 {
     [TestClass]
@@ -14,8 +18,10 @@ namespace UnitTestAPI
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestEmptyGUID()
         {
+            IaaSAPIController ctrl = new IaaSAPIController();
+            // init, assert expectation, repeat for other tests
         }
     }
 
