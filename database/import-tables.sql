@@ -26,7 +26,7 @@ INSERT INTO ServerSizes VALUES (default, 'XL', 30);
 INSERT INTO ServerSizes VALUES (default, 'XL', 33);
 INSERT INTO ServerSizes VALUES (default, 'XL', 36);
 
--- Insert initial values for VM-specific tables
+-- Insert initial values for IaaS VM-specific tables
 INSERT INTO IaaS_Web VALUES (default, 'D1_v2', 1, 3.5, 50, 5) 
 INSERT INTO IaaS_Web VALUES (default, 'D2s_v3', 2, 8, 16, 10) 
 INSERT INTO IaaS_Web VALUES (default, 'D2_v3', 2, 8, 50, 15) 
@@ -53,6 +53,11 @@ INSERT INTO IaaS_DB VALUES (default, 'F32s_v2', 32, 64, 256, 30)
 INSERT INTO IaaS_DB VALUES (default, 'F48s_v2', 48, 96, 384, 35) 
 INSERT INTO IaaS_DB VALUES (default, 'F64s_v2', 64, 128, 512, 40) 
 INSERT INTO IaaS_DB VALUES (default, 'F72s_v2', 72, 144, 576, 45) 
+
+-- Insert initial values for PaaS tables
+
+
+
 
 
 -- OLD ATTEMPT, for reference on .csv work
