@@ -3,6 +3,7 @@
     public class IaaSWebPlan
     {
         public Guid IWID { get; set; }
+        public string? Name { get; set; }    
         public string? VM { get; set; }
         public int? CPU { get; set; }
         public int? RAM { get; set; }
