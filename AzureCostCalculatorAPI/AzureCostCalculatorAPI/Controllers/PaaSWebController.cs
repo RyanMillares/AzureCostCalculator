@@ -1,8 +1,8 @@
-﻿using Dapper;
+﻿using AzureCostCalculatorAPI.Contract;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-using AzureCostCalculatorAPI.Contract;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,24 +10,23 @@ namespace AzureCostCalculatorAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IaaSWebController : ControllerBase
+    public class PaaSWebController : ControllerBase
     {
-        // GET: api/<DatabaseController>
         [HttpGet]
-        // Returns a list of all the IaaS Web plans
-        public async Task<List<IaaSWebPlan>> GetIaaSWebPlan()
+        // Returns a list of all the PaaS Website plans
+        public async Task<List<PaaSWebPlan>> GetPaaSWebPlan()
         {
             using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
-            var IaaSWebData = await conn.QueryAsync<IaaSWebPlan>("select * from IaaS_Web");
-            return IaaSWebData.ToList();
+            var PaaSWebData = await conn.QueryAsync<PaaSWebPlan>("select * from PaaS_Web");
+            return PaaSWebData.ToList();
         }
 
         [HttpGet("{id}")]
         // Returns the IaaS web plan associated with the given GUID
-        public async Task<IaaSWebPlan> Get(Guid id)
+        public async Task<PaaSWebPlan> Get(Guid id)
         {
             using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
-            var plan = await conn.QuerySingleAsync<IaaSWebPlan>("select * from IaaS_Web where iwid = @id", new { id });
+            var plan = await conn.QuerySingleAsync<PaaSWebPlan>("select * from PaaS_Web where pwid = @id", new { id });
             return plan;
         }
     }

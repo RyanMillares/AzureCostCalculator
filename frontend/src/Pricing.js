@@ -84,9 +84,10 @@ function PricingContent() {
                   label="App Size"
                   variant="outlined"
                   >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value='Small'>Small</MenuItem>
+                  <MenuItem value='Medium'>Medium</MenuItem>
+                  <MenuItem value='Large'>Large</MenuItem>
+                  <MenuItem value='X-Large'>X-Large</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -110,9 +111,9 @@ function PricingContent() {
                   label="Tier"
                   variant="outlined"
                   >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value='Web'>Web</MenuItem>
+                  <MenuItem value='API'>API</MenuItem>
+                  <MenuItem value='DB'>DB</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
