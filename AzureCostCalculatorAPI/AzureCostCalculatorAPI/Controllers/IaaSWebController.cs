@@ -22,7 +22,7 @@ namespace AzureCostCalculatorAPI.Controllers
             return IaaSWebData.ToList();
         }
 
-        [HttpGet("{webID}")]
+        [HttpGet("{id}")]
         // Returns the IaaS web plan associated with the given GUID
         public async Task<IaaSWebPlan> Get(Guid id)
         {

@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AzureResources", "AzureResources\AzureResources.sqlproj", "{0BBDAE9A-6AB0-4C4B-B421-C68CFA21A940}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureCostCalculatorAPI.Contract", "AzureCostCalculatorAPI.Contract\AzureCostCalculatorAPI.Contract.csproj", "{EEF7FF96-E982-4318-A4B3-67FE2B311876}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureCostCalculatorAPI.Contract", "AzureCostCalculatorAPI.Contract\AzureCostCalculatorAPI.Contract.csproj", "{EEF7FF96-E982-4318-A4B3-67FE2B311876}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
