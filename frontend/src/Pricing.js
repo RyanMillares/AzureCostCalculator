@@ -174,7 +174,7 @@ function PricingContent() {
                       </FormControl>
                     </Grid>
                   </Grid>
-                  <Grid container sx={{ mt: 2}}>
+                  <Grid container sx={{ mt: 4 }}>
                     <Grid item xs={12} md={4}>
                       <Typography variant="h4" align="center">
                         ${webPrice * (servers/3)}
@@ -212,9 +212,6 @@ function PricingContent() {
                   </Grid>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant="contained">
-                    Button
-                  </Button>
                 </CardActions>
               </Card>
             </Grid>
