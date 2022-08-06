@@ -43,9 +43,15 @@ function PricingContent() {
   const [appSize, setAppSize] = useState('Small');
   const [servers, setServers] = useState(0);
 
+  // Iaas variables
   const [webPrice, setWebPrice] = useState(0);
   const [apiPrice, setApiPrice] = useState(0);
   const [dbPrice, setDbPrice] = useState(0);
+
+  // Paas variables
+  const [websitePrice, setWebsitePrice] = useState(0);
+  const [appservicePrice, setAppservicePrice] = useState(0);
+  const [databasePrice, setDatabasePrice] = useState(0);
 
 
   const numServers = {
@@ -72,7 +78,6 @@ function PricingContent() {
             </Typography>
           </Toolbar>
         </AppBar>
-        {/* Hero unit */}
         <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
           <Grid container spacing={4}>
             <Grid item xs={6}>
@@ -104,7 +109,6 @@ function PricingContent() {
             </Grid>
           </Grid>
         </Container>
-        {/* End hero unit */}
         <Container maxWidth="xl" component="main">
           <Grid container spacing={5}>
             <Grid item xs={12} md={6}>
@@ -200,7 +204,7 @@ function PricingContent() {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid container sx={{ mt: 2}}>
+                  <Grid container sx={{ mt: 2 }}>
                     <Grid item xs={12} md={12}>
                       <Typography variant="h2" align="center">
                         ${((webPrice + apiPrice + dbPrice) * (servers/3)).toLocaleString()}
@@ -229,40 +233,86 @@ function PricingContent() {
                     ? theme.palette.grey[200]
                     : theme.palette.grey[700],
                   }}
-                  />
+                />
                 <CardContent>
-                <TableContainer>
-                    <Table aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>ID</TableCell>
-                          <TableCell>VM</TableCell>
-                          <TableCell>CPU</TableCell>
-                          <TableCell>RAM</TableCell>
-                          <TableCell>Storage</TableCell>
-                          <TableCell>Cost</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell>1</TableCell>
-                          <TableCell>15</TableCell>
-                          <TableCell>i7-7700K</TableCell>
-                          <TableCell>8GB</TableCell>
-                          <TableCell>256 GB</TableCell>
-                          <TableCell>$97.34</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>2</TableCell>
-                          <TableCell>17</TableCell>
-                          <TableCell>i9-9900K</TableCell>
-                          <TableCell>16GB</TableCell>
-                          <TableCell>512 GB</TableCell>
-                          <TableCell>$111.34</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={4}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Website Tier</InputLabel>
+                        <Select
+                          label="Website Tier"
+                          variant="outlined"
+                          >
+                            <MenuItem value="S1" onClick={() => setWebsitePrice(44)}>Standard - S1 1 Core, 1.75 GB RAM, 50 GB Storage, Price: 44</MenuItem>
+                            <MenuItem value="S2" onClick={() => setWebsitePrice(88)}>Standard - S2 2 Cores, 3.5 GB RAM, 50 GB Storage, Price: 88</MenuItem>
+                            <MenuItem value="S3" onClick={() => setWebsitePrice(175)}>Standard - S3 4 Cores, 7 GB RAM, 50 GB Storage, Price: 175</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">AppService Tier</InputLabel>
+                        <Select
+                          label="AppService Tier"
+                          variant="outlined"
+                          >
+                            <MenuItem value="S1" onClick={() => setAppservicePrice(44)}>Standard - S1 1 Core, 1.75 GB RAM, 50 GB Storage, Price: 44</MenuItem>
+                            <MenuItem value="S2" onClick={() => setAppservicePrice(88)}>Standard - S2 2 Cores, 3.5 GB RAM, 50 GB Storage, Price: 88</MenuItem>
+                            <MenuItem value="S3" onClick={() => setAppservicePrice(175)}>Standard - S3 4 Cores, 7 GB RAM, 50 GB Storage, Price: 175</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Database Tier</InputLabel>
+                        <Select
+                          label="Database Tier"
+                          variant="outlined"
+                          >
+                            <MenuItem value="RA-GRBS 2" onClick={() => setDatabasePrice(104)}>Single Database, vCore, RA-GRS 2 vCores, Price: 104</MenuItem>
+                            <MenuItem value="RA-GRBS 2.1" onClick={() => setDatabasePrice(204)}>Single Database, vCore, RA-GRS 2 vCores, Price: 204</MenuItem>
+                            <MenuItem value="RA-GRS 6" onClick={() => setDatabasePrice(304)}>Single Database, vCore, RA-GRS 6 vCores, Price: 304</MenuItem>
+                            <MenuItem value="RA-GRS 8" onClick={() => setDatabasePrice(404)}>Single Database, vCore, RA-GRS 8 vCores, Price: 404</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                  <Grid container sx={{ mt: 4 }}>
+                    <Grid item xs={12} md={4}>
+                      <Typography variant="h4" align="center">
+                        ${(websitePrice * (servers/3)).toLocaleString()}
+                      </Typography>
+                      <Typography variant="h6" align="center" color="text.secondary">
+                        Web Cost
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Typography variant="h4" align="center">
+                        ${(appservicePrice * (servers/3)).toLocaleString()}
+                      </Typography>
+                      <Typography variant="h6" align="center" color="text.secondary">
+                        API Cost
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Typography variant="h4" align="center">
+                        ${(databasePrice * (servers/3)).toLocaleString()}
+                      </Typography>
+                      <Typography variant="h6" align="center" color="text.secondary">
+                        DB Cost
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid container sx={{ mt: 2 }}>
+                    <Grid item xs={12} md={12}>
+                      <Typography variant="h2" align="center">
+                        ${((websitePrice + appservicePrice + databasePrice) * (servers/3)).toLocaleString()}
+                      </Typography>
+                      <Typography variant="h6" align="center" color="text.secondary">
+                        Total Cost
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </CardContent>
                 <CardActions>
                   <Button fullWidth variant="outlined">
