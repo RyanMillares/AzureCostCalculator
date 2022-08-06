@@ -43,14 +43,17 @@ const theme = createTheme({
 function PricingContent() {
   const [appSize, setAppSize] = useState('Small');
 
+  const [webPrice, setWebPrice] = useState(0);
+  const [apiPrice, setApiPrice] = useState(0);
+  const [dbPrice, setDbPrice] = useState(0);
+
+
   const numServers = {
     'Small': [3, 6, 9],
     'Medium': [12, 15, 18],
     'Large': [21, 24, 27],
     'X-Large': [30, 33, 36]
   }
-
-  console.log(numServers['Small'])
 
   return (
     <React.Fragment>
@@ -139,21 +142,21 @@ function PricingContent() {
                 <CardContent>
                   <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Web Tier</InputLabel>
-                      <Select
-                        label="Web Tier"
-                        variant="outlined"
-                        >
-                          <MenuItem>D1_v2 CPU: 1, RAM: 3.5 , Storage: 50, Price: 15</MenuItem>
-                          <MenuItem>D2_v3 CPU: 2 , RAM: 8 , Storage: 50, Price: 27</MenuItem>
-                          <MenuItem>D4s_v3 CPU: 4 , RAM: 16 , Storage: 32, Price: 54</MenuItem>
-                          <MenuItem>D8s_v3 CPU: 8 , RAM: 32 , Storage: 64, Price: 107</MenuItem>
-                          <MenuItem>D16s_v3 CPU: 16 , RAM: 64 , Storage: 128, Price: 215</MenuItem>
-                          <MenuItem>D32s_v3 CPU: 32 , RAM: 128 , Storage: 256, Price: 431</MenuItem>
-                          <MenuItem>D64s_v3 CPU: 64 , RAM: 256 , Storage: 512, Price: 861</MenuItem>
-                      </Select>
-                    </FormControl>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Web Tier</InputLabel>
+                        <Select
+                          label="Web Tier"
+                          variant="outlined"
+                          >
+                            <MenuItem value="D1_v2">D1_v2 CPU: 1, RAM: 3.5 , Storage: 50, Price: 15</MenuItem>
+                            <MenuItem value="D2_v3">D2_v3 CPU: 2 , RAM: 8 , Storage: 50, Price: 27</MenuItem>
+                            <MenuItem value="D4s_v3">D4s_v3 CPU: 4 , RAM: 16 , Storage: 32, Price: 54</MenuItem>
+                            <MenuItem value="D8s_v3">D8s_v3 CPU: 8 , RAM: 32 , Storage: 64, Price: 107</MenuItem>
+                            <MenuItem value="D16s_v3">D16s_v3 CPU: 16 , RAM: 64 , Storage: 128, Price: 215</MenuItem>
+                            <MenuItem value="D32s_v3">D32s_v3 CPU: 32 , RAM: 128 , Storage: 256, Price: 431</MenuItem>
+                            <MenuItem value="D64s_v3">D64s_v3 CPU: 64 , RAM: 256 , Storage: 512, Price: 861</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
@@ -162,13 +165,13 @@ function PricingContent() {
                         label="API Tier"
                         variant="outlined"
                         >
-                          <MenuItem>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
-                          <MenuItem>F4s_v2 CPU: 4 , RAM: 8 , Storage: 32, Price: 45</MenuItem>
-                          <MenuItem>F8s_v2 CPU: 8 , RAM: 16 , Storage: 64, Price: 91</MenuItem>
-                          <MenuItem>F16s_v2 CPU: 16 , RAM: 32 , Storage: 128, Price: 181</MenuItem>
-                          <MenuItem>F32s_v2 CPU: 32 , RAM: 64 , Storage: 256, Price: 362</MenuItem>
-                          <MenuItem>F48s_v2 CPU: 48 , RAM: 96 , Storage: 384, Price: 534</MenuItem>
-                          <MenuItem>F64s_v2 CPU: 64 , RAM: 128 , Storage: 512, Price: 724</MenuItem>
+                          <MenuItem value="F2s_v2">F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
+                          <MenuItem value="F4s_v2">F4s_v2 CPU: 4 , RAM: 8 , Storage: 32, Price: 45</MenuItem>
+                          <MenuItem value="F8s_v2">F8s_v2 CPU: 8 , RAM: 16 , Storage: 64, Price: 91</MenuItem>
+                          <MenuItem value="F16s_v2">F16s_v2 CPU: 16 , RAM: 32 , Storage: 128, Price: 181</MenuItem>
+                          <MenuItem value="F32s_v2">F32s_v2 CPU: 32 , RAM: 64 , Storage: 256, Price: 362</MenuItem>
+                          <MenuItem value="F48s_v2">F48s_v2 CPU: 48 , RAM: 96 , Storage: 384, Price: 534</MenuItem>
+                          <MenuItem value="F64s_v2">F64s_v2 CPU: 64 , RAM: 128 , Storage: 512, Price: 724</MenuItem>
                       </Select>
                     </FormControl>
                     </Grid>
@@ -179,11 +182,11 @@ function PricingContent() {
                         label="DB Tier"
                         variant="outlined"
                         >
-                          <MenuItem>E2s_v3 CPU: 2 , RAM: 16 , Storage: 32, Price: 37</MenuItem>
-                          <MenuItem>E4s_v5 CPU: 4 , RAM: 32 , Storage: 150, Price: 79</MenuItem>
-                          <MenuItem>E8s_v3 CPU: 8, RAM: 64 , Storage: 128, Price: 146</MenuItem>
-                          <MenuItem>E16s_v3 CPU: 16, RAM: 128 , Storage: 256, Price: 292</MenuItem>
-                          <MenuItem>E32_v3 CPU: 32 , RAM: 256 , Storage: 800, Price: 584</MenuItem>
+                          <MenuItem value="E2s_v3">E2s_v3 CPU: 2 , RAM: 16 , Storage: 32, Price: 37</MenuItem>
+                          <MenuItem value="E4s_v5">E4s_v5 CPU: 4 , RAM: 32 , Storage: 150, Price: 79</MenuItem>
+                          <MenuItem value="E8s_v3">E8s_v3 CPU: 8, RAM: 64 , Storage: 128, Price: 146</MenuItem>
+                          <MenuItem value="E16s_v3">E16s_v3 CPU: 16, RAM: 128 , Storage: 256, Price: 292</MenuItem>
+                          <MenuItem value="E32s_v3">E32_v3 CPU: 32 , RAM: 256 , Storage: 800, Price: 584</MenuItem>
                       </Select>
                     </FormControl>
                     </Grid>
