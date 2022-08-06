@@ -140,7 +140,7 @@ function PricingContent() {
                   <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                      <InputLabel id="demo-simple-select-label">Web Tier</InputLabel>
                       <Select
                         label="Web Tier"
                         variant="outlined"
@@ -157,7 +157,7 @@ function PricingContent() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                      <InputLabel id="demo-simple-select-label">API Tier</InputLabel>
                       <Select
                         label="API Tier"
                         variant="outlined"
@@ -174,7 +174,7 @@ function PricingContent() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                      <InputLabel id="demo-simple-select-label">DB Tier</InputLabel>
                       <Select
                         label="DB Tier"
                         variant="outlined"
@@ -187,6 +187,7 @@ function PricingContent() {
                       </Select>
                     </FormControl>
                     </Grid>
+                    <Grid item xs={12} md={6}></Grid>
                   </Grid>
                 </CardContent>
                 <CardActions>
