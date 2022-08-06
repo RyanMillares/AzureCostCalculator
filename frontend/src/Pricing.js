@@ -83,6 +83,7 @@ function PricingContent() {
                 <Select
                   label="App Size"
                   variant="outlined"
+                  value=""
                   >
                   <MenuItem value='Small'>Small</MenuItem>
                   <MenuItem value='Medium'>Medium</MenuItem>
@@ -97,6 +98,7 @@ function PricingContent() {
                 <Select
                   label="Number of Servers"
                   variant="outlined"
+                  value=""
                   >
                   <MenuItem value={10}>Ten</MenuItem>
                   <MenuItem value={20}>Twenty</MenuItem>
@@ -110,6 +112,7 @@ function PricingContent() {
                 <Select
                   label="Tier"
                   variant="outlined"
+                  value=""
                   >
                   <MenuItem value='Web'>Web</MenuItem>
                   <MenuItem value='API'>API</MenuItem>
