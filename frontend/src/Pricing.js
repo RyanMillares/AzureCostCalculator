@@ -89,7 +89,7 @@ function PricingContent() {
         {/* Hero unit */}
         <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 6 }}>
           <Grid container spacing={4}>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">App Size</InputLabel>
                 <Select
@@ -103,7 +103,7 @@ function PricingContent() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
                 <Select
@@ -113,19 +113,6 @@ function PricingContent() {
                   <MenuItem value={numServers[appSize][0]}>{numServers[appSize][0]}</MenuItem>
                   <MenuItem value={numServers[appSize][1]}>{numServers[appSize][1]}</MenuItem>
                   <MenuItem value={numServers[appSize][2]}>{numServers[appSize][2]}</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={4}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Tier</InputLabel>
-                <Select
-                  label="Tier"
-                  variant="outlined"
-                  >
-                  <MenuItem value='Web'>Web</MenuItem>
-                  <MenuItem value='API'>API</MenuItem>
-                  <MenuItem value='DB'>DB</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
