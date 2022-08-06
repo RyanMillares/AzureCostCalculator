@@ -11,7 +11,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import Select from '@mui/material/Select';
@@ -71,27 +70,10 @@ function PricingContent() {
             <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               Azure Cost Calculator
             </Typography>
-            <nav>
-              <Link
-                variant="button"
-                color="secondary"
-                href="#"
-                sx={{ my: 1, mx: 1.5 }}
-                >
-                  <Typography>
-                    Support
-                  </Typography>
-              </Link>
-            </nav>
-            <Button href="#" variant="outlined" color="secondary" sx={{ my: 1, mx: 1.5 }}>
-              <Typography>
-                Login
-              </Typography>
-            </Button>
           </Toolbar>
         </AppBar>
         {/* Hero unit */}
-        <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 6 }}>
+        <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
           <Grid container spacing={4}>
             <Grid item xs={6}>
               <FormControl fullWidth>
@@ -141,8 +123,8 @@ function PricingContent() {
                   }}
                   />
                 <CardContent>
-                  <Grid container spacing={4}>
-                    <Grid item xs={12} md={6}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={4}>
                       <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Web Tier</InputLabel>
                         <Select
@@ -159,7 +141,7 @@ function PricingContent() {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={4}>
                       <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">API Tier</InputLabel>
                         <Select
@@ -176,7 +158,7 @@ function PricingContent() {
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={4}>
                       <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">DB Tier</InputLabel>
                         <Select
@@ -192,7 +174,7 @@ function PricingContent() {
                       </FormControl>
                     </Grid>
                   </Grid>
-                  <Grid container sx={{ mt: 5}}>
+                  <Grid container sx={{ mt: 2}}>
                     <Grid item xs={12} md={4}>
                       <Typography variant="h4" align="center">
                         ${webPrice * (servers/3)}
@@ -218,7 +200,7 @@ function PricingContent() {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid container sx={{ mt: 5}}>
+                  <Grid container sx={{ mt: 2}}>
                     <Grid item xs={12} md={12}>
                       <Typography variant="h2" align="center">
                         ${(webPrice + apiPrice + dbPrice) * (servers/3)}
