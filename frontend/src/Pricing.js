@@ -110,9 +110,9 @@ function PricingContent() {
                   label="Number of Servers"
                   variant="outlined"
                   >
-                  <MenuItem value={10}>{numServers[appSize][0]}</MenuItem>
-                  <MenuItem value={20}>{numServers[appSize][1]}</MenuItem>
-                  <MenuItem value={30}>{numServers[appSize][2]}</MenuItem>
+                  <MenuItem value={numServers[appSize][0]}>{numServers[appSize][0]}</MenuItem>
+                  <MenuItem value={numServers[appSize][1]}>{numServers[appSize][1]}</MenuItem>
+                  <MenuItem value={numServers[appSize][2]}>{numServers[appSize][2]}</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
