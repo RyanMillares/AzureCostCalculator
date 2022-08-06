@@ -177,7 +177,7 @@ function PricingContent() {
                   <Grid container sx={{ mt: 4 }}>
                     <Grid item xs={12} md={4}>
                       <Typography variant="h4" align="center">
-                        ${webPrice * (servers/3)}
+                        ${(webPrice * (servers/3)).toLocaleString()}
                       </Typography>
                       <Typography variant="h6" align="center" color="text.secondary">
                         Web Cost
@@ -185,7 +185,7 @@ function PricingContent() {
                     </Grid>
                     <Grid item xs={12} md={4}>
                       <Typography variant="h4" align="center">
-                        ${apiPrice * (servers/3)}
+                        ${(apiPrice * (servers/3)).toLocaleString()}
                       </Typography>
                       <Typography variant="h6" align="center" color="text.secondary">
                         API Cost
@@ -193,7 +193,7 @@ function PricingContent() {
                     </Grid>
                     <Grid item xs={12} md={4}>
                       <Typography variant="h4" align="center">
-                        ${dbPrice * (servers/3)}
+                        ${(dbPrice * (servers/3)).toLocaleString()}
                       </Typography>
                       <Typography variant="h6" align="center" color="text.secondary">
                         DB Cost
@@ -203,7 +203,7 @@ function PricingContent() {
                   <Grid container sx={{ mt: 2}}>
                     <Grid item xs={12} md={12}>
                       <Typography variant="h2" align="center">
-                        ${(webPrice + apiPrice + dbPrice) * (servers/3)}
+                        ${((webPrice + apiPrice + dbPrice) * (servers/3)).toLocaleString()}
                       </Typography>
                       <Typography variant="h6" align="center" color="text.secondary">
                         Total Cost
