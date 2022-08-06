@@ -137,38 +137,57 @@ function PricingContent() {
                   }}
                   />
                 <CardContent>
-                  <TableContainer>
-                    <Table aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>ID</TableCell>
-                          <TableCell>VM</TableCell>
-                          <TableCell>CPU</TableCell>
-                          <TableCell>RAM</TableCell>
-                          <TableCell>Storage</TableCell>
-                          <TableCell>Cost</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell>1</TableCell>
-                          <TableCell>15</TableCell>
-                          <TableCell>i7-7700K</TableCell>
-                          <TableCell>8GB</TableCell>
-                          <TableCell>256 GB</TableCell>
-                          <TableCell>$97.34</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>2</TableCell>
-                          <TableCell>17</TableCell>
-                          <TableCell>i9-9900K</TableCell>
-                          <TableCell>16GB</TableCell>
-                          <TableCell>512 GB</TableCell>
-                          <TableCell>$111.34</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                  <Grid container spacing={4}>
+                    <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                      <Select
+                        label="Web Tier"
+                        variant="outlined"
+                        >
+                          <MenuItem>D1_v2 CPU: 1, RAM: 3.5 , Storage: 50, Price: 15</MenuItem>
+                          <MenuItem>D2_v3 CPU: 2 , RAM: 8 , Storage: 50, Price: 27</MenuItem>
+                          <MenuItem>D4s_v3 CPU: 4 , RAM: 16 , Storage: 32, Price: 54</MenuItem>
+                          <MenuItem>D8s_v3 CPU: 8 , RAM: 32 , Storage: 64, Price: 107</MenuItem>
+                          <MenuItem>D16s_v3 CPU: 16 , RAM: 64 , Storage: 128, Price: 215</MenuItem>
+                          <MenuItem>D32s_v3 CPU: 32 , RAM: 128 , Storage: 256, Price: 431</MenuItem>
+                          <MenuItem>D64s_v3 CPU: 64 , RAM: 256 , Storage: 512, Price: 861</MenuItem>
+                      </Select>
+                    </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                      <Select
+                        label="API Tier"
+                        variant="outlined"
+                        >
+                          <MenuItem>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
+                          <MenuItem>F4s_v2 CPU: 4 , RAM: 8 , Storage: 32, Price: 45</MenuItem>
+                          <MenuItem>F8s_v2 CPU: 8 , RAM: 16 , Storage: 64, Price: 91</MenuItem>
+                          <MenuItem>F16s_v2 CPU: 16 , RAM: 32 , Storage: 128, Price: 181</MenuItem>
+                          <MenuItem>F32s_v2 CPU: 32 , RAM: 64 , Storage: 256, Price: 362</MenuItem>
+                          <MenuItem>F48s_v2 CPU: 48 , RAM: 96 , Storage: 384, Price: 534</MenuItem>
+                          <MenuItem>F64s_v2 CPU: 64 , RAM: 128 , Storage: 512, Price: 724</MenuItem>
+                      </Select>
+                    </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                      <Select
+                        label="DB Tier"
+                        variant="outlined"
+                        >
+                          <MenuItem>E2s_v3 CPU: 2 , RAM: 16 , Storage: 32, Price: 37</MenuItem>
+                          <MenuItem>E4s_v5 CPU: 4 , RAM: 32 , Storage: 150, Price: 79</MenuItem>
+                          <MenuItem>E8s_v3 CPU: 8, RAM: 64 , Storage: 128, Price: 146</MenuItem>
+                          <MenuItem>E16s_v3 CPU: 16, RAM: 128 , Storage: 256, Price: 292</MenuItem>
+                          <MenuItem>E32_v3 CPU: 32 , RAM: 256 , Storage: 800, Price: 584</MenuItem>
+                      </Select>
+                    </FormControl>
+                    </Grid>
+                  </Grid>
                 </CardContent>
                 <CardActions>
                   <Button fullWidth variant="contained">
