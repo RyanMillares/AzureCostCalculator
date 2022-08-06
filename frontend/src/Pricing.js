@@ -160,57 +160,73 @@ function PricingContent() {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">API Tier</InputLabel>
-                      <Select
-                        label="API Tier"
-                        variant="outlined"
-                        >
-                          <MenuItem value="F2s_v2" onClick={() => setApiPrice(23)}>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
-                          <MenuItem value="F4s_v2" onClick={() => setApiPrice(45)}>F4s_v2 CPU: 4 , RAM: 8 , Storage: 32, Price: 45</MenuItem>
-                          <MenuItem value="F8s_v2" onClick={() => setApiPrice(91)}>F8s_v2 CPU: 8 , RAM: 16 , Storage: 64, Price: 91</MenuItem>
-                          <MenuItem value="F16s_v2" onClick={() => setApiPrice(181)}>F16s_v2 CPU: 16 , RAM: 32 , Storage: 128, Price: 181</MenuItem>
-                          <MenuItem value="F32s_v2" onClick={() => setApiPrice(362)}>F32s_v2 CPU: 32 , RAM: 64 , Storage: 256, Price: 362</MenuItem>
-                          <MenuItem value="F48s_v2" onClick={() => setApiPrice(534)}>F48s_v2 CPU: 48 , RAM: 96 , Storage: 384, Price: 534</MenuItem>
-                          <MenuItem value="F64s_v2" onClick={() => setApiPrice(724)}>F64s_v2 CPU: 64 , RAM: 128 , Storage: 512, Price: 724</MenuItem>
-                      </Select>
-                    </FormControl>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">API Tier</InputLabel>
+                        <Select
+                          label="API Tier"
+                          variant="outlined"
+                          >
+                            <MenuItem value="F2s_v2" onClick={() => setApiPrice(23)}>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
+                            <MenuItem value="F4s_v2" onClick={() => setApiPrice(45)}>F4s_v2 CPU: 4 , RAM: 8 , Storage: 32, Price: 45</MenuItem>
+                            <MenuItem value="F8s_v2" onClick={() => setApiPrice(91)}>F8s_v2 CPU: 8 , RAM: 16 , Storage: 64, Price: 91</MenuItem>
+                            <MenuItem value="F16s_v2" onClick={() => setApiPrice(181)}>F16s_v2 CPU: 16 , RAM: 32 , Storage: 128, Price: 181</MenuItem>
+                            <MenuItem value="F32s_v2" onClick={() => setApiPrice(362)}>F32s_v2 CPU: 32 , RAM: 64 , Storage: 256, Price: 362</MenuItem>
+                            <MenuItem value="F48s_v2" onClick={() => setApiPrice(534)}>F48s_v2 CPU: 48 , RAM: 96 , Storage: 384, Price: 534</MenuItem>
+                            <MenuItem value="F64s_v2" onClick={() => setApiPrice(724)}>F64s_v2 CPU: 64 , RAM: 128 , Storage: 512, Price: 724</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">DB Tier</InputLabel>
-                      <Select
-                        label="DB Tier"
-                        variant="outlined"
-                        >
-                          <MenuItem value="E2s_v3" onClick={() => setDbPrice(37)}>E2s_v3 CPU: 2 , RAM: 16 , Storage: 32, Price: 37</MenuItem>
-                          <MenuItem value="E4s_v5" onClick={() => setDbPrice(79)}>E4s_v5 CPU: 4 , RAM: 32 , Storage: 150, Price: 79</MenuItem>
-                          <MenuItem value="E8s_v3" onClick={() => setDbPrice(146)}>E8s_v3 CPU: 8, RAM: 64 , Storage: 128, Price: 146</MenuItem>
-                          <MenuItem value="E16s_v3" onClick={() => setDbPrice(292)}>E16s_v3 CPU: 16, RAM: 128 , Storage: 256, Price: 292</MenuItem>
-                          <MenuItem value="E32s_v3" onClick={() => setDbPrice(584)}>E32_v3 CPU: 32 , RAM: 256 , Storage: 800, Price: 584</MenuItem>
-                      </Select>
-                    </FormControl>
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">DB Tier</InputLabel>
+                        <Select
+                          label="DB Tier"
+                          variant="outlined"
+                          >
+                            <MenuItem value="E2s_v3" onClick={() => setDbPrice(37)}>E2s_v3 CPU: 2 , RAM: 16 , Storage: 32, Price: 37</MenuItem>
+                            <MenuItem value="E4s_v5" onClick={() => setDbPrice(79)}>E4s_v5 CPU: 4 , RAM: 32 , Storage: 150, Price: 79</MenuItem>
+                            <MenuItem value="E8s_v3" onClick={() => setDbPrice(146)}>E8s_v3 CPU: 8, RAM: 64 , Storage: 128, Price: 146</MenuItem>
+                            <MenuItem value="E16s_v3" onClick={() => setDbPrice(292)}>E16s_v3 CPU: 16, RAM: 128 , Storage: 256, Price: 292</MenuItem>
+                            <MenuItem value="E32s_v3" onClick={() => setDbPrice(584)}>E32_v3 CPU: 32 , RAM: 256 , Storage: 800, Price: 584</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={6}></Grid>
+                  </Grid>
+                  <Grid container sx={{ mt: 5}}>
                     <Grid item xs={12} md={4}>
-                      <Typography>
+                      <Typography variant="h4" align="center">
                         ${webPrice * (servers/3)}
                       </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                      <Typography>
-                        ${apiPrice * (servers/3)}
+                      <Typography variant="h6" align="center" color="text.secondary">
+                        Web Cost
                       </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                      <Typography>
+                      <Typography variant="h4" align="center">
+                        ${apiPrice * (servers/3)}
+                      </Typography>
+                      <Typography variant="h6" align="center" color="text.secondary">
+                        API Cost
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <Typography variant="h4" align="center">
                         ${dbPrice * (servers/3)}
+                      </Typography>
+                      <Typography variant="h6" align="center" color="text.secondary">
+                        DB Cost
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item xs={12} md={4}></Grid>
-                  <Grid item xs={12} md={4}>
-                    ${(webPrice + apiPrice + dbPrice) * (servers/3)}
+                  <Grid container sx={{ mt: 5}}>
+                    <Grid item xs={12} md={12}>
+                      <Typography variant="h2" align="center">
+                        ${(webPrice + apiPrice + dbPrice) * (servers/3)}
+                      </Typography>
+                      <Typography variant="h6" align="center" color="text.secondary">
+                        Total Cost
+                      </Typography>
+                    </Grid>
                   </Grid>
                 </CardContent>
                 <CardActions>
