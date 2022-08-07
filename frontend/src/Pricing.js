@@ -36,6 +36,7 @@ const theme = createTheme({
 function PricingContent() {
   const [appSize, setAppSize] = useState('Small');
   const [servers, setServers] = useState(0);
+  const [sizeSelected, setSizeSelected] = useState(false);
 
   // Iaas variables
   const [webPrice, setWebPrice] = useState(0);
@@ -81,10 +82,42 @@ function PricingContent() {
                   label="App Size"
                   variant="outlined"
                   >
-                  <MenuItem value='Small' selected onClick={() => setAppSize('Small')}>Small</MenuItem>
-                  <MenuItem value='Medium' onClick={() => setAppSize('Medium')}>Medium</MenuItem>
-                  <MenuItem value='Large' onClick={() => setAppSize('Large')}>Large</MenuItem>
-                  <MenuItem value='X-Large' onClick={() => setAppSize('X-Large')}>X-Large</MenuItem>
+                  <MenuItem 
+                    value='Small' 
+                    selected onClick={(e) => {
+                      setAppSize('Small');
+                      setSizeSelected(true);
+                    }}
+                  >
+                    Small
+                  </MenuItem>
+                  <MenuItem 
+                    value='Medium' 
+                    selected onClick={(e) => {
+                      setAppSize('Medium');
+                      setSizeSelected(true)
+                    }}
+                  >
+                    Medium
+                  </MenuItem>
+                  <MenuItem 
+                    value='Large' 
+                    selected onClick={(e) => {
+                      setAppSize('Large');
+                      setSizeSelected(true)
+                    }}
+                  >
+                    Large
+                  </MenuItem>
+                  <MenuItem 
+                    value='X-Large' 
+                    selected onClick={(e) => {
+                      setAppSize('X-Large');
+                      setSizeSelected(true)
+                    }}
+                  >
+                    X-Large
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -94,6 +127,7 @@ function PricingContent() {
                 <Select
                   label="Number of Servers"
                   variant="outlined"
+                  disabled={!sizeSelected}
                   >
                   <MenuItem value={numServers[appSize][0]} onClick={() => setServers(parseInt(numServers[appSize][0]))}>{numServers[appSize][0]}</MenuItem>
                   <MenuItem value={numServers[appSize][1]} onClick={() => setServers(parseInt(numServers[appSize][1]))}>{numServers[appSize][1]}</MenuItem>
