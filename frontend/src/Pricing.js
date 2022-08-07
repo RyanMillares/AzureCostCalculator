@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -343,9 +342,6 @@ function PricingContent() {
                   </Grid>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant="outlined">
-                    Button
-                  </Button>
                 </CardActions>
               </Card>
             </Grid>
