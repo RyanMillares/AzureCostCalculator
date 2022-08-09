@@ -74,7 +74,7 @@ function PricingContent() {
         </AppBar>
         <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
           <Grid container spacing={4}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">App Size</InputLabel>
                 <Select
@@ -120,7 +120,7 @@ function PricingContent() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
                 <Select
