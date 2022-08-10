@@ -13,10 +13,7 @@ namespace AzureCostCalculatorAPI.Controllers;
 [ApiController]
 public class IaaSAPIController : ControllerBase
 {
-    public IaaSAPIController() : this(new IaaSAPIRepository())
-    {
-        
-    }
+    
     public IaaSAPIController(IIaaSAPIRepository repo)
     {
         this.repo = repo;
