@@ -6,5 +6,5 @@ Description: create the tables (schema), and import the initial hardcoded values
 */
 
 -- https://stackoverflow.com/questions/5237198/transactsql-to-run-another-transactsql-script
--- :r ./create-tables.sql
+-- :r C:\Users\andrey.risukhin\source\repos\AzureCostCalculator\AzureCostCalculatorAPI\AzureResources\bin\Debug  ./create-tables.sql
 -- :r ./import-tables.sql

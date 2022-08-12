@@ -1,21 +1,19 @@
--- Purpose: Creating the table schemas used.
--- Author: Andrey Risukhin
--- Backlog:
--- > asap, have this run automatically when user loads the website
--- > before production, optimize fields and their sizes (storing as INT vs DECIMAL(10,2), that kind of thing)
--- Notes: 
--- > Using schema in the OneNote
--- > Likely do not need to specify BEGIN TRANSACTION
+/*
+Purpose: Creating the table schemas used.
+Author: Andrey Risukhin
+Backlog:
+> asap, have this run automatically when user loads the website
+> before production, optimize fields and their sizes (storing as INT vs DECIMAL(10,2), that kind of thing)
+Notes: 
+> Using schema in the OneNote
+> Likely do not need to specify BEGIN TRANSACTION
+*/
 
-
--- ===
--- Stores number of servers and the app size, rarely modified, mainly read from.
--- ===
+/*
+Stores number of servers and the app size, rarely modified, mainly read from.
+*/
 
 USE AzureResourcesDB; -- Always run, ensure we're on AZ DB all the time
-
-
-
 
 DROP TABLE IF EXISTS ServerSizes;
 CREATE TABLE ServerSizes (
