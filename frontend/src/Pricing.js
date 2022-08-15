@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Card from '@mui/material/Card';
@@ -47,13 +48,19 @@ function PricingContent() {
   const [appservicePrice, setAppservicePrice] = useState(0);
   const [databasePrice, setDatabasePrice] = useState(0);
 
-
   const numServers = {
     'Small': [3, 6, 9],
     'Medium': [12, 15, 18],
     'Large': [21, 24, 27],
     'X-Large': [30, 33, 36]
   }
+
+  useEffect(() => {
+    axios.get("https://localhost:7056/api/IaaSAPI")
+      .then(res => {
+        console.log(res);
+      })
+  })
 
   return (
     <React.Fragment>
