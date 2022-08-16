@@ -22,7 +22,7 @@ namespace AzureCostCalculatorAPI.Controllers
             return serverData.ToList();
         }
 
-        [HttpGet("{size}")]
+        [HttpGet("Sizes")]
         // Returns a list of distinct sizes: small, medium, large, XL
         public async Task<List<string>> GetDistinctSize()
         {
