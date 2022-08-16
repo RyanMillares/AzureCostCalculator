@@ -48,6 +48,10 @@ function PricingContent() {
   const [appservicePrice, setAppservicePrice] = useState(0);
   const [databasePrice, setDatabasePrice] = useState(0);
 
+  //IaaS dropdown options
+  const [iaasApi, setIaasApi] = useState([]);
+
+
   const numServers = {
     'Small': [3, 6, 9],
     'Medium': [12, 15, 18],
@@ -58,9 +62,10 @@ function PricingContent() {
   useEffect(() => {
     axios.get("https://localhost:7056/api/IaaSAPI")
       .then(res => {
-        console.log(res);
+        let a = res.data.sort((a,b) => a.cost - b.cost);
+        setIaasApi(a);
       })
-  })
+  }, [])
 
   return (
     <React.Fragment>
@@ -186,6 +191,11 @@ function PricingContent() {
                           label="API Tier"
                           variant="outlined"
                           >
+                            {
+                              iaasApi.map(e => {
+                                return <MenuItem value={e.vm}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
+                              })
+                            }
                             <MenuItem value="F2s_v2" onClick={() => setApiPrice(23)}>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
                             <MenuItem value="F4s_v2" onClick={() => setApiPrice(45)}>F4s_v2 CPU: 4 , RAM: 8 , Storage: 32, Price: 45</MenuItem>
                             <MenuItem value="F8s_v2" onClick={() => setApiPrice(91)}>F8s_v2 CPU: 8 , RAM: 16 , Storage: 64, Price: 91</MenuItem>
