@@ -193,7 +193,7 @@ function PricingContent() {
                           >
                             {
                               iaasApi.map(e => {
-                                return <MenuItem value={e.vm}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
+                                return <MenuItem value={e.vm} onClick={() => setApiPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
                               })
                             }
                             <MenuItem value="F2s_v2" onClick={() => setApiPrice(23)}>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
