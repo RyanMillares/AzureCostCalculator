@@ -1,13 +1,15 @@
--- Purpose: Importing the data for the first time into a table.
--- Author: Andrey Risukhin
--- Backlog:
--- > asap, have this run automatically when user loads the website
--- > Eventually update using API to website
--- > Soon, use .csv files to initialize, hardcoded imports is icky
--- Notes: 
--- > "default" is to generate the GUID for each row, can be overwritten
+/*
+Purpose: Importing the data for the first time into a table.
+Author: Andrey Risukhin
+Backlog:
+> asap, have this run automatically when user loads the website
+> Eventually update using API to website
+> Soon, use .csv files to initialize, hardcoded imports is icky
+Notes: 
+> "default" is to generate the GUID for each row, can be overwritten
 
--- v0 Hardcoded Values
+v0 Hardcoded Values
+*/
 
 -- Insert default VM sizes + server counts
 INSERT INTO ServerSizes VALUES (default, 'Small', 3);

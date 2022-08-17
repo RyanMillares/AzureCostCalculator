@@ -1,16 +1,17 @@
--- Purpose: Creating the table schemas used.
--- Author: Andrey Risukhin
--- Backlog:
--- > asap, have this run automatically when user loads the website
--- > before production, optimize fields and their sizes (storing as INT vs DECIMAL(10,2), that kind of thing)
--- Notes: 
--- > Using schema in the OneNote
--- > Likely do not need to specify BEGIN TRANSACTION
+/*
+Purpose: Creating the table schemas used.
+Author: Andrey Risukhin
+Backlog:
+> asap: have this run automatically when user loads the website
+> before production, optimize fields and their sizes (storing as INT vs DECIMAL(10,2), that kind of thing)
+Notes: 
+> Using schema in the OneNote
+> Likely do not need to specify BEGIN TRANSACTION
+*/
 
-
--- ===
--- Stores number of servers and the app size, rarely modified, mainly read from.
--- ===
+/*
+Stores number of servers and the app size, rarely modified, mainly read from.
+*/
 DROP TABLE IF EXISTS ServerSizes;
 CREATE TABLE ServerSizes (
 	ssid UNIQUEIDENTIFIER PRIMARY KEY default NEWID(), -- Using GUIDs as primary keys for security (implicit nonnull)
@@ -19,9 +20,9 @@ CREATE TABLE ServerSizes (
 	servers INT -- TODO check this is not a protected keyword
 );
 
--- ===
--- The following tables are often read from, sometimes writted to (updated costs via web API)
--- ===
+/*
+The following tables are often read from, sometimes writted to (updated costs via web API)
+*/
 DROP TABLE IF EXISTS IaaS_Web;
 CREATE TABLE IaaS_Web (
 	iwid UNIQUEIDENTIFIER PRIMARY KEY default NEWID(),
@@ -52,8 +53,10 @@ CREATE TABLE IaaS_DB (
 	cost INT
 );
 
--- IaaS Tables above
--- PaaS Tables below
+/*
+IaaS Tables above
+PaaS Tables below
+*/
 
 DROP TABLE IF EXISTS PaaS_Web;
 CREATE TABLE PaaS_Web (
