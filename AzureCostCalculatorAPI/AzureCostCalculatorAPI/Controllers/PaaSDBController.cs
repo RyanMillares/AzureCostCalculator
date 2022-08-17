@@ -16,7 +16,7 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns a list of all the IaaS API plans
         public async Task<List<PaaSDBPlan>> GetPaaSDBPlan()
         {
-            using IDbConnection conn = new SqlConnection("Server=.\\sqlexpress;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
+            using IDbConnection conn = new SqlConnection("Server=.\\sqlexpress;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
             var PaaSDBData = await conn.QueryAsync<PaaSDBPlan>("select * from PaaS_DB");
             return PaaSDBData.ToList();
         }
