@@ -18,9 +18,7 @@ Log:
 > To allow SQLCMD, right click on these words -> execution settings -> SQLCMD mode
 > Removed USE keyword across scripts
 
--- TODO
--- > Create new file, commit; test few times, no USE, commit
--- > Test by creating new DB, change USE statement location
+-- > Test by creating new DB
 Resources:
 -- https://stackoverflow.com/questions/5237198/transactsql-to-run-another-transactsql-script
 -- https://docs.microsoft.com/en-us/sql/ssdt/how-to-specify-predeployment-or-postdeployment-scripts?view=sql-server-ver16

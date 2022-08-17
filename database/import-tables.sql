@@ -6,7 +6,8 @@ Backlog:
 > Eventually update using API to website
 > Soon, use .csv files to initialize, hardcoded imports is icky
 Notes: 
-> "default" is to generate the GUID for each row, can be overwritten
+> "default" is to generate the GUID for each row, can be overwritten.
+> IaaS and PaaS have hardcoded values copied from Excel.
 
 v0 Hardcoded Values
 */
@@ -57,8 +58,18 @@ INSERT INTO IaaS_DB VALUES (default, 'F64s_v2', 64, 128, 512, 40)
 INSERT INTO IaaS_DB VALUES (default, 'F72s_v2', 72, 144, 576, 45) 
 
 -- Insert initial values for PaaS tables
+INSERT INTO PaaS_Web VALUES (default, 'Standard - S1', 1, 1.75, 50, 44)
+INSERT INTO PaaS_Web VALUES (default, 'Standard - S2', 2, 3.5, 50, 88)
+INSERT INTO PaaS_Web VALUES (default, 'Standard - S3', 4, 7, 50, 175)
 
+INSERT INTO PaaS_AS VALUES (default, 'Standard - S1', 1, 1.75, 50, 44)
+INSERT INTO PaaS_AS VALUES (default, 'Standard - S2', 2, 3.5, 50, 88)
+INSERT INTO PaaS_AS VALUES (default, 'Standard - S3', 4, 7, 50, 175)
 
+INSERT INTO PaaS_DB VALUES (default, 'Single Database', 'vCore', 'RA-GRS', '2 vCores', 104)
+INSERT INTO PaaS_DB VALUES (default, 'Single Database', 'vCore', 'RA-GRS', '2 vCores', 204)
+INSERT INTO PaaS_DB VALUES (default, 'Single Database', 'vCore', 'RA-GRS', '6 vCores', 304)
+INSERT INTO PaaS_DB VALUES (default, 'Single Database', 'vCore', 'RA-GRS', '8 vCores', 404)
 
 
 
