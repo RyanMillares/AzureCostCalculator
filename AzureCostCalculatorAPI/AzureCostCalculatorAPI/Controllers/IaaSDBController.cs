@@ -16,7 +16,7 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns a list of all the IaaS API plans
         public async Task<List<IaaSDBPlan>> GetIaaSDBPlan()
         {
-            using IDbConnection conn = new SqlConnection("Server=.\\sqlexpress;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
+            using IDbConnection conn = new SqlConnection("Server=.\\sqlexpress;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
             var IaaSDBData = await conn.QueryAsync<IaaSDBPlan>("select * from IaaS_DB");
             return IaaSDBData.ToList();
         }
