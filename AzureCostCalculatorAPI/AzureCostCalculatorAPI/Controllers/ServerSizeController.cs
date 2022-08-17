@@ -41,12 +41,6 @@ namespace AzureCostCalculatorAPI.Controllers
             return serverData.ToList();
         }
 
-        // POST api/<DatabaseController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
         // PUT api/<DatabaseController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
