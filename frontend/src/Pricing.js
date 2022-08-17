@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Card from '@mui/material/Card';
@@ -47,6 +48,11 @@ function PricingContent() {
   const [appservicePrice, setAppservicePrice] = useState(0);
   const [databasePrice, setDatabasePrice] = useState(0);
 
+  //IaaS dropdown options
+  const [iaasApi, setIaasApi] = useState([]);
+  const [iaasDb, setIaasDb] = useState([]);
+  const [iaasWeb, setIaasWeb] = useState([]);
+
 
   const numServers = {
     'Small': [3, 6, 9],
@@ -54,6 +60,22 @@ function PricingContent() {
     'Large': [21, 24, 27],
     'X-Large': [30, 33, 36]
   }
+
+  useEffect(() => {
+    const url1 = "https://localhost:7056/api/IaaSAPI";
+    const url2 = "https://localhost:7056/api/IaasDB";
+    const url3 = "https://localhost:7056/api/IaaSWeb";
+
+    const p1 = axios.get(url1);
+    const p2 = axios.get(url2);
+    const p3 = axios.get(url3);
+
+    Promise.all([p1, p2, p3]).then((values) => {
+        setIaasApi(values[0].data.sort((a,b) => a.cost - b.cost));
+        setIaasDb(values[1].data.sort((a,b) => a.cost - b.cost));
+        setIaasWeb(values[2].data.sort((a,b) => a.cost - b.cost));
+    })
+  }, [])
 
   return (
     <React.Fragment>
@@ -162,13 +184,18 @@ function PricingContent() {
                           label="Web Tier"
                           variant="outlined"
                           >
-                            <MenuItem value="D1_v2" onClick={() => setWebPrice(15)}>D1_v2 CPU: 1, RAM: 3.5 , Storage: 50, Price: 15</MenuItem>
+                            {
+                              iaasWeb.map(e => {
+                                return <MenuItem value={e.vm} onClick={() => setWebPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
+                              })
+                            }
+                            {/* <MenuItem value="D1_v2" onClick={() => setWebPrice(15)}>D1_v2 CPU: 1, RAM: 3.5 , Storage: 50, Price: 15</MenuItem>
                             <MenuItem value="D2_v3" onClick={() => setWebPrice(27)}>D2_v3 CPU: 2 , RAM: 8 , Storage: 50, Price: 27</MenuItem>
                             <MenuItem value="D4s_v3" onClick={() => setWebPrice(54)}>D4s_v3 CPU: 4 , RAM: 16 , Storage: 32, Price: 54</MenuItem>
                             <MenuItem value="D8s_v3" onClick={() => setWebPrice(107)}>D8s_v3 CPU: 8 , RAM: 32 , Storage: 64, Price: 107</MenuItem>
                             <MenuItem value="D16s_v3" onClick={() => setWebPrice(215)}>D16s_v3 CPU: 16 , RAM: 64 , Storage: 128, Price: 215</MenuItem>
                             <MenuItem value="D32s_v3" onClick={() => setWebPrice(431)}>D32s_v3 CPU: 32 , RAM: 128 , Storage: 256, Price: 431</MenuItem>
-                            <MenuItem value="D64s_v3" onClick={() => setWebPrice(861)}>D64s_v3 CPU: 64 , RAM: 256 , Storage: 512, Price: 861</MenuItem>
+                            <MenuItem value="D64s_v3" onClick={() => setWebPrice(861)}>D64s_v3 CPU: 64 , RAM: 256 , Storage: 512, Price: 861</MenuItem> */}
                         </Select>
                       </FormControl>
                     </Grid>
@@ -179,13 +206,18 @@ function PricingContent() {
                           label="API Tier"
                           variant="outlined"
                           >
-                            <MenuItem value="F2s_v2" onClick={() => setApiPrice(23)}>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
+                            {
+                              iaasApi.map(e => {
+                                return <MenuItem value={e.vm} onClick={() => setApiPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
+                              })
+                            }
+                            {/* <MenuItem value="F2s_v2" onClick={() => setApiPrice(23)}>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
                             <MenuItem value="F4s_v2" onClick={() => setApiPrice(45)}>F4s_v2 CPU: 4 , RAM: 8 , Storage: 32, Price: 45</MenuItem>
                             <MenuItem value="F8s_v2" onClick={() => setApiPrice(91)}>F8s_v2 CPU: 8 , RAM: 16 , Storage: 64, Price: 91</MenuItem>
                             <MenuItem value="F16s_v2" onClick={() => setApiPrice(181)}>F16s_v2 CPU: 16 , RAM: 32 , Storage: 128, Price: 181</MenuItem>
                             <MenuItem value="F32s_v2" onClick={() => setApiPrice(362)}>F32s_v2 CPU: 32 , RAM: 64 , Storage: 256, Price: 362</MenuItem>
                             <MenuItem value="F48s_v2" onClick={() => setApiPrice(534)}>F48s_v2 CPU: 48 , RAM: 96 , Storage: 384, Price: 534</MenuItem>
-                            <MenuItem value="F64s_v2" onClick={() => setApiPrice(724)}>F64s_v2 CPU: 64 , RAM: 128 , Storage: 512, Price: 724</MenuItem>
+                            <MenuItem value="F64s_v2" onClick={() => setApiPrice(724)}>F64s_v2 CPU: 64 , RAM: 128 , Storage: 512, Price: 724</MenuItem> */}
                         </Select>
                       </FormControl>
                     </Grid>
@@ -196,11 +228,16 @@ function PricingContent() {
                           label="DB Tier"
                           variant="outlined"
                           >
-                            <MenuItem value="E2s_v3" onClick={() => setDbPrice(37)}>E2s_v3 CPU: 2 , RAM: 16 , Storage: 32, Price: 37</MenuItem>
+                            {
+                              iaasDb.map(e => {
+                                return <MenuItem value={e.vm} onClick={() => setDbPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
+                              })
+                            }
+                            {/* <MenuItem value="E2s_v3" onClick={() => setDbPrice(37)}>E2s_v3 CPU: 2 , RAM: 16 , Storage: 32, Price: 37</MenuItem>
                             <MenuItem value="E4s_v5" onClick={() => setDbPrice(79)}>E4s_v5 CPU: 4 , RAM: 32 , Storage: 150, Price: 79</MenuItem>
                             <MenuItem value="E8s_v3" onClick={() => setDbPrice(146)}>E8s_v3 CPU: 8, RAM: 64 , Storage: 128, Price: 146</MenuItem>
                             <MenuItem value="E16s_v3" onClick={() => setDbPrice(292)}>E16s_v3 CPU: 16, RAM: 128 , Storage: 256, Price: 292</MenuItem>
-                            <MenuItem value="E32s_v3" onClick={() => setDbPrice(584)}>E32_v3 CPU: 32 , RAM: 256 , Storage: 800, Price: 584</MenuItem>
+                            <MenuItem value="E32s_v3" onClick={() => setDbPrice(584)}>E32_v3 CPU: 32 , RAM: 256 , Storage: 800, Price: 584</MenuItem> */}
                         </Select>
                       </FormControl>
                     </Grid>
