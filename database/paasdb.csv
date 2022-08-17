@@ -1,8 +1,4 @@
-E2s_v3, 2, 16, 32, 15
-E4s_v3, 4, 32, 64, 20
-E4_v3, 4, 32, 100, 25
-E8s_v3, 8, 64, 128, 30
-E8_v3, 8, 64, 200, 35
-E16s_v3, 16, 128, 256, 40
-E32s_v3, 32, 256, 512, 45
-E32_v3, 32, 256, 800, 45
+Single Database,vCore,RA-GRS,2 vCores,104
+Single Database,vCore,RA-GRS,2 vCores,204
+Single Database,vCore,RA-GRS,6 vCores,304
+Single Database,vCore,RA-GRS,8 vCores,404
