@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureCostCalculatorAPI.Cont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureCostCalculatorAPI.Test", "AzureCostCalculatorAPI.Test\AzureCostCalculatorAPI.Test.csproj", "{6F3314F8-BA2A-435D-BF54-C35D5351D571}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AzureCostCalculatorDB", "AzureCostCalculatorDB\AzureCostCalculatorDB.sqlproj", "{0FC49021-0047-4466-A1C6-861C179569FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,12 @@ Global
 		{6F3314F8-BA2A-435D-BF54-C35D5351D571}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F3314F8-BA2A-435D-BF54-C35D5351D571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F3314F8-BA2A-435D-BF54-C35D5351D571}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC49021-0047-4466-A1C6-861C179569FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC49021-0047-4466-A1C6-861C179569FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC49021-0047-4466-A1C6-861C179569FC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0FC49021-0047-4466-A1C6-861C179569FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC49021-0047-4466-A1C6-861C179569FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC49021-0047-4466-A1C6-861C179569FC}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
