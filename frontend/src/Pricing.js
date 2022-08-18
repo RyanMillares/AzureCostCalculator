@@ -53,6 +53,11 @@ function PricingContent() {
   const [iaasDb, setIaasDb] = useState([]);
   const [iaasWeb, setIaasWeb] = useState([]);
 
+  //PaaS dropdown options
+  const [paasApp, setPaasApp] = useState([]);
+  const [paasDb, setPaasDb ] = useState([]);
+  const [paasWeb, setPaasWeb] = useState([]);
+
 
   const numServers = {
     'Small': [3, 6, 9],
@@ -63,17 +68,26 @@ function PricingContent() {
 
   useEffect(() => {
     const url1 = "https://localhost:7056/api/IaaSAPI";
-    const url2 = "https://localhost:7056/api/IaasDB";
+    const url2 = "https://localhost:7056/api/IaaSDB";
     const url3 = "https://localhost:7056/api/IaaSWeb";
+    const url4 = "https://localhost:7056/api/PaaSApp";
+    const url5 = "https://localhost:7056/api/PaaSDB";
+    const url6 = "https://localhost:7056/api/PaaSWeb";
 
     const p1 = axios.get(url1);
     const p2 = axios.get(url2);
     const p3 = axios.get(url3);
+    const p4 = axios.get(url4);
+    const p5 = axios.get(url5);
+    const p6 = axios.get(url6);
 
-    Promise.all([p1, p2, p3]).then((values) => {
+    Promise.all([p1, p2, p3, p4, p5, p6]).then((values) => {
         setIaasApi(values[0].data.sort((a,b) => a.cost - b.cost));
         setIaasDb(values[1].data.sort((a,b) => a.cost - b.cost));
         setIaasWeb(values[2].data.sort((a,b) => a.cost - b.cost));
+        setPaasApp(values[3].data.sort((a,b) => a.cost - b.cost));
+        setPaasDb(values[4].data.sort((a,b) => a.cost - b.cost));
+        setPaasWeb(values[5].data.sort((a,b) => a.cost - b.cost));
     })
   }, [])
 
@@ -307,9 +321,14 @@ function PricingContent() {
                           label="Website Tier"
                           variant="outlined"
                           >
-                            <MenuItem value="S1" onClick={() => setWebsitePrice(44)}>Standard - S1 1 Core, 1.75 GB RAM, 50 GB Storage, Price: 44</MenuItem>
+                            {
+                              paasWeb.map(e => {
+                                return <MenuItem value={e.pwid} onClick={() => setWebsitePrice(e.cost)}>{e.name} {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
+                              })
+                            }
+                            {/* <MenuItem value="S1" onClick={() => setWebsitePrice(44)}>Standard - S1 1 Core, 1.75 GB RAM, 50 GB Storage, Price: 44</MenuItem>
                             <MenuItem value="S2" onClick={() => setWebsitePrice(88)}>Standard - S2 2 Cores, 3.5 GB RAM, 50 GB Storage, Price: 88</MenuItem>
-                            <MenuItem value="S3" onClick={() => setWebsitePrice(175)}>Standard - S3 4 Cores, 7 GB RAM, 50 GB Storage, Price: 175</MenuItem>
+                            <MenuItem value="S3" onClick={() => setWebsitePrice(175)}>Standard - S3 4 Cores, 7 GB RAM, 50 GB Storage, Price: 175</MenuItem> */}
                         </Select>
                       </FormControl>
                     </Grid>
@@ -320,9 +339,14 @@ function PricingContent() {
                           label="AppService Tier"
                           variant="outlined"
                           >
-                            <MenuItem value="S1" onClick={() => setAppservicePrice(44)}>Standard - S1 1 Core, 1.75 GB RAM, 50 GB Storage, Price: 44</MenuItem>
+                            {
+                              paasApp.map(e => {
+                                return <MenuItem value={e.paid} onClick={() => setDatabasePrice(e.cost)}>{e.name} {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
+                              })
+                            }
+                            {/* <MenuItem value="S1" onClick={() => setAppservicePrice(44)}>Standard - S1 1 Core, 1.75 GB RAM, 50 GB Storage, Price: 44</MenuItem>
                             <MenuItem value="S2" onClick={() => setAppservicePrice(88)}>Standard - S2 2 Cores, 3.5 GB RAM, 50 GB Storage, Price: 88</MenuItem>
-                            <MenuItem value="S3" onClick={() => setAppservicePrice(175)}>Standard - S3 4 Cores, 7 GB RAM, 50 GB Storage, Price: 175</MenuItem>
+                            <MenuItem value="S3" onClick={() => setAppservicePrice(175)}>Standard - S3 4 Cores, 7 GB RAM, 50 GB Storage, Price: 175</MenuItem> */}
                         </Select>
                       </FormControl>
                     </Grid>
@@ -333,10 +357,15 @@ function PricingContent() {
                           label="Database Tier"
                           variant="outlined"
                           >
-                            <MenuItem value="RA-GRBS 2" onClick={() => setDatabasePrice(104)}>Single Database, vCore, RA-GRS 2 vCores, Price: 104</MenuItem>
+                            {
+                              paasDb.map(e => {
+                                return <MenuItem value={e.pdid} onClick={() => setAppservicePrice(e.cost)}>{e.type}, {e.hardware}, {e.storage} {e.instance}, Price: {e.cost}</MenuItem>
+                              })
+                            }
+                            {/* <MenuItem value="RA-GRBS 2" onClick={() => setDatabasePrice(104)}>Single Database, vCore, RA-GRS 2 vCores, Price: 104</MenuItem>
                             <MenuItem value="RA-GRBS 2.1" onClick={() => setDatabasePrice(204)}>Single Database, vCore, RA-GRS 2 vCores, Price: 204</MenuItem>
                             <MenuItem value="RA-GRS 6" onClick={() => setDatabasePrice(304)}>Single Database, vCore, RA-GRS 6 vCores, Price: 304</MenuItem>
-                            <MenuItem value="RA-GRS 8" onClick={() => setDatabasePrice(404)}>Single Database, vCore, RA-GRS 8 vCores, Price: 404</MenuItem>
+                            <MenuItem value="RA-GRS 8" onClick={() => setDatabasePrice(404)}>Single Database, vCore, RA-GRS 8 vCores, Price: 404</MenuItem> */}
                         </Select>
                       </FormControl>
                     </Grid>
