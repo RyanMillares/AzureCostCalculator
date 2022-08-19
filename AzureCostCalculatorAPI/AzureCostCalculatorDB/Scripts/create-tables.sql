@@ -13,7 +13,7 @@ Notes:
 Stores number of servers and the app size, rarely modified, mainly read from.
 */
 
-USE AzureResourcesDB; -- Always run, ensure we're on AZ DB all the time
+
 
 DROP TABLE IF EXISTS ServerSizes;
 CREATE TABLE ServerSizes (
