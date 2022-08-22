@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[PaaS_DB] (
+﻿CREATE TABLE PaaS_DB (
 	pdid UNIQUEIDENTIFIER PRIMARY KEY default NEWID(),
 	type VARCHAR(32), 
 	hardware VARCHAR(16),

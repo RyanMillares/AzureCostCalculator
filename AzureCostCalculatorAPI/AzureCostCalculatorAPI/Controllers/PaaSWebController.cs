@@ -16,7 +16,7 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns a list of all the PaaS Website plans
         public async Task<List<PaaSWebPlan>> GetPaaSWebPlan()
         {
-            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
+            using IDbConnection conn = new SqlConnection("Server=.\\sqlexpress;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
             var PaaSWebData = await conn.QueryAsync<PaaSWebPlan>("select * from PaaS_Web");
             return PaaSWebData.ToList();
         }
@@ -25,7 +25,7 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns the IaaS web plan associated with the given GUID
         public async Task<PaaSWebPlan> Get(Guid id)
         {
-            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResources;TrustServerCertificate=True;");
+            using IDbConnection conn = new SqlConnection("Server=.\\sqlexpress;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
             var plan = await conn.QuerySingleAsync<PaaSWebPlan>("select * from PaaS_Web where pwid = @id", new { id });
             return plan;
         }

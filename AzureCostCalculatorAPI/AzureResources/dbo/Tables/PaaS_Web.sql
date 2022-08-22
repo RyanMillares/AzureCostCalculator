@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[PaaS_Web] (
+﻿CREATE TABLE PaaS_Web (
 	pwid UNIQUEIDENTIFIER PRIMARY KEY default NEWID(),
 	name VARCHAR(32), 
 	cpu INT,
