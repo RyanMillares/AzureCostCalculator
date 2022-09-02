@@ -1,8 +1,0 @@
-Log of important information!
-=============================
-
-Do not rename this project. Renaming causes hard-to-fix issues if done incorrectly.
-Do NOT delete the file 'AzureCostCalculatorDB.sqlproj! This is the actual project file.
-
-Andrey Risukhin is responsible for work on the database project, worked from June 20 2022 to August 26 2022. 
-
