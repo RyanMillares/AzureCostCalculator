@@ -1,0 +1,17 @@
+{
+  "name": "azurecostcalculator",
+  "version": "1.0.0",
+  "description": "TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm start --prefix ./frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://ava-continuous-learning@dev.azure.com/ava-continuous-learning/AzureCostCalculator/_git/AzureCostCalculator"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
