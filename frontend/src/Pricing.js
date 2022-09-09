@@ -80,6 +80,7 @@ function PricingContent() {
     const p4 = axios.get(url4);
     const p5 = axios.get(url5);
     const p6 = axios.get(url6);
+    console.log(window.navigator.userAgent)
 
     Promise.all([p1, p2, p3, p4, p5, p6]).then((values) => {
         setIaasApi(values[0].data.sort((a,b) => a.cost - b.cost));

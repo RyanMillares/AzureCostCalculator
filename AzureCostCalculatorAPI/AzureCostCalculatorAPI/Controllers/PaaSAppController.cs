@@ -16,7 +16,9 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns a list of all the PaaS AppService plans
         public async Task<List<PaaSAppPlan>> GetPaaSAPIPlan()
         {
-            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+
+            using IDbConnection conn = new SqlConnection(myConnectorString);
             var PaaSAPIData = await conn.QueryAsync<PaaSAppPlan>("select * from PaaS_AS");
             return PaaSAPIData.ToList();
         }
