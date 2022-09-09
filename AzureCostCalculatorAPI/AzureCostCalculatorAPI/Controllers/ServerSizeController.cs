@@ -17,7 +17,9 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns a list of all the server sizes (objects include 'small' and '3')
         public async Task<List<ServerSize>> Get()
         {
-            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+
+            using IDbConnection conn = new SqlConnection(myConnectorString);
             var serverData = await conn.QueryAsync<ServerSize>("select * from ServerSizes");
             return serverData.ToList();
         }
@@ -26,7 +28,9 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns a list of distinct sizes: small, medium, large, XL
         public async Task<List<string>> GetDistinctSize()
         {
-            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+
+            using IDbConnection conn = new SqlConnection(myConnectorString);
             var sizeData = await conn.QueryAsync<string>("SELECT DISTINCT SIZE FROM dbo.ServerSizes");
             return sizeData.ToList();
         }
@@ -36,7 +40,9 @@ namespace AzureCostCalculatorAPI.Controllers
         // Returns a list of server numbers associated with given size ('small', etc)
         public async Task<List<int>> Get(string serverSize)
         {
-            using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+
+            using IDbConnection conn = new SqlConnection(myConnectorString);
             var serverData = await conn.QueryAsync<int>("select * from ServerSizes where size = @serverSize", new { serverSize });
             return serverData.ToList();
         }
