@@ -20,7 +20,7 @@ import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
 
 import DeviceInfo from 'react-native-device-info';
-//import globalnames from './globalvars.json' assert {type: 'json' };
+import globalnames from './globalvars.json' //servernames
 
 
 const theme = createTheme({
@@ -93,19 +93,22 @@ function PricingContent() {
         console.log(shownName)
 
 
-
-        const apiServerName = "localhost"
-
-
         //tbd, to replace 'localhost' in the url
-        //console.log(apiServerName)
+
+        const apiServerNameObj = JSON.stringify(globalnames);
+       
+
+        const name = JSON.parse(apiServerNameObj);
+        const apiServerName = name.serverName;
 
         const url1 = "https://" + apiServerName +":7056/api/IaaSAPI";
         const url2 = "https://" + apiServerName +":7056/api/IaaSDB";
         const url3 = "https://" + apiServerName +":7056/api/IaaSWeb";
         const url4 = "https://" + apiServerName +":7056/api/PaaSApp";
         const url5 = "https://" + apiServerName +":7056/api/PaaSDB";
-        const url6 = "https://" + apiServerName +":7056/api/PaaSWeb";
+        const url6 = "https://" + apiServerName + ":7056/api/PaaSWeb";
+
+        
 
     const p1 = axios.get(url1);
     const p2 = axios.get(url2);
