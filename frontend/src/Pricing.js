@@ -19,7 +19,6 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
 
-import DeviceInfo from 'react-native-device-info';
 //import globalnames from './globalvars.json' assert {type: 'json' };
 
 
@@ -99,67 +98,64 @@ function PricingContent() {
     'Large': [21, 24, 27],
     'XL': [30, 33, 36]
     }
-    console.log(numServers)
-    //const serverSizes = 
 
-
-
- 
 
     useEffect(() => {
-        
-        let shownName = ""
+        let apiServer = ""
+        const getJson = () => {
+            fetch('globalnames.json'
+                , {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                }
+            )
+                .then(function (response) {
+                    console.log(response)
+                    return response.json();
+                })
+                .then(function (myJson) {
+                    console.log(myJson);
+                    const apiServerName = myJson.ApiName
 
-        const getData = () => {
-            const deviceName = DeviceInfo.getBaseOs();
-            //const deviceName = ""
-            console.log(deviceName)
-            return deviceName
+
+                    //tbd, to replace 'localhost' in the url
+                    //console.log(apiServerName)
+                    const url1 = "https://" + apiServerName + ":7056/api/IaaSAPI";
+                    const url2 = "https://" + apiServerName + ":7056/api/IaaSDB";
+                    const url3 = "https://" + apiServerName + ":7056/api/IaaSWeb";
+                    const url4 = "https://" + apiServerName + ":7056/api/PaaSApp";
+                    const url5 = "https://" + apiServerName + ":7056/api/PaaSDB";
+                    const url6 = "https://" + apiServerName + ":7056/api/PaaSWeb";
+                    const url7 = "https://" + apiServerName + ":7056/api/ServerSize";
+                    console.log(url1)
+
+                    const p1 = axios.get(url1);
+                    const p2 = axios.get(url2);
+                    const p3 = axios.get(url3);
+                    const p4 = axios.get(url4);
+                    const p5 = axios.get(url5);
+                    const p6 = axios.get(url6);
+                    const p7 = axios.get(url7);
+
+                    console.log(p7)
+
+                    Promise.all([p1, p2, p3, p4, p5, p6, p7]).then((values) => {
+                        setIaasApi(values[0].data.sort((a, b) => a.cost - b.cost));
+                        setIaasDb(values[1].data.sort((a, b) => a.cost - b.cost));
+                        setIaasWeb(values[2].data.sort((a, b) => a.cost - b.cost));
+                        setPaasApp(values[3].data.sort((a, b) => a.cost - b.cost));
+                        setPaasDb(values[4].data.sort((a, b) => a.cost - b.cost));
+                        setPaasWeb(values[5].data.sort((a, b) => a.cost - b.cost));
+                        setServerSizes(values[6].data);
+                    })
+                });
         }
+        getJson()
+ 
 
-        async function assigner() {
-            shownName = await getData()
-        }
-        assigner()
-        console.log(shownName)
-
-
-
-        const apiServerName = "localhost"
-
-
-        //tbd, to replace 'localhost' in the url
-        //console.log(apiServerName)
-
-        const url1 = "https://" + apiServerName +":7056/api/IaaSAPI";
-        const url2 = "https://" + apiServerName +":7056/api/IaaSDB";
-        const url3 = "https://" + apiServerName +":7056/api/IaaSWeb";
-        const url4 = "https://" + apiServerName +":7056/api/PaaSApp";
-        const url5 = "https://" + apiServerName +":7056/api/PaaSDB";
-        const url6 = "https://" + apiServerName + ":7056/api/PaaSWeb";
-        const url7 = "https://" + apiServerName + ":7056/api/ServerSize";
-
-        const p1 = axios.get(url1);
-        const p2 = axios.get(url2);
-        const p3 = axios.get(url3);
-        const p4 = axios.get(url4);
-        const p5 = axios.get(url5);
-        const p6 = axios.get(url6);
-        const p7 = axios.get(url7);
-
-        console.log(p7)
-
-        Promise.all([p1, p2, p3, p4, p5, p6, p7]).then((values) => {
-            setIaasApi(values[0].data.sort((a, b) => a.cost - b.cost));
-        setIaasDb(values[1].data.sort((a,b) => a.cost - b.cost));
-        setIaasWeb(values[2].data.sort((a,b) => a.cost - b.cost));
-        setPaasApp(values[3].data.sort((a,b) => a.cost - b.cost));
-        setPaasDb(values[4].data.sort((a,b) => a.cost - b.cost));
-            setPaasWeb(values[5].data.sort((a, b) => a.cost - b.cost));
-            setServerSizes(values[6].data);
-    })
     }, [])
-    console.log(Object.keys(serverSizes))
 
   return (
     <React.Fragment>
@@ -201,44 +197,7 @@ function PricingContent() {
                                               </MenuItem>
                                       }
                                       )}
-                                  {
-                                      /* <MenuItem 
-                    value='Small' 
-                    selected onClick={(e) => {
-                      setAppSize('Small');
-                      setSizeSelected(true);
-                    }}
-                  >
-                    Small
-                  </MenuItem>
-                  <MenuItem 
-                    value='Medium' 
-                    selected onClick={(e) => {
-                      setAppSize('Medium');
-                      setSizeSelected(true)
-                    }}
-                  >
-                    Medium
-                  </MenuItem>
-                  <MenuItem 
-                    value='Large' 
-                    selected onClick={(e) => {
-                      setAppSize('Large');
-                      setSizeSelected(true)
-                    }}
-                  >
-                    Large
-                  </MenuItem>
-                  <MenuItem 
-                    value='X-Large' 
-                    selected onClick={(e) => {
-                      setAppSize('X-Large');
-                      setSizeSelected(true)
-                    }}
-                  >
-                    X-Large
-                  </MenuItem>*/
-                                  }
+
                   
                 </Select>
               </FormControl>
