@@ -17,6 +17,10 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+//import NetworkInfo from 'react-native-network-info';
+
+import DeviceInfo from 'react-native-device-info';
+//import globalnames from './globalvars.json' assert {type: 'json' };
 
 
 const theme = createTheme({
@@ -32,6 +36,7 @@ const theme = createTheme({
     },
   },
 });
+
 
 function PricingContent() {
   const [appSize, setAppSize] = useState('Small');
@@ -64,15 +69,43 @@ function PricingContent() {
     'Medium': [12, 15, 18],
     'Large': [21, 24, 27],
     'X-Large': [30, 33, 36]
-  }
+    }
 
-  useEffect(() => {
-    const url1 = "https://localhost:7056/api/IaaSAPI";
-    const url2 = "https://localhost:7056/api/IaaSDB";
-    const url3 = "https://localhost:7056/api/IaaSWeb";
-    const url4 = "https://localhost:7056/api/PaaSApp";
-    const url5 = "https://localhost:7056/api/PaaSDB";
-    const url6 = "https://localhost:7056/api/PaaSWeb";
+
+
+ 
+
+    useEffect(() => {
+        
+        let shownName = ""
+
+        const getData = () => {
+            const deviceName = DeviceInfo.getBaseOs();
+            //const deviceName = ""
+            console.log(deviceName)
+            return deviceName
+        }
+
+        async function assigner() {
+            shownName = await getData()
+        }
+        assigner()
+        console.log(shownName)
+
+
+
+        const apiServerName = "localhost"
+
+
+        //tbd, to replace 'localhost' in the url
+        //console.log(apiServerName)
+
+        const url1 = "https://" + apiServerName +":7056/api/IaaSAPI";
+        const url2 = "https://" + apiServerName +":7056/api/IaaSDB";
+        const url3 = "https://" + apiServerName +":7056/api/IaaSWeb";
+        const url4 = "https://" + apiServerName +":7056/api/PaaSApp";
+        const url5 = "https://" + apiServerName +":7056/api/PaaSDB";
+        const url6 = "https://" + apiServerName +":7056/api/PaaSWeb";
 
     const p1 = axios.get(url1);
     const p2 = axios.get(url2);
@@ -178,7 +211,7 @@ function PricingContent() {
             <Grid item xs={12} md={6}>
               <Card>
                 <CardHeader
-                  title="IaaS"
+                  title="Shift-and-Lift" //IaaS
                   titleTypographyProps={{ align: 'center' }}
                   subheaderTypographyProps={{
                     align: 'center',
