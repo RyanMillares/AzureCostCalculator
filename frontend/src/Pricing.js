@@ -70,6 +70,7 @@ function PricingContent() {
         const newSizes = new Object()
         console.log(sizes)
 
+        // create the object
         sizes.forEach(function (sizeObject) {
             // the size property exists
             if (newSizes.hasOwnProperty(sizeObject.size)) {
@@ -81,9 +82,13 @@ function PricingContent() {
                 newSizes[sizeObject.size].push(sizeObject.servers)
             }
         })
-        //newSizes["test"] = [] (how to add new rows programmatically)
-        // additional note,
-        console.log(newSizes)
+
+        // sort each property's array in ascending order
+        Object.keys(newSizes).forEach(function (sizeName) {
+            newSizes[sizeName] = newSizes[sizeName].sort()
+        })
+        console.log(newSizes.length)
+        setSizes(newSizes)
 
 
     }
@@ -92,7 +97,7 @@ function PricingContent() {
     'Small': [3, 6, 9],
     'Medium': [12, 15, 18],
     'Large': [21, 24, 27],
-    'X-Large': [30, 33, 36]
+    'XL': [30, 33, 36]
     }
     console.log(numServers)
     //const serverSizes = 
@@ -153,7 +158,8 @@ function PricingContent() {
             setPaasWeb(values[5].data.sort((a, b) => a.cost - b.cost));
             setServerSizes(values[6].data);
     })
-  }, [])
+    }, [])
+    console.log(Object.keys(serverSizes))
 
   return (
     <React.Fragment>
@@ -180,8 +186,23 @@ function PricingContent() {
                 <Select
                   label="App Size"
                   variant="outlined"
-                  >
-                  <MenuItem 
+                              >
+                                  {
+                                      
+                                      Object.keys(serverSizes).map(p => {
+                                          return <MenuItem
+                                              value={p}
+                                              selected onClick={(e) => {
+                                                  setAppSize(p);
+                                                  setSizeSelected(true);
+                                              }}
+                                          >
+                                              {p}
+                                              </MenuItem>
+                                      }
+                                      )}
+                                  {
+                                      /* <MenuItem 
                     value='Small' 
                     selected onClick={(e) => {
                       setAppSize('Small');
@@ -216,7 +237,9 @@ function PricingContent() {
                     }}
                   >
                     X-Large
-                  </MenuItem>
+                  </MenuItem>*/
+                                  }
+                  
                 </Select>
               </FormControl>
             </Grid>
@@ -227,10 +250,31 @@ function PricingContent() {
                   label="Number of Servers"
                   variant="outlined"
                   disabled={!sizeSelected}
-                  >
-                  <MenuItem value={numServers[appSize][0]} onClick={() => setServers(parseInt(numServers[appSize][0]))}>{numServers[appSize][0]}</MenuItem>
-                  <MenuItem value={numServers[appSize][1]} onClick={() => setServers(parseInt(numServers[appSize][1]))}>{numServers[appSize][1]}</MenuItem>
-                  <MenuItem value={numServers[appSize][2]} onClick={() => setServers(parseInt(numServers[appSize][2]))}>{numServers[appSize][2]}</MenuItem>
+                              >
+                                  {
+                                      Object.keys(serverSizes).length > 0 && (
+                                                    
+                                                  serverSizes[appSize].map(p => {
+                                                      return <MenuItem
+                                                          value={p}
+                                                          selected onClick={(e) => {
+                                                              setServers(p)
+                                                          }}
+                                                      >
+                                                          {p}
+                                                      </MenuItem>
+                                                  }
+                                                  )                                                               
+                                          )                                
+                                  }
+                                  {
+                                      /* this is the old code, for reference
+                                       *<MenuItem value={numServers[appSize][0]} onClick={() => setServers(parseInt(numServers[appSize][0]))}>{numServers[appSize][0]}</MenuItem>
+                                      this goes 0, 1, 2
+                                       * */
+
+                                  }
+                        
                 </Select>
               </FormControl>
             </Grid>
