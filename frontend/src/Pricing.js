@@ -61,8 +61,32 @@ function PricingContent() {
   //PaaS dropdown options
   const [paasApp, setPaasApp] = useState([]);
   const [paasDb, setPaasDb ] = useState([]);
-  const [paasWeb, setPaasWeb] = useState([]);
+    const [paasWeb, setPaasWeb] = useState([]);
 
+    const [serverSizes, setSizes] = useState({})
+
+    function setServerSizes(sizes) {
+        //console.log(sizes)
+        const newSizes = new Object()
+        console.log(sizes)
+
+        sizes.forEach(function (sizeObject) {
+            // the size property exists
+            if (newSizes.hasOwnProperty(sizeObject.size)) {
+                newSizes[sizeObject.size].push(sizeObject.servers)
+            }
+            // the size property hasnt been added to object yet
+            else {
+                newSizes[sizeObject.size] = []
+                newSizes[sizeObject.size].push(sizeObject.servers)
+            }
+        })
+        //newSizes["test"] = [] (how to add new rows programmatically)
+        // additional note,
+        console.log(newSizes)
+
+
+    }
 
   const numServers = {
     'Small': [3, 6, 9],
@@ -70,6 +94,8 @@ function PricingContent() {
     'Large': [21, 24, 27],
     'X-Large': [30, 33, 36]
     }
+    console.log(numServers)
+    //const serverSizes = 
 
 
 
@@ -105,23 +131,27 @@ function PricingContent() {
         const url3 = "https://" + apiServerName +":7056/api/IaaSWeb";
         const url4 = "https://" + apiServerName +":7056/api/PaaSApp";
         const url5 = "https://" + apiServerName +":7056/api/PaaSDB";
-        const url6 = "https://" + apiServerName +":7056/api/PaaSWeb";
+        const url6 = "https://" + apiServerName + ":7056/api/PaaSWeb";
+        const url7 = "https://" + apiServerName + ":7056/api/ServerSize";
 
-    const p1 = axios.get(url1);
-    const p2 = axios.get(url2);
-    const p3 = axios.get(url3);
-    const p4 = axios.get(url4);
-    const p5 = axios.get(url5);
-    const p6 = axios.get(url6);
-    console.log(window.navigator.userAgent)
+        const p1 = axios.get(url1);
+        const p2 = axios.get(url2);
+        const p3 = axios.get(url3);
+        const p4 = axios.get(url4);
+        const p5 = axios.get(url5);
+        const p6 = axios.get(url6);
+        const p7 = axios.get(url7);
 
-    Promise.all([p1, p2, p3, p4, p5, p6]).then((values) => {
-        setIaasApi(values[0].data.sort((a,b) => a.cost - b.cost));
+        console.log(p7)
+
+        Promise.all([p1, p2, p3, p4, p5, p6, p7]).then((values) => {
+            setIaasApi(values[0].data.sort((a, b) => a.cost - b.cost));
         setIaasDb(values[1].data.sort((a,b) => a.cost - b.cost));
         setIaasWeb(values[2].data.sort((a,b) => a.cost - b.cost));
         setPaasApp(values[3].data.sort((a,b) => a.cost - b.cost));
         setPaasDb(values[4].data.sort((a,b) => a.cost - b.cost));
-        setPaasWeb(values[5].data.sort((a,b) => a.cost - b.cost));
+            setPaasWeb(values[5].data.sort((a, b) => a.cost - b.cost));
+            setServerSizes(values[6].data);
     })
   }, [])
 
