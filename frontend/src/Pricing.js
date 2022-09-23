@@ -115,7 +115,7 @@ function PricingContent() {
         const url4 = "https://" + apiServerName + ":7056/api/PaaSApp";
         const url5 = "https://" + apiServerName + ":7056/api/PaaSDB";
         const url6 = "https://" + apiServerName + ":7056/api/PaaSWeb";
-        const url7 = "https://" + apiServerName + ":7056/api/ServerSize";
+        const url7 = "https://" + apiServerName + ":7056/api/ServerSize/Sorted";
         console.log(url1)
 
         const p1 = axios.get(url1);
