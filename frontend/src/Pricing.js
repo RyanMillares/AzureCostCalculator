@@ -67,19 +67,17 @@ function PricingContent() {
     function setServerSizes(sizes) {
         //console.log(sizes)
         const newSizes = new Object()
-        console.log(sizes)
 
         // create the object
         sizes.forEach(function (sizeObject) {
-            // the size property exists
-            if (newSizes.hasOwnProperty(sizeObject.size)) {
-                newSizes[sizeObject.size].push(sizeObject.servers)
-            }
-            // the size property hasnt been added to object yet
-            else {
+            // if the size property doesn't exists, create the property
+            if (!newSizes.hasOwnProperty(sizeObject.size)) {
                 newSizes[sizeObject.size] = []
-                newSizes[sizeObject.size].push(sizeObject.servers)
             }
+            // the size property exists already, push to existing property
+            
+                newSizes[sizeObject.size].push(sizeObject.servers)
+            
         })
 
         // sort each property's array in ascending order
@@ -88,7 +86,6 @@ function PricingContent() {
         })
         console.log(newSizes.length)
         setSizes(newSizes)
-
 
     }
 
