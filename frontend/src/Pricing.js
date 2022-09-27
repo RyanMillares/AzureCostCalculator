@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -15,7 +18,10 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
+import IconButton from "@mui/material/IconButton";
+
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
 
@@ -63,6 +69,42 @@ function PricingContent() {
     const [paasWeb, setPaasWeb] = useState([]);
 
     const [serverSizes, setSizes] = useState({})
+
+    //UI for PaaS
+    const [createMode, setMode] = useState(false)
+
+    const PaasOptions = {
+        'Website Tier': 'PaaSWeb',
+        'AppService Tier': 'PaaSApp',
+        'Database Tier': 'PaaSDB'
+    }
+    const [PaasOption, setPaasOption] = useState("")
+
+    // PaaS Website Fields
+    const [PaasWebName, setPaasWebName] = useState("")
+    const [PaasWebRam, setPaasWebRam] = useState(0)
+    const [PaasWebCpu, setPaasWebCpu] = useState(0)
+    const [PaasWebStorage, setPaasWebStorage] = useState(0)
+    const [PaasWebCost, setPaasWebCost] = useState(0)
+
+    // PaaS AppService Fields
+    const [PaasAppName, setPaasAppName] = useState("")
+    const [PaasAppRam, setPaasAppRam] = useState(0)
+    const [PaasAppCpu, setPaasAppCpu] = useState(0)
+    const [PaasAppStorage, setPaasAppStorage] = useState(0)
+    const [PaasAppCost, setPaasAppCost] = useState(0)
+
+    // PaaS Database Fields
+    const [PaasDbType, setPaasDbType] = useState("")
+    const [PaasDbHardware, setPaasDbHardware] = useState("")
+    const [PaasDbStorage, setPaasDbStorage] = useState("")
+    const [PaasDbInstance, setPaasDbInstance] = useState("")
+    const [PaasDbCost, setPaasDbCost] = useState(0)
+
+    function clearFields() {
+        setPaasOption("")
+    }
+
 
     function setServerSizes(sizes) {
         //console.log(sizes)
@@ -345,8 +387,14 @@ function PricingContent() {
                             </Card>
                         </Grid>
                         <Grid item xs={12} md={6}>
+
                             <Card>
-                                <CardHeader
+                                <Grid style={{
+                                    display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                    alignItems: 'center', backgroundColor: '#EEEEEE'
+                                }}>
+                                    <CardHeader
+                                        style={{flexGrow: '5'}}
                                     title='PaaS'
                                     titleTypographyProps={{ align: 'center' }}
                                     subheaderTypographyProps={{
@@ -358,7 +406,16 @@ function PricingContent() {
                                                 ? theme.palette.grey[200]
                                                 : theme.palette.grey[700],
                                     }}
-                                />
+                                    />
+                                   
+                                    <Button title="Add PaaS Options" variant="contained"
+                                        style={{ marginRight: '10px' }}
+                                        onClick={() => setMode(!createMode)}
+                                        disabled={ createMode ? 'disabled' : ''}
+                                    ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+
+                                </Grid>
+
                                 <CardContent>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} md={4}>
@@ -458,6 +515,126 @@ function PricingContent() {
                                 </CardActions>
                             </Card>
                         </Grid>
+                        {
+                            // additional conditions can be applied here to check for admin access in future
+                            createMode && (
+                                <Card style={{
+
+                                    boxShadow: '0 0 0 9999px #000000b0',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    height: 'auto',
+                                    width: '51vw',
+                                    backgroundColor: 'white',
+                                    borderStyle: 'solid',
+                                    borderColor: '#FF8800',
+                                    borderWidth: '2px',
+                                    borderRadius: '10px',
+
+                                    paddingBottom: '3px',
+                                    position: 'absolute',
+                                    left: '24vw',
+                                    top: '15vh',
+                                    zIndex: '1'
+
+                                }}>
+                                    <CardHeader
+                                        title='Add PaaS Options'
+                                        titleTypographyProps={{ align: 'center' }}
+                                        subheaderTypographyProps={{
+                                            align: 'center',
+                                        }}
+                                        sx={{
+                                            backgroundColor: (theme) =>
+                                                theme.palette.mode === 'light'
+                                                    ? theme.palette.grey[200]
+                                                    : theme.palette.grey[700],
+                                        }}
+                                    />
+
+                                    <CardContent>
+                                        <Grid style={{
+                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                            alignItems: 'center'
+                                        }} container spacing={1} >
+                                            <Grid>
+                                                <Typography sx={{
+                                                    fontFamily: 'Segoe UI Light',
+                                                    verticalAlign: 'middle',
+                                                    textAlign: 'center',
+                                                    
+                                                    
+                                                }}>
+                                                    Select Category: </Typography>
+
+                                            </Grid>
+                                            <Grid item style={{flexGrow: '5'}}>
+                                                <FormControl fullWidth>
+                                                    <InputLabel id="demo-simple-select-label">Tier</InputLabel>
+                                                    <Select
+                                                        label="Tier"
+                                                        variant="outlined"
+                                                    >
+                                                        {
+                                                            Object.keys(PaasOptions).map(category => {
+                                                                return <MenuItem value={category} onClick={() => setPaasOption(PaasOptions[category])}>{category}</MenuItem>
+                                                            })
+                                                        }
+
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                           
+                                        </Grid>
+                                        <Grid container sx={{ mt: 4 }}>
+                                            <Grid item xs={12} md={4}>
+                                                <Typography variant="h4" align="center">
+                                                    ${(websitePrice).toLocaleString()}
+                                                </Typography>
+                                                <Typography variant="h6" align="center" color="text.secondary">
+                                                    Web Cost
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={12} md={4}>
+                                                <Typography variant="h4" align="center">
+                                                    ${(appservicePrice).toLocaleString()}
+                                                </Typography>
+                                                <Typography variant="h6" align="center" color="text.secondary">
+                                                    API Cost
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={12} md={4}>
+                                                <Typography variant="h4" align="center">
+                                                    ${(databasePrice).toLocaleString()}
+                                                </Typography>
+                                                <Typography variant="h6" align="center" color="text.secondary">
+                                                    DB Cost
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container sx={{ mt: 2 }}>
+                                            <Grid item xs={12} md={12}>
+                                                <Typography variant="h2" align="center">
+                                                    ${((websitePrice + appservicePrice + databasePrice)).toLocaleString()}
+                                                </Typography>
+                                                <Typography variant="h6" align="center" color="text.secondary">
+                                                    Total Cost
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid style={{ float: 'right' }}>
+                                            <Button variant="outlined">Close</Button>&nbsp;&nbsp;
+                                            <Button variant="contained">Add Option</Button>
+
+
+                                        </Grid>
+                                    </CardContent>
+                                    <CardActions>
+                                    </CardActions>
+                                </Card>
+                                
+                                )
+                        }
                     </Grid>
                 </Container>
             </ThemeProvider>
