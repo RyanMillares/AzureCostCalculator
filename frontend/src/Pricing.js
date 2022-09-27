@@ -129,12 +129,21 @@ function PricingContent() {
     function validToSubmit(paasOption) {
         switch (paasOption) {
             case "PaaSWeb":
-                return (PaasWebName.length > 0 && PaasWebCost > 0 && PaasWebRam > 0 && PaasWebStorage > 0 && PaasWebCpu > 0)
+                return (PaasWebName.length > 0 &&
+                    (!isNaN(PaasWebCost) && PaasWebCost > 0) &&
+                    (!isNaN(PaasWebRam) && PaasWebRam > 0) &&
+                    (!isNaN(PaasWebStorage) && PaasWebStorage > 0) &&
+                    (!isNaN(PaasWebCpu) && PaasWebCpu > 0))
 
             case "PaaSApp":
-                return (PaasAppName.length > 0 && PaasAppCost > 0 && PaasAppRam > 0 && PaasAppStorage > 0 && PaasAppCpu > 0)
+                return (PaasAppName.length > 0 &&
+                    (!isNaN(PaasAppCost) && PaasAppCost > 0) &&
+                    (!isNaN(PaasAppRam) && PaasAppRam > 0) &&
+                    (!isNaN(PaasAppStorage) && PaasAppStorage > 0) &&
+                    (!isNaN(PaasAppCpu) && PaasAppCpu > 0))
             case "PaaSDB":
-                return (PaasDbCost > 0 && PaasDbHardware.length > 0 && PaasDbInstance.length > 0 && PaasDbStorage.length > 0 && PaasDbType.length > 0)
+                return ((!isNaN(PaasDbCost) && PaasDbCost > 0) &&
+                    PaasDbHardware.length > 0 && PaasDbInstance.length > 0 && PaasDbStorage.length > 0 && PaasDbType.length > 0)
             default:
                 return false
         }
@@ -668,6 +677,7 @@ function PricingContent() {
                                                         }}>
                                                             Add AppService Tier </Typography>
                                                     </Grid><br />
+
                                                     <Grid style={{
                                                         display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
                                                         alignItems: 'center'
@@ -679,8 +689,64 @@ function PricingContent() {
 
 
                                                         }}>
-                                                            AppService Tier Fields </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="AppService Tier Inputs" variant="outlined" />
+                                                            AS Name </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="Name" onChange={(e) => setPaasAppName(e.target.value)} variant="outlined" />
+                                                    </Grid>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            AS CPU </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="CPU" onChange={(e) => setPaasAppCpu(e.target.value)} variant="outlined" />
+                                                    </Grid>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            AS RAM </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="RAM" onChange={(e) => setPaasAppRam(e.target.value)} variant="outlined" />
+                                                    </Grid>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            AS Storage </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasAppStorage(e.target.value)} variant="outlined" />
+                                                    </Grid>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Price </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
                                                     </Grid>
 
                                                 </>
@@ -730,11 +796,9 @@ function PricingContent() {
 
                                         <Grid container sx={{ mt: 2 }}>
                                             <Grid item xs={12} md={12}>
-                                                <Typography variant="h2" align="center">
-                                                    ${((websitePrice + appservicePrice + databasePrice)).toLocaleString()}
-                                                </Typography>
+                                               
                                                 <Typography variant="h6" align="center" color="text.secondary">
-                                                    Total Cost
+                                                    Bottom Text
                                                 </Typography>
                                             </Grid>
                                         </Grid>
