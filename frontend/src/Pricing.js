@@ -21,6 +21,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import IconButton from "@mui/material/IconButton";
+import TextField from '@mui/material/TextField';
+
 
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
@@ -71,7 +73,7 @@ function PricingContent() {
     const [serverSizes, setSizes] = useState({})
 
     //UI for PaaS
-    const [createMode, setMode] = useState(false)
+    const [createMode, setMode] = useState(0)
 
     const PaasOptions = {
         'Website Tier': 'PaaSWeb',
@@ -101,8 +103,41 @@ function PricingContent() {
     const [PaasDbInstance, setPaasDbInstance] = useState("")
     const [PaasDbCost, setPaasDbCost] = useState(0)
 
-    function clearFields() {
+    function clearOption() {
         setPaasOption("")
+        setMode(0)
+    }
+    function clearPaasFields() {
+        setPaasWebName("")
+        setPaasWebCost(0)
+        setPaasWebRam(0)
+        setPaasWebStorage(0)
+        setPaasWebCpu(0)
+
+        setPaasAppName("")
+        setPaasAppCost(0)
+        setPaasAppRam(0)
+        setPaasAppStorage(0)
+        setPaasAppCpu(0)
+
+        setPaasDbCost(0)
+        setPaasDbHardware("")
+        setPaasDbInstance("")
+        setPaasDbType("")
+        setPaasDbStorage("")
+    }
+    function validToSubmit(paasOption) {
+        switch (paasOption) {
+            case "PaaSWeb":
+                return (PaasWebName.length > 0 && PaasWebCost > 0 && PaasWebRam > 0 && PaasWebStorage > 0 && PaasWebCpu > 0)
+
+            case "PaaSApp":
+                return (PaasAppName.length > 0 && PaasAppCost > 0 && PaasAppRam > 0 && PaasAppStorage > 0 && PaasAppCpu > 0)
+            case "PaaSDB":
+                return (PaasDbCost > 0 && PaasDbHardware.length > 0 && PaasDbInstance.length > 0 && PaasDbStorage.length > 0 && PaasDbType.length > 0)
+            default:
+                return false
+        }
     }
 
 
@@ -389,32 +424,30 @@ function PricingContent() {
                         <Grid item xs={12} md={6}>
 
                             <Card>
-                                <Grid style={{
-                                    display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                    alignItems: 'center', backgroundColor: '#EEEEEE'
-                                }}>
+                                
                                     <CardHeader
-                                        style={{flexGrow: '5'}}
-                                    title='PaaS'
-                                    titleTypographyProps={{ align: 'center' }}
-                                    subheaderTypographyProps={{
-                                        align: 'center',
-                                    }}
-                                    sx={{
-                                        backgroundColor: (theme) =>
-                                            theme.palette.mode === 'light'
-                                                ? theme.palette.grey[200]
-                                                : theme.palette.grey[700],
-                                    }}
+                                        title='PaaS'
+                                        titleTypographyProps={{ align: 'center' }}
+                                        subheaderTypographyProps={{
+                                            align: 'center',
+                                        }}
+                                        sx={{
+                                            backgroundColor: (theme) =>
+                                                theme.palette.mode === 'light'
+                                                    ? theme.palette.grey[200]
+                                                    : theme.palette.grey[700],
+                                        }}
+                                        action={
+                                            <Button title="Add PaaS Options" variant="contained"
+                                                onClick={() => setMode(2)}
+                                                disabled={createMode ? 'disabled' : ''}
+                                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+                                        }
                                     />
                                    
-                                    <Button title="Add PaaS Options" variant="contained"
-                                        style={{ marginRight: '10px' }}
-                                        onClick={() => setMode(!createMode)}
-                                        disabled={ createMode ? 'disabled' : ''}
-                                    ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
 
-                                </Grid>
+
+                          
 
                                 <CardContent>
                                     <Grid container spacing={2}>
@@ -517,7 +550,7 @@ function PricingContent() {
                         </Grid>
                         {
                             // additional conditions can be applied here to check for admin access in future
-                            createMode && (
+                            createMode == 2 && (
                                 <Card style={{
 
                                     boxShadow: '0 0 0 9999px #000000b0',
@@ -586,32 +619,115 @@ function PricingContent() {
                                             </Grid>
                                            
                                         </Grid>
-                                        <Grid container sx={{ mt: 4 }}>
-                                            <Grid item xs={12} md={4}>
-                                                <Typography variant="h4" align="center">
-                                                    ${(websitePrice).toLocaleString()}
-                                                </Typography>
-                                                <Typography variant="h6" align="center" color="text.secondary">
-                                                    Web Cost
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} md={4}>
-                                                <Typography variant="h4" align="center">
-                                                    ${(appservicePrice).toLocaleString()}
-                                                </Typography>
-                                                <Typography variant="h6" align="center" color="text.secondary">
-                                                    API Cost
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} md={4}>
-                                                <Typography variant="h4" align="center">
-                                                    ${(databasePrice).toLocaleString()}
-                                                </Typography>
-                                                <Typography variant="h6" align="center" color="text.secondary">
-                                                    DB Cost
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
+                                        <br />
+                                        {
+                                            PaasOption == "PaaSWeb" && (
+                                                <>
+                                                    
+                                                    <Grid>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            fontWeight: 'bold',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Add Website Tier </Typography>
+                                                    </Grid><br/>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'}}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Website Tier Fields </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="Website Tier Inputs" variant="outlined" />
+                                                    </Grid>
+
+                                                    </>
+   
+                                                )
+                                        }
+                                        {
+                                            PaasOption == "PaaSApp" && (
+                                                <>
+
+                                                    <Grid>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            fontWeight: 'bold',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Add AppService Tier </Typography>
+                                                    </Grid><br />
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            AppService Tier Fields </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="AppService Tier Inputs" variant="outlined" />
+                                                    </Grid>
+
+                                                </>
+
+                                            )
+                                        }
+                                        {
+                                            PaasOption == "PaaSDB" && (
+                                                <>
+
+                                                    <Grid>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            fontWeight: 'bold',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Add Database Tier </Typography>
+                                                    </Grid><br />
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Database Tier Fields </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="Database Tier Inputs" variant="outlined" />
+                                                    </Grid>
+
+                                                </>
+
+                                            )
+                                        }
+
+
+
+
+
+
+
                                         <Grid container sx={{ mt: 2 }}>
                                             <Grid item xs={12} md={12}>
                                                 <Typography variant="h2" align="center">
@@ -623,8 +739,8 @@ function PricingContent() {
                                             </Grid>
                                         </Grid>
                                         <Grid style={{ float: 'right' }}>
-                                            <Button variant="outlined">Close</Button>&nbsp;&nbsp;
-                                            <Button variant="contained">Add Option</Button>
+                                            <Button variant="outlined" onClick={() => clearOption()}>Close</Button>&nbsp;&nbsp;
+                                            <Button variant="contained" disabled={validToSubmit(PaasOption) ? '' : 'disabled'}>Add Option</Button>
 
 
                                         </Grid>
