@@ -711,7 +711,7 @@ function PricingContent() {
                                                             Add Website Tier </Typography>
                                                     </Grid><br />
 
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
 
 
                                                         <Grid style={{
@@ -725,8 +725,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Web Name </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Name" onChange={(e) => setPaasWebName(e.target.value)} variant="outlined" />
+                                                                Name </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Name" onChange={(e) => setPaasWebName(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -739,8 +739,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Web CPU </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setPaasWebCpu(e.target.value)} variant="outlined" />
+                                                                CPU </Typography>&nbsp;
+                                                            <TextField style={{flexGrow: '1'}} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setPaasWebCpu(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -753,8 +753,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Web RAM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setPaasWebRam(e.target.value)} variant="outlined" />
+                                                                RAM </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setPaasWebRam(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -767,8 +767,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Web Storage </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setPaasWebStorage(e.target.value)} variant="outlined" />
+                                                                Storage </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setPaasWebStorage(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -782,7 +782,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Price </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasWebCost(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasWebCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
@@ -804,7 +804,7 @@ function PricingContent() {
                                                         }}>
                                                             Add AppService Tier </Typography>
                                                     </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
 
 
 
@@ -819,8 +819,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                AS Name </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Name" onChange={(e) => setPaasAppName(e.target.value)} variant="outlined" />
+                                                                Name </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Name" onChange={(e) => setPaasAppName(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -833,8 +833,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                AS CPU </Typography>&nbsp;
-                                                            <span><TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setPaasAppCpu(e.target.value)} variant="outlined" /></span>
+                                                                CPU </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setPaasAppCpu(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -847,8 +847,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                AS RAM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setPaasAppRam(e.target.value)} variant="outlined" />
+                                                                RAM </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setPaasAppRam(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -862,7 +862,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 AS Storage </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setPaasAppStorage(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setPaasAppStorage(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -876,7 +876,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Price </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
@@ -899,7 +899,7 @@ function PricingContent() {
                                                         }}>
                                                             Add Database Tier </Typography>
                                                     </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
 
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -913,7 +913,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Type </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Type" onChange={(e) => setPaasDbType(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Type" onChange={(e) => setPaasDbType(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -927,7 +927,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Hardware </Typography>&nbsp;
-                                                            <span><TextField id="outlined-basic" label="Hardware" onChange={(e) => setPaasDbHardware(e.target.value)} variant="outlined" /></span>
+                                                            <span><TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Hardware" onChange={(e) => setPaasDbHardware(e.target.value)} variant="outlined" /></span>
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -941,7 +941,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Storage </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasDbStorage(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage" onChange={(e) => setPaasDbStorage(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -955,7 +955,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Instance </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Instance" onChange={(e) => setPaasDbInstance(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Instance" onChange={(e) => setPaasDbInstance(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -969,7 +969,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Price </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasDbCost(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasDbCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
@@ -991,7 +991,7 @@ function PricingContent() {
                                                         }}>
                                                             Add Web Tier </Typography>
                                                     </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
 
 
 
@@ -1006,8 +1006,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Web VM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasWebVm(e.target.value)} variant="outlined" />
+                                                                VM </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasWebVm(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1020,8 +1020,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Web CPU </Typography>&nbsp;
-                                                            <span><TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasWebCpu(e.target.value)} variant="outlined" /></span>
+                                                                CPU </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasWebCpu(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1034,8 +1034,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Web RAM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasWebRam(e.target.value)} variant="outlined" />
+                                                                RAM </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasWebRam(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1049,7 +1049,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Web Storage </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasWebStorage(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasWebStorage(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1063,7 +1063,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Price </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasWebCost(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasWebCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
@@ -1085,7 +1085,7 @@ function PricingContent() {
                                                         }}>
                                                             Add API Tier </Typography>
                                                     </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
 
 
 
@@ -1100,8 +1100,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                API VM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasApiVm(e.target.value)} variant="outlined" />
+                                                                VM </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasApiVm(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1114,8 +1114,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                API CPU </Typography>&nbsp;
-                                                            <span><TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasApiCpu(e.target.value)} variant="outlined" /></span>
+                                                                CPU </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasApiCpu(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1128,8 +1128,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                API RAM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasApiRam(e.target.value)} variant="outlined" />
+                                                                RAM </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasApiRam(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1142,8 +1142,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                API Storage </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasApiStorage(e.target.value)} variant="outlined" />
+                                                                Storage </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasApiStorage(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1157,7 +1157,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Price </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasApiCost(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasApiCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
@@ -1179,7 +1179,7 @@ function PricingContent() {
                                                         }}>
                                                             Add Database Tier </Typography>
                                                     </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
 
 
 
@@ -1195,7 +1195,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Database VM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasDbVm(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasDbVm(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1208,8 +1208,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Database CPU </Typography>&nbsp;
-                                                            <span><TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasDbCpu(e.target.value)} variant="outlined" /></span>
+                                                                CPU </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasDbCpu(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1222,8 +1222,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Database RAM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasDbRam(e.target.value)} variant="outlined" />
+                                                                RAM </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasDbRam(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1236,8 +1236,8 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Db Storage </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasDbStorage(e.target.value)} variant="outlined" />
+                                                                Storage </Typography>&nbsp;
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasDbStorage(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -1251,7 +1251,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Price </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasDbCost(e.target.value)} variant="outlined" />
+                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasDbCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
