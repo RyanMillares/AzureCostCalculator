@@ -23,6 +23,8 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
+//import Avatar from '@mui/material/Avatar';
+import Logo from './AvanadeLogo.png';
 
 
 import FormControl from '@mui/material/FormControl';
@@ -308,6 +310,8 @@ function PricingContent() {
                         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                             Azure Cost Calculator
                         </Typography>
+                        <img src={Logo} />
+                        <IconButton ></IconButton>
                     </Toolbar>
                 </AppBar>
                 <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
