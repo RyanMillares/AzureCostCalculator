@@ -632,7 +632,6 @@ function PricingContent() {
                                         {
                                             PaasOption == "PaaSWeb" && (
                                                 <>
-                                                    
                                                     <Grid>
                                                         <Typography sx={{
                                                             fontFamily: 'Segoe UI Light',
@@ -643,10 +642,15 @@ function PricingContent() {
 
                                                         }}>
                                                             Add Website Tier </Typography>
-                                                    </Grid><br/>
+                                                    </Grid><br />
+
+                                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr'}}>
+
+                                               
                                                     <Grid style={{
                                                         display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'}}>
+                                                        alignItems: 'center'
+                                                    }}>
                                                         <Typography sx={{
                                                             fontFamily: 'Segoe UI Light',
                                                             verticalAlign: 'middle',
@@ -654,10 +658,67 @@ function PricingContent() {
 
 
                                                         }}>
-                                                            Website Tier Fields </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="Website Tier Inputs" variant="outlined" />
+                                                            Web Name </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="Name" onChange={(e) => setPaasWebName(e.target.value)} variant="outlined" />
+                                                    </Grid>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Web CPU </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="CPU" onChange={(e) => setPaasWebCpu(e.target.value)} variant="outlined" />
+                                                    </Grid>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Web RAM </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="RAM" onChange={(e) => setPaasWebRam(e.target.value)} variant="outlined" />
+                                                    </Grid>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Web Storage </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasWebStorage(e.target.value)} variant="outlined" />
+                                                    </Grid>
+                                                    <Grid style={{
+                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                        alignItems: 'center'
+                                                    }}>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Price </Typography>&nbsp;
+                                                        <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasWebCost(e.target.value)} variant="outlined" />
                                                     </Grid>
 
+                                                </div>
                                                     </>
    
                                                 )
@@ -665,7 +726,6 @@ function PricingContent() {
                                         {
                                             PaasOption == "PaaSApp" && (
                                                 <>
-
                                                     <Grid>
                                                         <Typography sx={{
                                                             fontFamily: 'Segoe UI Light',
@@ -677,6 +737,9 @@ function PricingContent() {
                                                         }}>
                                                             Add AppService Tier </Typography>
                                                     </Grid><br />
+                                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr' }}>
+
+                                                  
 
                                                     <Grid style={{
                                                         display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -749,7 +812,8 @@ function PricingContent() {
                                                         <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
                                                     </Grid>
 
-                                                </>
+                                                </div>
+                                                    </>
 
                                             )
                                         }
