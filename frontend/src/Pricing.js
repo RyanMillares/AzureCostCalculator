@@ -18,9 +18,7 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
 //import Avatar from '@mui/material/Avatar';
@@ -224,7 +222,7 @@ function PricingContent() {
 
     function setServerSizes(sizes) {
         //console.log(sizes)
-        const newSizes = new Object()
+        const newSizes = {}
 
         // create the object
         sizes.forEach(function (sizeObject) {
@@ -310,7 +308,7 @@ function PricingContent() {
                         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                             Azure Cost Calculator
                         </Typography>
-                        <img src={Logo} />
+                        <img src={Logo} alt="Avanade Logo"/>
                         <IconButton ></IconButton>
                     </Toolbar>
                 </AppBar>
