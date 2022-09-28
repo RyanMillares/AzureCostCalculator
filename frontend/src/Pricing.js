@@ -20,6 +20,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
 
@@ -82,7 +83,7 @@ function PricingContent() {
     }
     const IaasOptions = {
         'Web Tier': 'IaaSWeb',
-        'API Tier': 'IaaSApp',
+        'API Tier': 'IaaSApi',
         'Database Tier': 'IaaSDB'
     }
     const [selectedOption, setOption] = useState("")
@@ -108,12 +109,56 @@ function PricingContent() {
     const [PaasDbInstance, setPaasDbInstance] = useState("")
     const [PaasDbCost, setPaasDbCost] = useState(0)
 
-    function clearPaas() {
+    // IaaS Web Fields
+    const [IaasWebVm, setIaasWebVm] = useState("")
+    const [IaasWebRam, setIaasWebRam] = useState(0)
+    const [IaasWebCpu, setIaasWebCpu] = useState(0)
+    const [IaasWebStorage, setIaasWebStorage] = useState(0)
+    const [IaasWebCost, setIaasWebCost] = useState(0)
+
+    // IaaS API Fields
+    const [IaasApiVm, setIaasApiVm] = useState("")
+    const [IaasApiRam, setIaasApiRam] = useState(0)
+    const [IaasApiCpu, setIaasApiCpu] = useState(0)
+    const [IaasApiStorage, setIaasApiStorage] = useState(0)
+    const [IaasApiCost, setIaasApiCost] = useState(0)
+
+    // IaaS Database Fields
+    const [IaasDbVm, setIaasDbVm] = useState("")
+    const [IaasDbRam, setIaasDbRam] = useState(0)
+    const [IaasDbCpu, setIaasDbCpu] = useState(0)
+    const [IaasDbStorage, setIaasDbStorage] = useState(0)
+    const [IaasDbCost, setIaasDbCost] = useState(0)
+
+
+    function clearAll() {
         setOption("")
         setMode(0)
         clearPaasFields()
+        clearIaasFields()
     }
+
+
     function clearPaasFields() {
+        setIaasWebVm("")
+        setIaasWebCost(0)
+        setIaasWebRam(0)
+        setIaasWebStorage(0)
+        setIaasWebCpu(0)
+
+        setIaasApiVm("")
+        setIaasApiCost(0)
+        setIaasApiRam(0)
+        setIaasApiStorage(0)
+        setIaasApiCpu(0)
+
+        setIaasDbVm("")
+        setIaasDbCost(0)
+        setIaasDbRam(0)
+        setIaasDbStorage(0)
+        setIaasDbCpu(0)
+    }
+    function clearIaasFields() {
         setPaasWebName("")
         setPaasWebCost(0)
         setPaasWebRam(0)
@@ -132,8 +177,9 @@ function PricingContent() {
         setPaasDbType("")
         setPaasDbStorage("")
     }
-    function validToSubmit(paasOption) {
-        switch (paasOption) {
+    function validToSubmit(option) {
+        // return to this and validate even harder
+        switch (option) {
             case "PaaSWeb":
                 return (PaasWebName.length > 0 &&
                     (!isNaN(PaasWebCost) && PaasWebCost > 0) &&
@@ -150,6 +196,24 @@ function PricingContent() {
             case "PaaSDB":
                 return ((!isNaN(PaasDbCost) && PaasDbCost > 0) &&
                     PaasDbHardware.length > 0 && PaasDbInstance.length > 0 && PaasDbStorage.length > 0 && PaasDbType.length > 0)
+            case "IaaSWeb":
+                return (IaasWebVm.length > 0 &&
+                    (!isNaN(IaasWebCost) && IaasWebCost > 0) &&
+                    (!isNaN(IaasWebRam) && IaasWebRam > 0) &&
+                    (!isNaN(IaasWebStorage) && IaasWebStorage > 0) &&
+                    (!isNaN(IaasWebCpu) && IaasWebCpu > 0))
+            case "IaaSApi":
+                return (IaasApiVm.length > 0 &&
+                    (!isNaN(IaasApiCost) && IaasApiCost > 0) &&
+                    (!isNaN(IaasApiRam) && IaasApiRam > 0) &&
+                    (!isNaN(IaasApiStorage) && IaasApiStorage > 0) &&
+                    (!isNaN(IaasApiCpu) && IaasApiCpu > 0))
+            case "IaaSDB":
+                return (IaasDbVm.length > 0 &&
+                    (!isNaN(IaasDbCost) && IaasDbCost > 0) &&
+                    (!isNaN(IaasDbRam) && IaasDbRam > 0) &&
+                    (!isNaN(IaasDbStorage) && IaasDbStorage > 0) &&
+                    (!isNaN(IaasDbCpu) && IaasDbCpu > 0))
             default:
                 return false
         }
@@ -468,9 +532,7 @@ function PricingContent() {
                                                             return <MenuItem value={e.pwid} onClick={() => setWebsitePrice(e.cost)}>{e.name} {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
                                                         })
                                                     }
-                                                    {/* <MenuItem value="S1" onClick={() => setWebsitePrice(44)}>Standard - S1 1 Core, 1.75 GB RAM, 50 GB Storage, Price: 44</MenuItem>
-                            <MenuItem value="S2" onClick={() => setWebsitePrice(88)}>Standard - S2 2 Cores, 3.5 GB RAM, 50 GB Storage, Price: 88</MenuItem>
-                            <MenuItem value="S3" onClick={() => setWebsitePrice(175)}>Standard - S3 4 Cores, 7 GB RAM, 50 GB Storage, Price: 175</MenuItem> */}
+
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -504,10 +566,7 @@ function PricingContent() {
                                                             return <MenuItem value={e.pdid} onClick={() => setDatabasePrice(e.cost)}>{e.type}, {e.hardware}, {e.storage} {e.instance}, Price: {e.cost}</MenuItem>
                                                         })
                                                     }
-                                                    {/* <MenuItem value="RA-GRBS 2" onClick={() => setDatabasePrice(104)}>Single Database, vCore, RA-GRS 2 vCores, Price: 104</MenuItem>
-                            <MenuItem value="RA-GRBS 2.1" onClick={() => setDatabasePrice(204)}>Single Database, vCore, RA-GRS 2 vCores, Price: 204</MenuItem>
-                            <MenuItem value="RA-GRS 6" onClick={() => setDatabasePrice(304)}>Single Database, vCore, RA-GRS 6 vCores, Price: 304</MenuItem>
-                            <MenuItem value="RA-GRS 8" onClick={() => setDatabasePrice(404)}>Single Database, vCore, RA-GRS 8 vCores, Price: 404</MenuItem> */}
+
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -679,7 +738,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Web CPU </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="CPU" onChange={(e) => setPaasWebCpu(e.target.value)} variant="outlined" />
+                                                            <TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setPaasWebCpu(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -693,7 +752,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Web RAM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="RAM" onChange={(e) => setPaasWebRam(e.target.value)} variant="outlined" />
+                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setPaasWebRam(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -707,7 +766,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Web Storage </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasWebStorage(e.target.value)} variant="outlined" />
+                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setPaasWebStorage(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -721,7 +780,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Price </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasWebCost(e.target.value)} variant="outlined" />
+                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasWebCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
@@ -773,7 +832,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 AS CPU </Typography>&nbsp;
-                                                            <span><TextField id="outlined-basic" label="CPU" onChange={(e) => setPaasAppCpu(e.target.value)} variant="outlined" /></span>
+                                                            <span><TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setPaasAppCpu(e.target.value)} variant="outlined" /></span>
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -787,7 +846,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 AS RAM </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="RAM" onChange={(e) => setPaasAppRam(e.target.value)} variant="outlined" />
+                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setPaasAppRam(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -801,7 +860,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 AS Storage </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasAppStorage(e.target.value)} variant="outlined" />
+                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setPaasAppStorage(e.target.value)} variant="outlined" />
                                                         </Grid>
                                                         <Grid style={{
                                                             display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -815,7 +874,7 @@ function PricingContent() {
 
                                                             }}>
                                                                 Price </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
+                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
@@ -851,8 +910,64 @@ function PricingContent() {
 
 
                                                             }}>
-                                                                Database Tier Fields </Typography>&nbsp;
-                                                            <TextField id="outlined-basic" label="Database Tier Inputs" variant="outlined" />
+                                                                Type </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Type" onChange={(e) => setPaasDbType(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Hardware </Typography>&nbsp;
+                                                            <span><TextField id="outlined-basic" label="Hardware" onChange={(e) => setPaasDbHardware(e.target.value)} variant="outlined" /></span>
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Storage </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasDbStorage(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Instance </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Instance" onChange={(e) => setPaasDbInstance(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Price </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasDbCost(e.target.value)} variant="outlined" />
                                                         </Grid>
 
                                                     </div>
@@ -860,6 +975,289 @@ function PricingContent() {
 
                                             )
                                         }
+                                        {
+                                            selectedOption == "IaaSWeb" && (
+                                                <>
+                                                    <Grid>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            fontWeight: 'bold',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Add Web Tier </Typography>
+                                                    </Grid><br />
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+
+
+
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Web VM </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasWebVm(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Web CPU </Typography>&nbsp;
+                                                            <span><TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasWebCpu(e.target.value)} variant="outlined" /></span>
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Web RAM </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasWebRam(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Web Storage </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasWebStorage(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Price </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasWebCost(e.target.value)} variant="outlined" />
+                                                        </Grid>
+
+                                                    </div>
+                                                </>
+
+                                            )
+                                        }
+                                        {
+                                            selectedOption == "IaaSApi" && (
+                                                <>
+                                                    <Grid>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            fontWeight: 'bold',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Add API Tier </Typography>
+                                                    </Grid><br />
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+
+
+
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                API VM </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasApiVm(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                API CPU </Typography>&nbsp;
+                                                            <span><TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasApiCpu(e.target.value)} variant="outlined" /></span>
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                API RAM </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasApiRam(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                API Storage </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasApiStorage(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Price </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasApiCost(e.target.value)} variant="outlined" />
+                                                        </Grid>
+
+                                                    </div>
+                                                </>
+
+                                            )
+                                        }
+                                        {
+                                            selectedOption == "IaaSDB" && (
+                                                <>
+                                                    <Grid>
+                                                        <Typography sx={{
+                                                            fontFamily: 'Segoe UI Light',
+                                                            fontWeight: 'bold',
+                                                            verticalAlign: 'middle',
+                                                            textAlign: 'center',
+
+
+                                                        }}>
+                                                            Add Database Tier </Typography>
+                                                    </Grid><br />
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
+
+
+
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Database VM </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasDbVm(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Database CPU </Typography>&nbsp;
+                                                            <span><TextField id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasDbCpu(e.target.value)} variant="outlined" /></span>
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Database RAM </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasDbRam(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Db Storage </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasDbStorage(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
+
+
+                                                            }}>
+                                                                Price </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasDbCost(e.target.value)} variant="outlined" />
+                                                        </Grid>
+
+                                                    </div>
+                                                </>
+
+                                            )
+                                        }
+
 
 
                                         <Grid container sx={{ mt: 2 }}>
@@ -871,7 +1269,7 @@ function PricingContent() {
                                             </Grid>
                                         </Grid>
                                         <Grid style={{ float: 'right' }}>
-                                            <Button variant="outlined" onClick={() => clearPaas()}>Close</Button>&nbsp;&nbsp;
+                                            <Button variant="outlined" onClick={() => clearAll()}>Close</Button>&nbsp;&nbsp;
                                             <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'}>Add Option</Button>
 
 
