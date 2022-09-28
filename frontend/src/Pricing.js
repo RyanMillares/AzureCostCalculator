@@ -80,7 +80,12 @@ function PricingContent() {
         'AppService Tier': 'PaaSApp',
         'Database Tier': 'PaaSDB'
     }
-    const [PaasOption, setPaasOption] = useState("")
+    const IaasOptions = {
+        'Web Tier': 'IaaSWeb',
+        'API Tier': 'IaaSApp',
+        'Database Tier': 'IaaSDB'
+    }
+    const [selectedOption, setOption] = useState("")
 
     // PaaS Website Fields
     const [PaasWebName, setPaasWebName] = useState("")
@@ -103,9 +108,10 @@ function PricingContent() {
     const [PaasDbInstance, setPaasDbInstance] = useState("")
     const [PaasDbCost, setPaasDbCost] = useState(0)
 
-    function clearOption() {
-        setPaasOption("")
+    function clearPaas() {
+        setOption("")
         setMode(0)
+        clearPaasFields()
     }
     function clearPaasFields() {
         setPaasWebName("")
@@ -161,9 +167,9 @@ function PricingContent() {
                 newSizes[sizeObject.size] = []
             }
             // the size property exists already, push to existing property
-            
-                newSizes[sizeObject.size].push(sizeObject.servers)
-            
+
+            newSizes[sizeObject.size].push(sizeObject.servers)
+
         })
 
         // sort each property's array in ascending order
@@ -321,6 +327,12 @@ function PricingContent() {
                                                 ? theme.palette.grey[200]
                                                 : theme.palette.grey[700],
                                     }}
+                                    action={
+                                        <Button title="Add PaaS Options" variant="contained"
+                                            onClick={() => setMode(1)}
+                                            disabled={createMode ? 'disabled' : ''}
+                                        ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+                                    }
                                 />
                                 <CardContent>
                                     <Grid container spacing={2}>
@@ -336,13 +348,7 @@ function PricingContent() {
                                                             return <MenuItem value={e.vm} onClick={() => setWebPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
                                                         })
                                                     }
-                                                    {/* <MenuItem value="D1_v2" onClick={() => setWebPrice(15)}>D1_v2 CPU: 1, RAM: 3.5 , Storage: 50, Price: 15</MenuItem>
-                            <MenuItem value="D2_v3" onClick={() => setWebPrice(27)}>D2_v3 CPU: 2 , RAM: 8 , Storage: 50, Price: 27</MenuItem>
-                            <MenuItem value="D4s_v3" onClick={() => setWebPrice(54)}>D4s_v3 CPU: 4 , RAM: 16 , Storage: 32, Price: 54</MenuItem>
-                            <MenuItem value="D8s_v3" onClick={() => setWebPrice(107)}>D8s_v3 CPU: 8 , RAM: 32 , Storage: 64, Price: 107</MenuItem>
-                            <MenuItem value="D16s_v3" onClick={() => setWebPrice(215)}>D16s_v3 CPU: 16 , RAM: 64 , Storage: 128, Price: 215</MenuItem>
-                            <MenuItem value="D32s_v3" onClick={() => setWebPrice(431)}>D32s_v3 CPU: 32 , RAM: 128 , Storage: 256, Price: 431</MenuItem>
-                            <MenuItem value="D64s_v3" onClick={() => setWebPrice(861)}>D64s_v3 CPU: 64 , RAM: 256 , Storage: 512, Price: 861</MenuItem> */}
+
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -358,13 +364,7 @@ function PricingContent() {
                                                             return <MenuItem value={e.vm} onClick={() => setApiPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
                                                         })
                                                     }
-                                                    {/* <MenuItem value="F2s_v2" onClick={() => setApiPrice(23)}>F2s_v2 CPU: 2 , RAM: 4 , Storage: 16, Price: 23</MenuItem>
-                            <MenuItem value="F4s_v2" onClick={() => setApiPrice(45)}>F4s_v2 CPU: 4 , RAM: 8 , Storage: 32, Price: 45</MenuItem>
-                            <MenuItem value="F8s_v2" onClick={() => setApiPrice(91)}>F8s_v2 CPU: 8 , RAM: 16 , Storage: 64, Price: 91</MenuItem>
-                            <MenuItem value="F16s_v2" onClick={() => setApiPrice(181)}>F16s_v2 CPU: 16 , RAM: 32 , Storage: 128, Price: 181</MenuItem>
-                            <MenuItem value="F32s_v2" onClick={() => setApiPrice(362)}>F32s_v2 CPU: 32 , RAM: 64 , Storage: 256, Price: 362</MenuItem>
-                            <MenuItem value="F48s_v2" onClick={() => setApiPrice(534)}>F48s_v2 CPU: 48 , RAM: 96 , Storage: 384, Price: 534</MenuItem>
-                            <MenuItem value="F64s_v2" onClick={() => setApiPrice(724)}>F64s_v2 CPU: 64 , RAM: 128 , Storage: 512, Price: 724</MenuItem> */}
+
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -380,11 +380,7 @@ function PricingContent() {
                                                             return <MenuItem value={e.vm} onClick={() => setDbPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
                                                         })
                                                     }
-                                                    {/* <MenuItem value="E2s_v3" onClick={() => setDbPrice(37)}>E2s_v3 CPU: 2 , RAM: 16 , Storage: 32, Price: 37</MenuItem>
-                            <MenuItem value="E4s_v5" onClick={() => setDbPrice(79)}>E4s_v5 CPU: 4 , RAM: 32 , Storage: 150, Price: 79</MenuItem>
-                            <MenuItem value="E8s_v3" onClick={() => setDbPrice(146)}>E8s_v3 CPU: 8, RAM: 64 , Storage: 128, Price: 146</MenuItem>
-                            <MenuItem value="E16s_v3" onClick={() => setDbPrice(292)}>E16s_v3 CPU: 16, RAM: 128 , Storage: 256, Price: 292</MenuItem>
-                            <MenuItem value="E32s_v3" onClick={() => setDbPrice(584)}>E32_v3 CPU: 32 , RAM: 256 , Storage: 800, Price: 584</MenuItem> */}
+
                                                 </Select>
                                             </FormControl>
                                         </Grid>
@@ -433,30 +429,30 @@ function PricingContent() {
                         <Grid item xs={12} md={6}>
 
                             <Card>
-                                
-                                    <CardHeader
-                                        title='PaaS'
-                                        titleTypographyProps={{ align: 'center' }}
-                                        subheaderTypographyProps={{
-                                            align: 'center',
-                                        }}
-                                        sx={{
-                                            backgroundColor: (theme) =>
-                                                theme.palette.mode === 'light'
-                                                    ? theme.palette.grey[200]
-                                                    : theme.palette.grey[700],
-                                        }}
-                                        action={
-                                            <Button title="Add PaaS Options" variant="contained"
-                                                onClick={() => setMode(2)}
-                                                disabled={createMode ? 'disabled' : ''}
-                                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
-                                        }
-                                    />
-                                   
+
+                                <CardHeader
+                                    title='PaaS'
+                                    titleTypographyProps={{ align: 'center' }}
+                                    subheaderTypographyProps={{
+                                        align: 'center',
+                                    }}
+                                    sx={{
+                                        backgroundColor: (theme) =>
+                                            theme.palette.mode === 'light'
+                                                ? theme.palette.grey[200]
+                                                : theme.palette.grey[700],
+                                    }}
+                                    action={
+                                        <Button title="Add PaaS Options" variant="contained"
+                                            onClick={() => setMode(2)}
+                                            disabled={createMode ? 'disabled' : ''}
+                                        ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+                                    }
+                                />
 
 
-                          
+
+
 
                                 <CardContent>
                                     <Grid container spacing={2}>
@@ -559,7 +555,7 @@ function PricingContent() {
                         </Grid>
                         {
                             // additional conditions can be applied here to check for admin access in future
-                            createMode == 2 && (
+                            createMode != 0 && (
                                 <Card style={{
 
                                     boxShadow: '0 0 0 9999px #000000b0',
@@ -581,7 +577,7 @@ function PricingContent() {
 
                                 }}>
                                     <CardHeader
-                                        title='Add PaaS Options'
+                                        title={createMode == 1 ? 'Create Shift-and-Lift Options' : 'Create PaaS Options' }
                                         titleTypographyProps={{ align: 'center' }}
                                         subheaderTypographyProps={{
                                             align: 'center',
@@ -604,13 +600,13 @@ function PricingContent() {
                                                     fontFamily: 'Segoe UI Light',
                                                     verticalAlign: 'middle',
                                                     textAlign: 'center',
-                                                    
-                                                    
+
+
                                                 }}>
-                                                    Select Category: </Typography>
+                                                    Select a Tier: </Typography>
 
                                             </Grid>
-                                            <Grid item style={{flexGrow: '5'}}>
+                                            <Grid item style={{ flexGrow: '5' }}>
                                                 <FormControl fullWidth>
                                                     <InputLabel id="demo-simple-select-label">Tier</InputLabel>
                                                     <Select
@@ -618,19 +614,29 @@ function PricingContent() {
                                                         variant="outlined"
                                                     >
                                                         {
-                                                            Object.keys(PaasOptions).map(category => {
-                                                                return <MenuItem value={category} onClick={() => setPaasOption(PaasOptions[category])}>{category}</MenuItem>
-                                                            })
+                                                            createMode == 1 && (
+                                                                Object.keys(IaasOptions).map(category => {
+                                                                    return <MenuItem value={category} onClick={() => setOption(IaasOptions[category])}>{category}</MenuItem>
+                                                                })
+                                                            ) 
+
+                                                        }
+                                                        {
+                                                            createMode == 2 && (
+                                                                Object.keys(PaasOptions).map(category => {
+                                                                    return <MenuItem value={category} onClick={() => setOption(PaasOptions[category])}>{category}</MenuItem>
+                                                                })
+                                                            ) 
                                                         }
 
                                                     </Select>
                                                 </FormControl>
                                             </Grid>
-                                           
+
                                         </Grid>
                                         <br />
                                         {
-                                            PaasOption == "PaaSWeb" && (
+                                            selectedOption == "PaaSWeb" && (
                                                 <>
                                                     <Grid>
                                                         <Typography sx={{
@@ -644,87 +650,87 @@ function PricingContent() {
                                                             Add Website Tier </Typography>
                                                     </Grid><br />
 
-                                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr'}}>
-
-                                               
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
 
 
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            Web Name </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="Name" onChange={(e) => setPaasWebName(e.target.value)} variant="outlined" />
-                                                    </Grid>
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
 
+                                                            }}>
+                                                                Web Name </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Name" onChange={(e) => setPaasWebName(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            Web CPU </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="CPU" onChange={(e) => setPaasWebCpu(e.target.value)} variant="outlined" />
-                                                    </Grid>
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
 
+                                                            }}>
+                                                                Web CPU </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="CPU" onChange={(e) => setPaasWebCpu(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            Web RAM </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="RAM" onChange={(e) => setPaasWebRam(e.target.value)} variant="outlined" />
-                                                    </Grid>
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
 
+                                                            }}>
+                                                                Web RAM </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="RAM" onChange={(e) => setPaasWebRam(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            Web Storage </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasWebStorage(e.target.value)} variant="outlined" />
-                                                    </Grid>
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
 
+                                                            }}>
+                                                                Web Storage </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasWebStorage(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            Price </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasWebCost(e.target.value)} variant="outlined" />
-                                                    </Grid>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
-                                                </div>
-                                                    </>
-   
-                                                )
+
+                                                            }}>
+                                                                Price </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasWebCost(e.target.value)} variant="outlined" />
+                                                        </Grid>
+
+                                                    </div>
+                                                </>
+
+                                            )
                                         }
                                         {
-                                            PaasOption == "PaaSApp" && (
+                                            selectedOption == "PaaSApp" && (
                                                 <>
                                                     <Grid>
                                                         <Typography sx={{
@@ -737,88 +743,88 @@ function PricingContent() {
                                                         }}>
                                                             Add AppService Tier </Typography>
                                                     </Grid><br />
-                                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr' }}>
-
-                                                  
-
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
 
 
+
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            AS Name </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="Name" onChange={(e) => setPaasAppName(e.target.value)} variant="outlined" />
-                                                    </Grid>
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
 
+                                                            }}>
+                                                                AS Name </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Name" onChange={(e) => setPaasAppName(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            AS CPU </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="CPU" onChange={(e) => setPaasAppCpu(e.target.value)} variant="outlined" />
-                                                    </Grid>
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
 
+                                                            }}>
+                                                                AS CPU </Typography>&nbsp;
+                                                            <span><TextField id="outlined-basic" label="CPU" onChange={(e) => setPaasAppCpu(e.target.value)} variant="outlined" /></span>
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            AS RAM </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="RAM" onChange={(e) => setPaasAppRam(e.target.value)} variant="outlined" />
-                                                    </Grid>
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
 
+                                                            }}>
+                                                                AS RAM </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="RAM" onChange={(e) => setPaasAppRam(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            AS Storage </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasAppStorage(e.target.value)} variant="outlined" />
-                                                    </Grid>
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
 
+                                                            }}>
+                                                                AS Storage </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Storage" onChange={(e) => setPaasAppStorage(e.target.value)} variant="outlined" />
+                                                        </Grid>
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            Price </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
-                                                    </Grid>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
-                                                </div>
-                                                    </>
+
+                                                            }}>
+                                                                Price </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Cost" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
+                                                        </Grid>
+
+                                                    </div>
+                                                </>
 
                                             )
                                         }
                                         {
-                                            PaasOption == "PaaSDB" && (
+                                            selectedOption == "PaaSDB" && (
                                                 <>
 
                                                     <Grid>
@@ -832,43 +838,41 @@ function PricingContent() {
                                                         }}>
                                                             Add Database Tier </Typography>
                                                     </Grid><br />
-                                                    <Grid style={{
-                                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
+                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em' }}>
 
-
+                                                        <Grid style={{
+                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                            alignItems: 'center'
                                                         }}>
-                                                            Database Tier Fields </Typography>&nbsp;
-                                                        <TextField id="outlined-basic" label="Database Tier Inputs" variant="outlined" />
-                                                    </Grid>
+                                                            <Typography sx={{
+                                                                fontFamily: 'Segoe UI Light',
+                                                                verticalAlign: 'middle',
+                                                                textAlign: 'center',
 
+
+                                                            }}>
+                                                                Database Tier Fields </Typography>&nbsp;
+                                                            <TextField id="outlined-basic" label="Database Tier Inputs" variant="outlined" />
+                                                        </Grid>
+
+                                                    </div>
                                                 </>
 
                                             )
                                         }
 
 
-
-
-
-
-
                                         <Grid container sx={{ mt: 2 }}>
                                             <Grid item xs={12} md={12}>
-                                               
+
                                                 <Typography variant="h6" align="center" color="text.secondary">
                                                     Bottom Text
                                                 </Typography>
                                             </Grid>
                                         </Grid>
                                         <Grid style={{ float: 'right' }}>
-                                            <Button variant="outlined" onClick={() => clearOption()}>Close</Button>&nbsp;&nbsp;
-                                            <Button variant="contained" disabled={validToSubmit(PaasOption) ? '' : 'disabled'}>Add Option</Button>
+                                            <Button variant="outlined" onClick={() => clearPaas()}>Close</Button>&nbsp;&nbsp;
+                                            <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'}>Add Option</Button>
 
 
                                         </Grid>
@@ -876,11 +880,12 @@ function PricingContent() {
                                     <CardActions>
                                     </CardActions>
                                 </Card>
-                                
-                                )
+
+                            )
                         }
                     </Grid>
                 </Container>
+                
             </ThemeProvider>
         </React.Fragment>
     );
