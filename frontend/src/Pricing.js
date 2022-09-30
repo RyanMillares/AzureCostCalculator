@@ -24,7 +24,8 @@ import TextField from '@mui/material/TextField';
 //import Avatar from '@mui/material/Avatar';
 import Logo from './AvanadeLogo.png';
 
-import { getToggle, setNewToggle } from './ToggleContext'
+import { getToggle, setToggle } from './ToggleContext'
+import TestComponent from './components/TestComponent'
 
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
@@ -1390,9 +1391,12 @@ function PricingContent() {
                         }
                         <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
 
-                        <Button variant="outlined" onClick={() => setNewToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
+                        <Button variant="outlined" onClick={() => setToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
 
-                        <Button variant="outlined" onClick={() => console.log(getToggle())}>Get Value</Button>&nbsp;&nbsp;
+                        <TestComponent />
+
+                        
+
 
 
                     </Grid>

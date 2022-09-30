@@ -1,0 +1,50 @@
+import AddFields from './AddFields'
+
+export default function AddWindow() {
+
+    const [data, setData] = useState({})
+    const [option, setOption] = useState("")
+
+    function addData() {
+        
+    
+    }
+    
+
+
+	return (
+		 <>
+        {
+            getToggle() != 0 && (
+                <div style = {{zIndex = 1, boxShadow= hugeShadow}}>
+                    //st
+                    <Header>{Dependent on PaaS or IaaS}</Header>
+                    <Select>
+                        Object.keys(listOfTiers).map((e) => {
+                            return <MenuItems onClick={() => setOption(listOfTiers[e])}> {e} </MenuItem>
+                        })
+                    </Select>
+
+
+                    <AddFields 
+                        selectedOption = {option}
+
+                    
+                    
+                    />
+
+                    <Button onClick={()=>setToggle(0) }>Close</Button>
+                    <Button onClick={()=>addData()}></Button>
+                </div>
+                )
+        }
+        
+    </>
+	
+	)
+
+
+
+
+}
+

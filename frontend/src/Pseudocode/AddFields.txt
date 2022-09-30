@@ -1,0 +1,48 @@
+
+
+export default function AddFields({option}) {
+	function ReturnTierFields() {
+		switch(option) {
+			case "PaasWeb":
+				return ["Name", "Cpu", "Ram", "Storage", "price"]
+			break;
+			.. continue for each of 6 options 
+
+			..
+			default:
+			break;
+
+		}
+
+	}
+
+	
+
+	function validates() {
+		switch(option){
+			case "PaasWeb":
+				//validate this
+			break;
+			.. and so forth
+			default:
+			break;
+		}
+	}
+
+	return (
+	
+		<>
+			<p>{ReturnTierFields[0]}</p>
+			<TextField>
+
+			</TextField>
+
+		</>
+	
+	
+	)
+
+
+
+
+}
