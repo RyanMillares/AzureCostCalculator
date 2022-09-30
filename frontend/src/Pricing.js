@@ -24,6 +24,7 @@ import TextField from '@mui/material/TextField';
 //import Avatar from '@mui/material/Avatar';
 import Logo from './AvanadeLogo.png';
 
+import { getToggle, setNewToggle } from './ToggleContext'
 
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
@@ -129,6 +130,8 @@ function PricingContent() {
     const [IaasDbCpu, setIaasDbCpu] = useState(0)
     const [IaasDbStorage, setIaasDbStorage] = useState(0)
     const [IaasDbCost, setIaasDbCost] = useState(0)
+
+    const [testVal, setVal] = useState(0)
 
 
     function clearAll() {
@@ -243,6 +246,108 @@ function PricingContent() {
         console.log(newSizes.length)
         setSizes(newSizes)
 
+    }
+
+    // this implementation is not connected to the database; all submitted data is lost upon a refresh
+    function submitForm() {
+        submitData(selectedOption)
+        clearAll()
+    }
+
+    function createUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function submitData(option) {
+        switch (option) {
+            // all vars with numbers will be changed to have better names
+            case "PaaSWeb":
+                const newTier = {}
+                newTier.pwid = createUUID()
+                newTier.name = PaasWebName
+                newTier.cpu = parseInt(PaasWebCpu,10)
+                newTier.ram = parseInt(PaasWebRam,10)
+                newTier.storage = parseInt(PaasWebStorage,10)
+                newTier.cost = parseInt(PaasWebCost, 10)
+                
+                console.log(newTier)
+                const tempArray = paasWeb
+                tempArray.push(newTier)
+                setPaasWeb(tempArray)
+                break;
+
+            case "PaaSApp":
+                const newTier1 = {}
+                newTier1.paid = createUUID()
+                newTier1.name = PaasAppName
+                newTier1.cpu = parseInt(PaasAppCpu, 10)
+                newTier1.ram = parseInt(PaasAppRam, 10)
+                newTier1.storage = parseInt(PaasAppStorage, 10)
+                newTier1.cost = parseInt(PaasAppCost, 10)
+
+                const tempArray1 = paasApp
+                tempArray1.push(newTier1)
+                setPaasApp(tempArray1)
+                break;
+            case "PaaSDB":
+                const newTier2 = {}
+                newTier2.pdid = createUUID()
+                newTier2.type = PaasDbType
+                newTier2.hardware = PaasDbHardware
+                newTier2.instance = PaasDbInstance
+                newTier2.storage = PaasDbStorage
+                newTier2.cost = parseInt(PaasDbCost, 10)
+
+                const tempArray2 = paasDb
+                tempArray2.push(newTier2)
+                setPaasDb(tempArray2)
+                break;
+            case "IaaSWeb":
+                const newTier3 = {}
+                newTier3.iwid = createUUID()
+                newTier3.vm = IaasWebVm
+                newTier3.cpu = parseInt(IaasWebCpu, 10)
+                newTier3.ram = parseInt(IaasWebRam, 10)
+                newTier3.storage = parseInt(IaasWebStorage, 10)
+                newTier3.cost = parseInt(IaasWebCost, 10)
+
+                const tempArray3 = iaasWeb
+                tempArray3.push(newTier3)
+                setIaasWeb(tempArray3)
+                
+                break;
+            case "IaaSApi":
+                const newTier4 = {}
+                newTier4.iaid = createUUID()
+                newTier4.vm = IaasApiVm
+                newTier4.cpu = parseInt(IaasApiCpu, 10)
+                newTier4.ram = parseInt(IaasApiRam, 10)
+                newTier4.storage = parseInt(IaasApiStorage, 10)
+                newTier4.cost = parseInt(IaasApiCost, 10)
+
+                const tempArray4 = iaasApi
+                tempArray4.push(newTier4)
+                setIaasApi(tempArray4)
+                break;
+            case "IaaSDB":
+                const newTier5 = {}
+                newTier5.idid = createUUID()
+                newTier5.vm = IaasDbVm
+                newTier5.cpu = parseInt(IaasDbCpu, 10)
+                newTier5.ram = parseInt(IaasDbRam, 10)
+                newTier5.storage = parseInt(IaasDbStorage, 10)
+                newTier5.cost = parseInt(IaasDbCost, 10)
+
+                const tempArray5 = iaasDb
+                tempArray5.push(newTier5)
+                setIaasDb(tempArray5)
+                break;
+            default:
+                break;
+        }
     }
 
     const numServers = {
@@ -396,7 +501,7 @@ function PricingContent() {
                                     action={
                                         <Button title="Add PaaS Options" variant="contained"
                                             onClick={() => setMode(1)}
-                                            disabled={createMode ? 'disabled' : ''}
+                                            disabled={createMode != 0}
                                         ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
                                     }
                                 />
@@ -511,7 +616,7 @@ function PricingContent() {
                                     action={
                                         <Button title="Add PaaS Options" variant="contained"
                                             onClick={() => setMode(2)}
-                                            disabled={createMode ? 'disabled' : ''}
+                                            disabled={createMode != 0} 
                                         ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
                                     }
                                 />
@@ -531,7 +636,7 @@ function PricingContent() {
                                                 >
                                                     {
                                                         paasWeb.map(e => {
-                                                            return <MenuItem value={e.pwid} onClick={() => setWebsitePrice(e.cost)}>{e.name} {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
+                                                            return <MenuItem value={e.pwid} onClick={() => setWebsitePrice(e.cost)}>{e.name}, {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
                                                         })
                                                     }
 
@@ -1272,7 +1377,7 @@ function PricingContent() {
                                         </Grid>
                                         <Grid style={{ float: 'right' }}>
                                             <Button variant="outlined" onClick={() => clearAll()}>Close</Button>&nbsp;&nbsp;
-                                            <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'}>Add Option</Button>
+                                            <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'} onClick={() => submitForm()}>Add Option</Button>
 
 
                                         </Grid>
@@ -1283,6 +1388,13 @@ function PricingContent() {
 
                             )
                         }
+                        <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
+
+                        <Button variant="outlined" onClick={() => setNewToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
+
+                        <Button variant="outlined" onClick={() => console.log(getToggle())}>Get Value</Button>&nbsp;&nbsp;
+
+
                     </Grid>
                 </Container>
                 
