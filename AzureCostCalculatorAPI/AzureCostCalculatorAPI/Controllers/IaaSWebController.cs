@@ -34,5 +34,30 @@ namespace AzureCostCalculatorAPI.Controllers
             var plan = await conn.QuerySingleAsync<IaaSWebPlan>("select * from IaaS_Web where iwid = @id", new { id });
             return plan;
         }
+        [HttpPost]
+        public async Task<IActionResult> Post(IaaSWebPlan plan)
+        {
+            /**
+            PaaSWebPlan plan = new PaaSWebPlan();
+            plan.PWID = Guid.NewGuid();
+            plan.Name = name;
+            plan.CPU = cpu;
+            plan.RAM = ram;
+            plan.Storage = storage;
+            plan.Cost = cost;
+            **/
+            String query = "INSERT INTO IaaS_Web (iwid, vm,cpu,ram,storage,cost) VALUES (default, @vm, @cpu, @ram, @storage, @cost)";
+
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+            using (var conn = new SqlConnection(myConnectorString))
+            {
+                await conn.OpenAsync();
+                var affectedRows = await conn.QueryAsync<IaaSWebPlan>(query, plan);
+
+            }
+
+            return Ok();
+
+        }
     }
 }

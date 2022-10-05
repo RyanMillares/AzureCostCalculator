@@ -27,4 +27,21 @@ public class IaaSAPIController : ControllerBase
     {
         return await repo.GetIaaSAPIPlans();
     }
+    [HttpPost]
+    public async Task<IActionResult> Post(IaaSAPIPlan plan)
+    {
+
+        String query = "INSERT INTO IaaS_API (iaid, vm,cpu,ram,storage,cost) VALUES (default, @vm, @cpu, @ram, @storage, @cost)";
+
+        var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+        using (var conn = new SqlConnection(myConnectorString))
+        {
+            await conn.OpenAsync();
+            var affectedRows = await conn.QueryAsync<IaaSAPIPlan>(query, plan);
+
+        }
+
+        return Ok();
+
+    }
 }

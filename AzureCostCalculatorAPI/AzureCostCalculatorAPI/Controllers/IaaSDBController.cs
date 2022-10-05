@@ -21,5 +21,22 @@ namespace AzureCostCalculatorAPI.Controllers
             var IaaSDBData = await conn.QueryAsync<IaaSDBPlan>("select * from IaaS_DB");
             return IaaSDBData.ToList();
         }
+        [HttpPost]
+        public async Task<IActionResult> Post(IaaSDBPlan plan)
+        {
+
+            String query = "INSERT INTO IaaS_DB (idid, vm,cpu,ram,storage,cost) VALUES (default, @vm, @cpu, @ram, @storage, @cost)";
+
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+            using (var conn = new SqlConnection(myConnectorString))
+            {
+                await conn.OpenAsync();
+                var affectedRows = await conn.QueryAsync<IaaSDBPlan>(query, plan);
+
+            }
+
+            return Ok();
+
+        }
     }
 }

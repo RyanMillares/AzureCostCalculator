@@ -1,8 +1,6 @@
 ﻿using AzureCostCalculatorAPI.Contract;
-using Microsoft.EntityFrameworkCore;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client.Extensions.Msal;
 using System.Data;
 using System.Data.SqlClient;
 using static System.Data.IDbConnection;
