@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using static System.Data.IDbConnection;
 
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AzureCostCalculatorAPI.Controllers
@@ -36,40 +37,33 @@ namespace AzureCostCalculatorAPI.Controllers
             var plan = await conn.QuerySingleAsync<PaaSWebPlan>("select * from PaaS_Web where pwid = @id", new { id });
             return plan;
         }
-        [HttpPost("paasweb/Post")]
-        public async Task<PaaSWebPlan> Post(String pwid, String name, int cpu, int ram, int storage, int cost)
+        [HttpPost]
+        //public async Task<IActionResult> Post(Guid pwid, String name, int cpu, int ram, int storage, int cost)
+
+        public async Task<IActionResult> Post(PaaSWebPlan plan)
         {
+            /**
+            PaaSWebPlan plan = new PaaSWebPlan();
+            plan.PWID = Guid.NewGuid();
+            plan.Name = name;
+            plan.CPU = cpu;
+            plan.RAM = ram;
+            plan.Storage = storage;
+            plan.Cost = cost;
+            **/
+            String query = "INSERT INTO PaaS_Web (pwid, name,cpu,ram,storage,cost) VALUES (default, @name, @cpu, @ram, @storage, @cost)";
+
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-            using IDbConnection conn = new SqlConnection(myConnectorString);
+            using (var conn = new SqlConnection(myConnectorString))
+            {
+                await conn.OpenAsync();
+                var affectedRows = await conn.QueryAsync<PaaSWebPlan>(query, plan);
 
-            String sql = $"INSERT INTO PaaSWeb (pwid,name,cpu,ram,storage,cost) VALUES ({pwid},{name}, {cpu}, {ram}, {storage}, {cost})";
-   
-            
-            //return plan;
+            }
+ 
+            return Ok();
 
-            
-            String query = "INSERT INTO PaaSWeb (pwid, name,cpu,ram,storage,cost) VALUES (@pwid, @name, @cpu, @ram, @storage, @cost)";
 
-            SqlCommand command = new SqlCommand(query);
-            //command.Connection = conn;
-            command.Parameters.AddWithValue("@pwid", pwid);
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@cpu", cpu);
-            command.Parameters.AddWithValue("@ram", ram);
-            command.Parameters.AddWithValue("@storage", storage);
-            command.Parameters.AddWithValue("@cost", cost);
-
-            conn.Open();
-            var result = command.ExecuteNonQuery();
-
-            if (result < 0)
-                Console.WriteLine("Error inserting data!");
-
-                //return result;
-            
-            //Console.WriteLine(sql);
-            var plan = await conn.QuerySingleAsync<PaaSWebPlan>(sql);
-            return plan;
 
 
         }

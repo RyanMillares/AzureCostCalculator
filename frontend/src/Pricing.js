@@ -263,22 +263,52 @@ function PricingContent() {
     }
 
     function submitData(option) {
+        const apiServerNameObj = JSON.stringify(globalnames);
+
+        const name = JSON.parse(apiServerNameObj);
+        const apiServerName = name.serverName;
         switch (option) {
             // all vars with numbers will be changed to have better names
             case "PaaSWeb":
-                const newTier = {}
-                newTier.pwid = createUUID()
-                newTier.name = PaasWebName
-                newTier.cpu = parseInt(PaasWebCpu,10)
-                newTier.ram = parseInt(PaasWebRam,10)
-                newTier.storage = parseInt(PaasWebStorage,10)
-                newTier.cost = parseInt(PaasWebCost, 10)
-                
+                const newTier = {
+                    pwid: createUUID(),
+                    name: PaasWebName,
+                    cpu: parseInt(PaasWebCpu, 10),
+                    ram: parseInt(PaasWebRam, 10),
+                    storage: parseInt(PaasWebStorage, 10),
+                    cost: parseInt(PaasWebCost, 10)
+                }
+
+                // temporary method
+                /**
                 console.log(newTier)
                 const tempArray = paasWeb
                 tempArray.push(newTier)
                 setPaasWeb(tempArray)
+                **/
+
+                //permanent method
+                const paasWebUrl = "https://" + apiServerName + ":7056/api/PaaSWeb";
+
+                let res = axios.post(paasWebUrl, newTier
+                    
+                    ,{
+                        headers: {
+                            "Content-Type": "application/json",
+                            //"Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Authorization, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Access-Control-Allow-Credentials"
+
+                            //"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+                            //"Access-Control-Allow-Origin": "localhost",
+                            //"Content-Type": "application/json",
+                            //"Access-Control-Allow-Credentials": true,
+                        }
+                    }
+                        
+                )
+                console.log(res);
+                console.log(res.data)
                 break;
+
 
             case "PaaSApp":
                 const newTier1 = {}

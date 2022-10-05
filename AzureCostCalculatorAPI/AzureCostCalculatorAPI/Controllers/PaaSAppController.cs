@@ -22,5 +22,34 @@ namespace AzureCostCalculatorAPI.Controllers
             var PaaSAPIData = await conn.QueryAsync<PaaSAppPlan>("select * from PaaS_AS");
             return PaaSAPIData.ToList();
         }
+        [HttpPost]
+        public async Task<IActionResult> Post(PaaSAppPlan plan)
+        {
+            /**
+            PaaSWebPlan plan = new PaaSWebPlan();
+            plan.PWID = Guid.NewGuid();
+            plan.Name = name;
+            plan.CPU = cpu;
+            plan.RAM = ram;
+            plan.Storage = storage;
+            plan.Cost = cost;
+            **/
+            String query = "INSERT INTO PaaS_AS (paid, name,cpu,ram,storage,cost) VALUES (default, @name, @cpu, @ram, @storage, @cost)";
+
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+            using (var conn = new SqlConnection(myConnectorString))
+            {
+                await conn.OpenAsync();
+                var affectedRows = await conn.QueryAsync<PaaSWebPlan>(query, plan);
+
+            }
+
+            return Ok();
+
+
+
+
+        }
     }
+
 }
