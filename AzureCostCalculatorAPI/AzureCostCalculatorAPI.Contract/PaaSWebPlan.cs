@@ -8,7 +8,7 @@ namespace AzureCostCalculatorAPI.Contract
 {
     public class PaaSWebPlan
     {
-        public Guid PWID { get; set; }
+        public Guid? PWID { get; set; }
         public string? Name { get; set; }
         public int? CPU { get; set; }
         public int? RAM { get; set; }

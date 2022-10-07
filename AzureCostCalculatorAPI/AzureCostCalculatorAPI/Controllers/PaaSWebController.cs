@@ -38,17 +38,27 @@ namespace AzureCostCalculatorAPI.Controllers
         [HttpPost]
         //public async Task<IActionResult> Post(Guid pwid, String name, int cpu, int ram, int storage, int cost)
 
-        public async Task<IActionResult> Post(PaaSWebPlan plan)
+        public async Task<IActionResult> Post(string name, int cpu, int ram, int storage, int cost)
         {
             /**
+            string[] inputs = rawInput.Split(',');
+
             PaaSWebPlan plan = new PaaSWebPlan();
-            plan.PWID = Guid.NewGuid();
+            plan.PWID = null;
+            plan.Name = inputs[0];
+            plan.CPU = Int16.Parse(inputs[1]);
+            plan.RAM = Int16.Parse(inputs[2]);
+            plan.Storage = Int16.Parse(inputs[3]);
+            plan.Cost = Int16.Parse(inputs[4]);
+            
+            **/
+            PaaSWebPlan plan = new PaaSWebPlan();
+            plan.PWID = null;
             plan.Name = name;
             plan.CPU = cpu;
             plan.RAM = ram;
             plan.Storage = storage;
             plan.Cost = cost;
-            **/
             String query = "INSERT INTO PaaS_Web (pwid, name,cpu,ram,storage,cost) VALUES (default, @name, @cpu, @ram, @storage, @cost)";
 
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");

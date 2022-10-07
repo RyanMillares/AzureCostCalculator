@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import useForceUpdate from 'use-force-update';
+
 import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -133,8 +135,7 @@ function PricingContent() {
     const [IaasDbCost, setIaasDbCost] = useState(0)
 
     const [testVal, setVal] = useState(0)
-    let checkVal = 0
-
+    const [permVal, setPerm] = useState(0)
 
     function clearAll() {
         setOption("")
@@ -256,12 +257,17 @@ function PricingContent() {
         clearAll()
     }
 
+
+ 
+
+    
     function createUUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     }
+    
 
     function submitData(option) {
         const apiServerNameObj = JSON.stringify(globalnames);
@@ -272,74 +278,13 @@ function PricingContent() {
         switch (option) {
             // all vars with numbers will be changed to have better names
             case "PaaSWeb":
-                const newTier = {
-                    pwid: createUUID(),
-                    name: PaasWebName,
-                    cpu: parseInt(PaasWebCpu, 10),
-                    ram: parseInt(PaasWebRam, 10),
-                    storage: parseInt(PaasWebStorage, 10),
-                    cost: parseInt(PaasWebCost, 10)
-                }
+               
+                var newTierString = "name="+PaasWebName + "&cpu="
+                    + PaasWebCpu + "&ram=" + PaasWebRam + "&storage=" + PaasWebStorage + "&cost=" + PaasWebCost
+        
+                let newres = axios.post(postUrl + "?" + newTierString)
 
-                // temporary method
-                /**
-                console.log(newTier)
-                const tempArray = paasWeb
-                tempArray.push(newTier)
-                setPaasWeb(tempArray)
-                **/
-
-                //permanent method
-
-                const paasWebUrl = "https://" + apiServerName + ":7056/api/PaaSWeb";
-                console.log(newTier)
-
-
-                /**
-                  // FETCH METHOD
-
-  
-                const requestOptions = {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: JSON.stringify(newTier)
-                }
-                fetch(paasWebUrl, requestOptions).then(response => response.json())
-                **/
-
-                // AXIOS METHOD
-                /**
-                const client = axios.create({
-                    baseURL: paasWebUrl,
-                    Headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
-                    }
-                });
-                **/
-                let res = axios.post(paasWebUrl, newTier
-                    
-                    ,{
-                        headers: {
-                            //"content-type": "text/plain;charset=utf-8"//,
-                            //"Access-Control-Allow-Headers": "*",
-
-                            //"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT, DELETE",
-
-
-                            //"Access-Control-Allow-Origin": "ORIGIN",
-                            //"Content-Type": "application/json",
-                            //"Access-Control-Allow-Credentials": true,
-                        }
-                    }
-                    
-                       
-                ).then((response) => console.log(response.data))
-              
-                
                 break;
-
 
             case "PaaSApp":
                 const newTier1 = {
@@ -418,7 +363,13 @@ function PricingContent() {
         'XL': [30, 33, 36]
     }
   
+    function TestToggle(toggleVal) {
 
+        setToggle(toggleVal)
+        setPerm(toggleVal)
+        //useForceUpdate()
+        console.log("testval: " + toggleVal)
+    }
     useEffect(() => {
 
         //tbd, to replace 'localhost' in the url
@@ -456,7 +407,7 @@ function PricingContent() {
             setPaasWeb(values[5].data.sort((a, b) => a.cost - b.cost));
             setServerSizes(values[6].data);
         })
-    }, [])
+    }, [getToggle()])
 
     return (
         <React.Fragment>
@@ -1448,9 +1399,9 @@ function PricingContent() {
 
                             )
                         }
-                        <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
+                        <TextField style={{ flexGrow: '1',marginLeft:'10px' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
 
-                        <Button variant="outlined" onClick={() => setToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
+                        <Button variant="outlined" onClick={() => TestToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
                         {
                             getToggle() == 4 && (
                                 <TestComponent />
