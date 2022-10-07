@@ -268,6 +268,7 @@ function PricingContent() {
 
         const name = JSON.parse(apiServerNameObj);
         const apiServerName = name.serverName;
+        const postUrl = "https://" + apiServerName + ":7056/api/" + option;
         switch (option) {
             // all vars with numbers will be changed to have better names
             case "PaaSWeb":
@@ -307,7 +308,7 @@ function PricingContent() {
                 }
                 fetch(paasWebUrl, requestOptions).then(response => response.json())
                 **/
-                
+
                 // AXIOS METHOD
                 /**
                 const client = axios.create({
@@ -341,70 +342,67 @@ function PricingContent() {
 
 
             case "PaaSApp":
-                const newTier1 = {}
-                newTier1.paid = createUUID()
-                newTier1.name = PaasAppName
-                newTier1.cpu = parseInt(PaasAppCpu, 10)
-                newTier1.ram = parseInt(PaasAppRam, 10)
-                newTier1.storage = parseInt(PaasAppStorage, 10)
-                newTier1.cost = parseInt(PaasAppCost, 10)
-
-                const tempArray1 = paasApp
-                tempArray1.push(newTier1)
-                setPaasApp(tempArray1)
+                const newTier1 = {
+                    paid: createUUID(),
+                    name: PaasAppName,
+                    cpu: parseInt(PaasAppCpu, 10),
+                    ram: parseInt(PaasAppRam, 10),
+                    storage: parseInt(PaasAppStorage, 10),
+                    cost: parseInt(PaasAppCost, 10)
+                }
+                    /** 
+                    const tempArray1 = paasApp
+                    tempArray1.push(newTier1)
+                    setPaasApp(tempArray1)
+                    **/
+                let paasAppRes = axios.post(postUrl,newTier1)
                 break;
             case "PaaSDB":
-                const newTier2 = {}
-                newTier2.pdid = createUUID()
-                newTier2.type = PaasDbType
-                newTier2.hardware = PaasDbHardware
-                newTier2.instance = PaasDbInstance
-                newTier2.storage = PaasDbStorage
-                newTier2.cost = parseInt(PaasDbCost, 10)
-
-                const tempArray2 = paasDb
-                tempArray2.push(newTier2)
-                setPaasDb(tempArray2)
+                const newTier2 = {
+                    pdid: createUUID(),
+                    type: PaasDbType,
+                    hardware: PaasDbHardware,
+                    instance: PaasDbInstance,
+                    storage: PaasDbStorage,
+                    cost: parseInt(PaasDbCost, 10)
+                }
+                let paasDbRes = axios.post(postUrl, newTier2)
                 break;
             case "IaaSWeb":
-                const newTier3 = {}
-                newTier3.iwid = createUUID()
-                newTier3.vm = IaasWebVm
-                newTier3.cpu = parseInt(IaasWebCpu, 10)
-                newTier3.ram = parseInt(IaasWebRam, 10)
-                newTier3.storage = parseInt(IaasWebStorage, 10)
-                newTier3.cost = parseInt(IaasWebCost, 10)
+                const newTier3 = {
+                    iwid: createUUID(),
+                    vm: IaasWebVm,
+                    cpu: parseInt(IaasWebCpu, 10),
+                    ram: parseInt(IaasWebRam, 10),
+                    storage: parseInt(IaasWebStorage, 10),
+                    cost: parseInt(IaasWebCost, 10)
+                }
 
-                const tempArray3 = iaasWeb
-                tempArray3.push(newTier3)
-                setIaasWeb(tempArray3)
-                
+                let iaasWebRes = axios.post(postUrl, newTier3)
                 break;
             case "IaaSApi":
-                const newTier4 = {}
-                newTier4.iaid = createUUID()
-                newTier4.vm = IaasApiVm
-                newTier4.cpu = parseInt(IaasApiCpu, 10)
-                newTier4.ram = parseInt(IaasApiRam, 10)
-                newTier4.storage = parseInt(IaasApiStorage, 10)
-                newTier4.cost = parseInt(IaasApiCost, 10)
+                const newTier4 = {
+                    iaid: createUUID(),
+                    vm: IaasApiVm,
+                    cpu: parseInt(IaasApiCpu, 10),
+                    ram: parseInt(IaasApiRam, 10),
+                    storage: parseInt(IaasApiStorage, 10),
+                    cost: parseInt(IaasApiCost, 10)
+                }
 
-                const tempArray4 = iaasApi
-                tempArray4.push(newTier4)
-                setIaasApi(tempArray4)
+                let iaasApiRes = axios.post(postUrl, newTier4)
                 break;
             case "IaaSDB":
-                const newTier5 = {}
-                newTier5.idid = createUUID()
-                newTier5.vm = IaasDbVm
-                newTier5.cpu = parseInt(IaasDbCpu, 10)
-                newTier5.ram = parseInt(IaasDbRam, 10)
-                newTier5.storage = parseInt(IaasDbStorage, 10)
-                newTier5.cost = parseInt(IaasDbCost, 10)
+                const newTier5 = {
+                    idid: createUUID(),
+                    vm: IaasDbVm,
+                    cpu: parseInt(IaasDbCpu, 10),
+                    ram: parseInt(IaasDbRam, 10),
+                    storage: parseInt(IaasDbStorage, 10),
+                    cost: parseInt(IaasDbCost, 10)
+                }
 
-                const tempArray5 = iaasDb
-                tempArray5.push(newTier5)
-                setIaasDb(tempArray5)
+                let iaasDbRes = axios.post(postUrl, newTier5)
                 break;
             default:
                 break;
