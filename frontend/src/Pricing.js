@@ -140,6 +140,7 @@ function PricingContent() {
     function clearAll() {
         setOption("")
         setMode(0)
+        TestToggle(0)
         clearPaasFields()
         clearIaasFields()
     }
@@ -510,9 +511,9 @@ function PricingContent() {
                                                 : theme.palette.grey[700],
                                     }}
                                     action={
-                                        <Button title="Add PaaS Options" variant="contained"
-                                            onClick={() => setMode(1)}
-                                            disabled={createMode != 0}
+                                        <Button title="Add Shift-and-Lift Options" variant="contained"
+                                            onClick={() => TestToggle(1)}
+                                            disabled={getToggle() != 0}
                                         ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
                                     }
                                 />
@@ -626,8 +627,8 @@ function PricingContent() {
                                     }}
                                     action={
                                         <Button title="Add PaaS Options" variant="contained"
-                                            onClick={() => setMode(2)}
-                                            disabled={createMode != 0} 
+                                            onClick={() => TestToggle(2)}
+                                            disabled={getToggle() != 0} 
                                         ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
                                     }
                                 />
@@ -732,7 +733,7 @@ function PricingContent() {
                         </Grid>
                         {
                             // additional conditions can be applied here to check for admin access in future
-                            createMode != 0 && (
+                            getToggle() != 0 && (
                                 <Card style={{
 
                                     boxShadow: '0 0 0 9999px #000000b0',
@@ -754,7 +755,7 @@ function PricingContent() {
 
                                 }}>
                                     <CardHeader
-                                        title={createMode == 1 ? 'Create Shift-and-Lift Options' : 'Create PaaS Options' }
+                                        title={getToggle() == 1 ? 'Create Shift-and-Lift Options' : 'Create PaaS Options' }
                                         titleTypographyProps={{ align: 'center' }}
                                         subheaderTypographyProps={{
                                             align: 'center',
@@ -791,7 +792,7 @@ function PricingContent() {
                                                         variant="outlined"
                                                     >
                                                         {
-                                                            createMode == 1 && (
+                                                            getToggle() == 1 && (
                                                                 Object.keys(IaasOptions).map(category => {
                                                                     return <MenuItem value={category} onClick={() => setOption(IaasOptions[category])}>{category}</MenuItem>
                                                                 })
@@ -799,7 +800,7 @@ function PricingContent() {
 
                                                         }
                                                         {
-                                                            createMode == 2 && (
+                                                            getToggle() == 2 && (
                                                                 Object.keys(PaasOptions).map(category => {
                                                                     return <MenuItem value={category} onClick={() => setOption(PaasOptions[category])}>{category}</MenuItem>
                                                                 })
