@@ -733,7 +733,7 @@ function PricingContent() {
                         </Grid>
                         {
                             // additional conditions can be applied here to check for admin access in future
-                            getToggle() != 0 && (
+                            getToggle() > 0 && (
                                 <Card style={{
 
                                     boxShadow: '0 0 0 9999px #000000b0',
