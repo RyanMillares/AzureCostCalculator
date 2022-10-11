@@ -53,7 +53,7 @@ namespace AzureCostCalculatorAPI.Controllers
             
             **/
             PaaSWebPlan plan = new PaaSWebPlan();
-            plan.PWID = null;
+            plan.PWID = Guid.NewGuid();
             plan.Name = name;
             plan.CPU = cpu;
             plan.RAM = ram;

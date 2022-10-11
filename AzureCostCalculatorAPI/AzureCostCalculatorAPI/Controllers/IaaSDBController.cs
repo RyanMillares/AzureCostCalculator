@@ -1,8 +1,10 @@
 ﻿using AzureCostCalculatorAPI.Contract;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.Intrinsics.Arm;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,9 +24,15 @@ namespace AzureCostCalculatorAPI.Controllers
             return IaaSDBData.ToList();
         }
         [HttpPost]
-        public async Task<IActionResult> Post(IaaSDBPlan plan)
+        public async Task<IActionResult> Post(string vm, int cpu, int ram, int storage, int cost)
         {
-
+            IaaSDBPlan plan = new IaaSDBPlan();
+            plan.IDID = Guid.NewGuid();
+            plan.VM = vm;
+            plan.CPU = cpu;
+            plan.RAM = ram;
+            plan.Storage = storage;
+            plan.Cost = cost;
             String query = "INSERT INTO IaaS_DB (idid, vm,cpu,ram,storage,cost) VALUES (default, @vm, @cpu, @ram, @storage, @cost)";
 
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");

@@ -34,6 +34,7 @@ import FormControl from '@mui/material/FormControl';
 
 //import globalnames from './globalvars.json' assert {type: 'json' };
 import globalnames from './globalvars.json'
+import AddPopup from './components/AddPopup'
 
 const theme = createTheme({
     typography: {
@@ -288,67 +289,37 @@ function PricingContent() {
                 break;
 
             case "PaaSApp":
-                const newTier1 = {
-                    paid: createUUID(),
-                    name: PaasAppName,
-                    cpu: parseInt(PaasAppCpu, 10),
-                    ram: parseInt(PaasAppRam, 10),
-                    storage: parseInt(PaasAppStorage, 10),
-                    cost: parseInt(PaasAppCost, 10)
-                }
-                    /** 
-                    const tempArray1 = paasApp
-                    tempArray1.push(newTier1)
-                    setPaasApp(tempArray1)
-                    **/
-                let paasAppRes = axios.post(postUrl,newTier1)
+                var newTierString1 = "name=" + PaasAppName + "&cpu="
+                    + PaasAppCpu + "&ram=" + PaasAppRam + "&storage=" + PaasAppStorage + "&cost=" + PaasAppCost
+                let res = axios.post(postUrl + "?" + newTierString1)
+
+
                 break;
             case "PaaSDB":
-                const newTier2 = {
-                    pdid: createUUID(),
-                    type: PaasDbType,
-                    hardware: PaasDbHardware,
-                    instance: PaasDbInstance,
-                    storage: PaasDbStorage,
-                    cost: parseInt(PaasDbCost, 10)
-                }
-                let paasDbRes = axios.post(postUrl, newTier2)
-                break;
-            case "IaaSWeb":
-                const newTier3 = {
-                    iwid: createUUID(),
-                    vm: IaasWebVm,
-                    cpu: parseInt(IaasWebCpu, 10),
-                    ram: parseInt(IaasWebRam, 10),
-                    storage: parseInt(IaasWebStorage, 10),
-                    cost: parseInt(IaasWebCost, 10)
-                }
 
-                let iaasWebRes = axios.post(postUrl, newTier3)
+                var newTierString2 = "type=" + PaasDbType + "&hardware="
+                    + PaasDbHardware + "&instance=" + PaasDbInstance + "&storage=" + PaasDbStorage + "&cost=" + PaasDbCost
+                axios.post(postUrl + "?" + newTierString2)
+                break;
+
+            case "IaaSWeb":
+
+                var newTierString3 = "vm=" + IaasWebVm + "&cpu="
+                    + IaasWebCpu + "&ram=" + IaasWebRam + "&storage=" + IaasWebStorage + "&cost=" + IaasWebCost
+
+                axios.post(postUrl + "?" + newTierString3)
                 break;
             case "IaaSApi":
-                const newTier4 = {
-                    iaid: createUUID(),
-                    vm: IaasApiVm,
-                    cpu: parseInt(IaasApiCpu, 10),
-                    ram: parseInt(IaasApiRam, 10),
-                    storage: parseInt(IaasApiStorage, 10),
-                    cost: parseInt(IaasApiCost, 10)
-                }
+                var newTierString4 = "vm=" + IaasApiVm + "&cpu="
+                    + IaasApiCpu + "&ram=" + IaasApiRam + "&storage=" + IaasApiStorage + "&cost=" + IaasApiCost
 
-                let iaasApiRes = axios.post(postUrl, newTier4)
+                axios.post(postUrl + "?" + newTierString4)
                 break;
             case "IaaSDB":
-                const newTier5 = {
-                    idid: createUUID(),
-                    vm: IaasDbVm,
-                    cpu: parseInt(IaasDbCpu, 10),
-                    ram: parseInt(IaasDbRam, 10),
-                    storage: parseInt(IaasDbStorage, 10),
-                    cost: parseInt(IaasDbCost, 10)
-                }
+                var newTierString5 = "vm=" + IaasDbVm + "&cpu="
+                    + IaasDbCpu + "&ram=" + IaasDbRam + "&storage=" + IaasDbStorage + "&cost=" + IaasDbCost
 
-                let iaasDbRes = axios.post(postUrl, newTier5)
+                axios.post(postUrl + "?" + newTierString5)
                 break;
             default:
                 break;
@@ -513,7 +484,7 @@ function PricingContent() {
                                     action={
                                         <Button title="Add Shift-and-Lift Options" variant="contained"
                                             onClick={() => TestToggle(1)}
-                                            disabled={getToggle() != 0}
+                                            //disabled={getToggle() != 0}
                                         ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
                                     }
                                 />
@@ -628,7 +599,7 @@ function PricingContent() {
                                     action={
                                         <Button title="Add PaaS Options" variant="contained"
                                             onClick={() => TestToggle(2)}
-                                            disabled={getToggle() != 0} 
+                                            //disabled={getToggle() != 0} 
                                         ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
                                     }
                                 />
@@ -733,672 +704,18 @@ function PricingContent() {
                         </Grid>
                         {
                             // additional conditions can be applied here to check for admin access in future
+                            // change to something perm false when testing component
+                            
+                        }
+
+                        {
                             getToggle() > 0 && (
-                                <Card style={{
+                                <AddPopup
+                                    createMode={getToggle()}
+    
+                                />
+                                )
 
-                                    boxShadow: '0 0 0 9999px #000000b0',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    height: 'auto',
-                                    width: '51vw',
-                                    backgroundColor: 'white',
-                                    borderStyle: 'solid',
-                                    borderColor: '#FF8800',
-                                    borderWidth: '2px',
-                                    borderRadius: '10px',
-
-                                    paddingBottom: '3px',
-                                    position: 'absolute',
-                                    left: '24vw',
-                                    top: '15vh',
-                                    zIndex: '1'
-
-                                }}>
-                                    <CardHeader
-                                        title={getToggle() == 1 ? 'Create Shift-and-Lift Options' : 'Create PaaS Options' }
-                                        titleTypographyProps={{ align: 'center' }}
-                                        subheaderTypographyProps={{
-                                            align: 'center',
-                                        }}
-                                        sx={{
-                                            backgroundColor: (theme) =>
-                                                theme.palette.mode === 'light'
-                                                    ? theme.palette.grey[200]
-                                                    : theme.palette.grey[700],
-                                        }}
-                                    />
-
-                                    <CardContent>
-                                        <Grid style={{
-                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                            alignItems: 'center'
-                                        }} container spacing={1} >
-                                            <Grid>
-                                                <Typography sx={{
-                                                    fontFamily: 'Segoe UI Light',
-                                                    verticalAlign: 'middle',
-                                                    textAlign: 'center',
-
-
-                                                }}>
-                                                    Select a Tier: </Typography>
-
-                                            </Grid>
-                                            <Grid item style={{ flexGrow: '5' }}>
-                                                <FormControl fullWidth>
-                                                    <InputLabel id="demo-simple-select-label">Tier</InputLabel>
-                                                    <Select
-                                                        label="Tier"
-                                                        variant="outlined"
-                                                    >
-                                                        {
-                                                            getToggle() == 1 && (
-                                                                Object.keys(IaasOptions).map(category => {
-                                                                    return <MenuItem value={category} onClick={() => setOption(IaasOptions[category])}>{category}</MenuItem>
-                                                                })
-                                                            ) 
-
-                                                        }
-                                                        {
-                                                            getToggle() == 2 && (
-                                                                Object.keys(PaasOptions).map(category => {
-                                                                    return <MenuItem value={category} onClick={() => setOption(PaasOptions[category])}>{category}</MenuItem>
-                                                                })
-                                                            ) 
-                                                        }
-
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
-
-                                        </Grid>
-                                        <br />
-                                        {
-                                            selectedOption == "PaaSWeb" && (
-                                                <>
-                                                    <Grid>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            fontWeight: 'bold',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
-
-
-                                                        }}>
-                                                            Add Website Tier </Typography>
-                                                    </Grid><br />
-
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
-
-
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Name </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Name" onChange={(e) => setPaasWebName(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                CPU </Typography>&nbsp;
-                                                            <TextField style={{flexGrow: '1'}} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setPaasWebCpu(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                RAM </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setPaasWebRam(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Storage </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setPaasWebStorage(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Price </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasWebCost(e.target.value)} variant="outlined" />
-                                                        </Grid>
-
-                                                    </div>
-                                                </>
-
-                                            )
-                                        }
-                                        {
-                                            selectedOption == "PaaSApp" && (
-                                                <>
-                                                    <Grid>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            fontWeight: 'bold',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
-
-
-                                                        }}>
-                                                            Add AppService Tier </Typography>
-                                                    </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
-
-
-
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Name </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Name" onChange={(e) => setPaasAppName(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                CPU </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setPaasAppCpu(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                RAM </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setPaasAppRam(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                AS Storage </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setPaasAppStorage(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Price </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasAppCost(e.target.value)} variant="outlined" />
-                                                        </Grid>
-
-                                                    </div>
-                                                </>
-
-                                            )
-                                        }
-                                        {
-                                            selectedOption == "PaaSDB" && (
-                                                <>
-
-                                                    <Grid>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            fontWeight: 'bold',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
-
-
-                                                        }}>
-                                                            Add Database Tier </Typography>
-                                                    </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
-
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Type </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Type" onChange={(e) => setPaasDbType(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Hardware </Typography>&nbsp;
-                                                            <span><TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Hardware" onChange={(e) => setPaasDbHardware(e.target.value)} variant="outlined" /></span>
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Storage </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage" onChange={(e) => setPaasDbStorage(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Instance </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Instance" onChange={(e) => setPaasDbInstance(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Price </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setPaasDbCost(e.target.value)} variant="outlined" />
-                                                        </Grid>
-
-                                                    </div>
-                                                </>
-
-                                            )
-                                        }
-                                        {
-                                            selectedOption == "IaaSWeb" && (
-                                                <>
-                                                    <Grid>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            fontWeight: 'bold',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
-
-
-                                                        }}>
-                                                            Add Web Tier </Typography>
-                                                    </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
-
-
-
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                VM </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasWebVm(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                CPU </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasWebCpu(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                RAM </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasWebRam(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Web Storage </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasWebStorage(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Price </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasWebCost(e.target.value)} variant="outlined" />
-                                                        </Grid>
-
-                                                    </div>
-                                                </>
-
-                                            )
-                                        }
-                                        {
-                                            selectedOption == "IaaSApi" && (
-                                                <>
-                                                    <Grid>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            fontWeight: 'bold',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
-
-
-                                                        }}>
-                                                            Add API Tier </Typography>
-                                                    </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
-
-
-
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                VM </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasApiVm(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                CPU </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasApiCpu(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                RAM </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasApiRam(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Storage </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasApiStorage(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Price </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasApiCost(e.target.value)} variant="outlined" />
-                                                        </Grid>
-
-                                                    </div>
-                                                </>
-
-                                            )
-                                        }
-                                        {
-                                            selectedOption == "IaaSDB" && (
-                                                <>
-                                                    <Grid>
-                                                        <Typography sx={{
-                                                            fontFamily: 'Segoe UI Light',
-                                                            fontWeight: 'bold',
-                                                            verticalAlign: 'middle',
-                                                            textAlign: 'center',
-
-
-                                                        }}>
-                                                            Add Database Tier </Typography>
-                                                    </Grid><br />
-                                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
-
-
-
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Database VM </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Virtual Machine" onChange={(e) => setIaasDbVm(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                CPU </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="CPU (Cores)" onChange={(e) => setIaasDbCpu(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                RAM </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="RAM (GB)" onChange={(e) => setIaasDbRam(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Storage </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Storage (GB)" onChange={(e) => setIaasDbStorage(e.target.value)} variant="outlined" />
-                                                        </Grid>
-                                                        <Grid style={{
-                                                            display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                                            alignItems: 'center'
-                                                        }}>
-                                                            <Typography sx={{
-                                                                fontFamily: 'Segoe UI Light',
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-
-
-                                                            }}>
-                                                                Price </Typography>&nbsp;
-                                                            <TextField style={{ flexGrow: '1' }} id="outlined-basic" label="Cost ($)" onChange={(e) => setIaasDbCost(e.target.value)} variant="outlined" />
-                                                        </Grid>
-
-                                                    </div>
-                                                </>
-
-                                            )
-                                        }
-
-
-
-                                        <Grid container sx={{ mt: 2 }}>
-                                            <Grid item xs={12} md={12}>
-
-                                                <Typography variant="h6" align="center" color="text.secondary">
-                                                    Bottom Text
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid style={{ float: 'right' }}>
-                                            <Button variant="outlined" onClick={() => clearAll()}>Close</Button>&nbsp;&nbsp;
-                                            <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'} onClick={() => submitForm()}>Add Option</Button>
-
-
-                                        </Grid>
-                                    </CardContent>
-                                    <CardActions>
-                                    </CardActions>
-                                </Card>
-
-                            )
                         }
                         <TextField style={{ flexGrow: '1',marginLeft:'10px' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
 

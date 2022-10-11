@@ -35,7 +35,7 @@ namespace AzureCostCalculatorAPI.Controllers
             return plan;
         }
         [HttpPost]
-        public async Task<IActionResult> Post(IaaSWebPlan plan)
+        public async Task<IActionResult> Post(string vm, int cpu, int ram, int storage, int cost)
         {
             /**
             PaaSWebPlan plan = new PaaSWebPlan();
@@ -46,6 +46,14 @@ namespace AzureCostCalculatorAPI.Controllers
             plan.Storage = storage;
             plan.Cost = cost;
             **/
+
+            IaaSWebPlan plan = new IaaSWebPlan();
+            plan.IWID = Guid.NewGuid();
+            plan.VM = vm;
+            plan.CPU = cpu;
+            plan.RAM = ram;
+            plan.Storage = storage;
+            plan.Cost = cost;
             String query = "INSERT INTO IaaS_Web (iwid, vm,cpu,ram,storage,cost) VALUES (default, @vm, @cpu, @ram, @storage, @cost)";
 
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");

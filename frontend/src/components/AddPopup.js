@@ -1,4 +1,6 @@
 import * as React from 'react';
+import axios from 'axios';
+
 import { useState, useEffect } from 'react';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -20,6 +22,8 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+
 
 import { getToggle, setToggle } from '../ToggleContext'
 import globalnames from '../globalvars.json'
@@ -89,9 +93,20 @@ export default function AddPopup({ createMode }) {
         'PaaSDB': ['Type', 'Hardware', 'Storage', 'Instance', 'Cost']
     }
     const [selectedOption, setOption] = useState("")
-    const [selectedCategory, setCategory] = useState("")
 
+    // returns Category from Option
+    function getCategory(option) {
+        let valueToReturn = ""
+        Object.keys(AllOptions).forEach(function (field, index) {
 
+            if (AllOptions[field] == option) {
+                valueToReturn = field
+            }
+        })
+        return valueToReturn
+        //return "Nothing"
+    }
+    
     // validates whether inputs meet validations for each option
     function validToSubmit(option) {
         // return to this and validate even harder
@@ -145,7 +160,7 @@ export default function AddPopup({ createMode }) {
 
         const name = JSON.parse(apiServerNameObj);
         const apiServerName = name.serverName;
-        const postUrl = "https://" + apiServerName + ":7056/api/" + option;
+        let postUrl = "https://" + apiServerName + ":7056/api/" + option;
 
         postUrl += "?"
 
@@ -167,14 +182,17 @@ export default function AddPopup({ createMode }) {
     function submitForm() {
 
         submitData(selectedOption)
+        alert("New Tier Added!")
+
         clearAll()
+        window.location.reload()
     }
 
     // sets both the current option and category
     function setOptionAndTitle(category) {
         ClearFields()
         setOption(AllOptions[category])
-        setCategory(category)
+        console.log(getCategory())
 
     }
     // resets all input fields
@@ -191,201 +209,210 @@ export default function AddPopup({ createMode }) {
         setOption("")
         TestToggle(0)
     }
-
+    function changeOption(category) {
+        setOption(AllOptions[category])
+        ClearFields()
+    }
     useEffect(() => {
 
 
-    }, [getToggle()])
+    }, [permVal])
 
     return (
         <>
-            <Card style={{
+            {
+                getToggle() > 0 && (
+                    <Card style={{
 
-                boxShadow: '0 0 0 9999px #000000b0',
-                display: 'flex',
-                flexDirection: 'column',
-                height: 'auto',
-                width: '51vw',
-                backgroundColor: 'white',
-                borderStyle: 'solid',
-                borderColor: '#FF8800',
-                borderWidth: '2px',
-                borderRadius: '10px',
+                        boxShadow: '0 0 0 9999px #000000b0',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: 'auto',
+                        width: '51vw',
+                        backgroundColor: 'white',
+                        borderStyle: 'solid',
+                        borderColor: '#FF8800',
+                        borderWidth: '2px',
+                        borderRadius: '10px',
 
-                paddingBottom: '3px',
-                position: 'absolute',
-                left: '24vw',
-                top: '15vh',
-                zIndex: '1'
+                        paddingBottom: '3px',
+                        position: 'absolute',
+                        left: '24vw',
+                        top: '15vh',
+                        zIndex: '1'
 
-            }}>
-                <CardHeader
-                    title={getToggle() == 1 ? 'Create Shift-and-Lift Options' : 'Create PaaS Options'}
-                    titleTypographyProps={{ align: 'center' }}
-                    subheaderTypographyProps={{
-                        align: 'center',
-                    }}
-                    sx={{
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'light'
-                                ? theme.palette.grey[200]
-                                : theme.palette.grey[700],
-                    }}
-                />
-                <CardContent>
-                    <Grid style={{
-                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                        alignItems: 'center'
-                    }} container spacing={1} >
-                        <Grid>
-                            <Typography sx={{
-                                fontFamily: 'Segoe UI Light',
-                                verticalAlign: 'middle',
-                                textAlign: 'center',
-
-
-                            }}>
-                                Select a Tier: </Typography>
-
-                        </Grid>
-                        <Grid item style={{ flexGrow: '5' }}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Tier</InputLabel>
-                                <Select
-                                    label="Tier"
-                                    variant="outlined"
-                                >
-                                    {
-                                        getToggle() == 1 && (
-                                            Object.keys(IaasOptions).map(category => {
-                                                return <MenuItem value={category} onClick={() => setOption(AllOptions[category])}>{category}</MenuItem>
-                                            })
-                                        )
-
-                                    }
-                                    {
-                                        getToggle() == 2 && (
-                                            Object.keys(PaasOptions).map(category => {
-                                                return <MenuItem value={category} onClick={() => setOption(AllOptions[category])}>{category}</MenuItem>
-                                            })
-                                        )
-                                    }
-
-                                </Select>
-                            </FormControl>
-                        </Grid>
-
-                    </Grid>
-                    <br />
-                    {
-                        selectedOption.length > 0 && (
-                            <>
+                    }}>
+                        <CardHeader
+                            title={getToggle() == 1 ? 'Create Shift-and-Lift Options' : 'Create PaaS Options'}
+                            titleTypographyProps={{ align: 'center' }}
+                            subheaderTypographyProps={{
+                                align: 'center',
+                            }}
+                            sx={{
+                                backgroundColor: (theme) =>
+                                    theme.palette.mode === 'light'
+                                        ? theme.palette.grey[200]
+                                        : theme.palette.grey[700],
+                            }}
+                        />
+                        <CardContent>
+                            <Grid style={{
+                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                alignItems: 'center'
+                            }} container spacing={1} >
                                 <Grid>
                                     <Typography sx={{
                                         fontFamily: 'Segoe UI Light',
-                                        fontWeight: 'bold',
                                         verticalAlign: 'middle',
                                         textAlign: 'center',
 
+
                                     }}>
-                                        Add {{selectedCategory}} </Typography>
-                                </Grid><br />
+                                        Select a Tier: </Typography>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
+                                </Grid>
+                                <Grid item style={{ flexGrow: '5' }}>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Tier</InputLabel>
+                                        <Select
+                                            label="Tier"
+                                            variant="outlined"
+                                        >
+                                            {
+                                                getToggle() == 1 && (
+                                                    Object.keys(IaasOptions).map(category => {
+                                                        return <MenuItem value={category} onClick={() => changeOption(category)}>{category}</MenuItem>
+                                                    })
+                                                )
 
+                                            }
+                                            {
+                                                getToggle() == 2 && (
+                                                    Object.keys(PaasOptions).map(category => {
+                                                        return <MenuItem value={category} onClick={() => changeOption(category)}>{category}</MenuItem>
+                                                    })
+                                                )
+                                            }
 
-                                    <Grid style={{
-                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Typography sx={{
-                                            fontFamily: 'Segoe UI Light',
-                                            verticalAlign: 'middle',
-                                            textAlign: 'center',
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
 
-                                        }}>
-                                            { inputNames[selectedOption][0] } </Typography>&nbsp;
-                                        <TextField style={{ flexGrow: '1' }} id="outlined-basic" label={ inputNames[selectedOption][0] } onChange={(e) => setFirst(e.target.value)} variant="outlined" />
-                                    </Grid>
-                                    <Grid style={{
-                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Typography sx={{
-                                            fontFamily: 'Segoe UI Light',
-                                            verticalAlign: 'middle',
-                                            textAlign: 'center',
+                            </Grid>
+                            <br />
+                            {
+                                selectedOption.length > 0 && (
+                                    <>
+                                        <Grid>
+                                            <Typography sx={{
+                                                fontFamily: 'Segoe UI Light',
+                                                fontWeight: 'bold',
+                                                verticalAlign: 'middle',
+                                                textAlign: 'center',
 
-                                        }}>
-                                            {inputNames[selectedOption][1] } </Typography>&nbsp;
-                                        <TextField style={{ flexGrow: '1' }} id="outlined-basic" label={inputNames[selectedOption][1]} onChange={(e) => setSecond(e.target.value)} variant="outlined" />
-                                    </Grid>
-                                    <Grid style={{
-                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Typography sx={{
-                                            fontFamily: 'Segoe UI Light',
-                                            verticalAlign: 'middle',
-                                            textAlign: 'center',
+                                            }}>
+                                                Add { getCategory(selectedOption) } </Typography>
+                                        </Grid><br />
 
-                                        }}>
-                                            {inputNames[selectedOption][2] } </Typography>&nbsp;
-                                        <TextField style={{ flexGrow: '1' }} id="outlined-basic" label={inputNames[selectedOption][2]} onChange={(e) => setThird(e.target.value)} variant="outlined" />
-                                    </Grid>
-                                    <Grid style={{
-                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Typography sx={{
-                                            fontFamily: 'Segoe UI Light',
-                                            verticalAlign: 'middle',
-                                            textAlign: 'center',
-
-                                        }}>
-                                            {inputNames[selectedOption][3] } </Typography>&nbsp;
-                                        <TextField style={{ flexGrow: '1' }} id="outlined-basic" label={inputNames[selectedOption][3] } onChange={(e) => setFourth(e.target.value)} variant="outlined" />
-                                    </Grid>
-                                    <Grid style={{
-                                        display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Typography sx={{
-                                            fontFamily: 'Segoe UI Light',
-                                            verticalAlign: 'middle',
-                                            textAlign: 'center',
-
-                                        }}>
-                                            {inputNames[selectedOption][4] } </Typography>&nbsp;
-                                        <TextField style={{ flexGrow: '1' }} id="outlined-basic" label={inputNames[selectedOption][4]} onChange={(e) => setFourth(e.target.value)} variant="outlined" />
-                                    </Grid>
-
-                                </div>
-
-                            </>
-
-                        )
-                    }
-
-                    <Grid container sx={{ mt: 2 }}>
-                        <Grid item xs={12} md={12}>
-
-                            <Typography variant="h6" align="center" color="text.secondary">
-                                Bottom Text
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid style={{ float: 'right' }}>
-                        <Button variant="outlined" onClick={() => clearAll()}>Close</Button>&nbsp;&nbsp;
-                        <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'} onClick={() => submitForm()}>Add Option</Button>
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
 
 
-                    </Grid>
+                                            <Grid style={{
+                                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                alignItems: 'center'
+                                            }}>
+                                                <Typography sx={{
+                                                    fontFamily: 'Segoe UI Light',
+                                                    verticalAlign: 'middle',
+                                                    textAlign: 'center',
 
-                </CardContent>
-                <CardActions>
-                </CardActions>
-            </Card>
+                                                }}>
+                                                    {inputNames[selectedOption][0]} </Typography>&nbsp;
+                                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={ inputFirst} label={inputNames[selectedOption][0]} onChange={(e) => setFirst(e.target.value)} variant="outlined" />
+                                            </Grid>
+                                            <Grid style={{
+                                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                alignItems: 'center'
+                                            }}>
+                                                <Typography sx={{
+                                                    fontFamily: 'Segoe UI Light',
+                                                    verticalAlign: 'middle',
+                                                    textAlign: 'center',
+
+                                                }}>
+                                                    {inputNames[selectedOption][1]} </Typography>&nbsp;
+                                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputSecond} label={inputNames[selectedOption][1]} onChange={(e) => setSecond(e.target.value)} variant="outlined" />
+                                            </Grid>
+                                            <Grid style={{
+                                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                alignItems: 'center'
+                                            }}>
+                                                <Typography sx={{
+                                                    fontFamily: 'Segoe UI Light',
+                                                    verticalAlign: 'middle',
+                                                    textAlign: 'center',
+
+                                                }}>
+                                                    {inputNames[selectedOption][2]} </Typography>&nbsp;
+                                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputThird} label={inputNames[selectedOption][2]} onChange={(e) => setThird(e.target.value)} variant="outlined" />
+                                            </Grid>
+                                            <Grid style={{
+                                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                alignItems: 'center'
+                                            }}>
+                                                <Typography sx={{
+                                                    fontFamily: 'Segoe UI Light',
+                                                    verticalAlign: 'middle',
+                                                    textAlign: 'center',
+
+                                                }}>
+                                                    {inputNames[selectedOption][3]} </Typography>&nbsp;
+                                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputFourth} label={inputNames[selectedOption][3]} onChange={(e) => setFourth(e.target.value)} variant="outlined" />
+                                            </Grid>
+                                            <Grid style={{
+                                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
+                                                alignItems: 'center'
+                                            }}>
+                                                <Typography sx={{
+                                                    fontFamily: 'Segoe UI Light',
+                                                    verticalAlign: 'middle',
+                                                    textAlign: 'center',
+
+                                                }}>
+                                                    {inputNames[selectedOption][4]} </Typography>&nbsp;
+                                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputFifth} label={inputNames[selectedOption][4]} onChange={(e) => setFifth(e.target.value)} variant="outlined" />
+                                            </Grid>
+
+                                        </div>
+
+                                    </>
+
+                                )
+                            }
+
+                            <Grid container sx={{ mt: 2 }}>
+                                <Grid item xs={12} md={12}>
+
+                                    <Typography variant="h6" align="center" color="text.secondary">
+                                        Bottom Text
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid style={{ float: 'right' }}>
+                                <Button variant="outlined" onClick={() => clearAll()}>Close</Button>&nbsp;&nbsp;
+                                <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'} onClick={() => submitForm()}>Add Option</Button>
+
+
+                            </Grid>
+
+                        </CardContent>
+                        <CardActions>
+                        </CardActions>
+                    </Card>
+                    )
+
+            }
+            
 
         </>
 

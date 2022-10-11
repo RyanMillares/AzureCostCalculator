@@ -23,9 +23,15 @@ namespace AzureCostCalculatorAPI.Controllers
             return PaaSAPIData.ToList();
         }
         [HttpPost]
-        public async Task<IActionResult> Post(PaaSAppPlan plan)
+        public async Task<IActionResult> Post(string name, int cpu, int ram, int storage, int cost)
         {
-
+            PaaSAppPlan plan = new PaaSAppPlan();
+            plan.PAID = Guid.NewGuid();
+            plan.Name = name;
+            plan.CPU = cpu;
+            plan.RAM = ram;
+            plan.Storage = storage;
+            plan.Cost = cost;
             String query = "INSERT INTO PaaS_AS (paid, name,cpu,ram,storage,cost) VALUES (default, @name, @cpu, @ram, @storage, @cost)";
 
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
