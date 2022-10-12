@@ -718,8 +718,10 @@ function PricingContent() {
 
                         }
                         <TextField style={{ flexGrow: '1',marginLeft:'10px' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
-
+                        
                         <Button variant="outlined" onClick={() => TestToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
+                        <Button variant="outlined" onClick={() => alert(getToggle())}>Get Toggle</Button>&nbsp;&nbsp;
+
                         {
                             getToggle() == 4 && (
                                 <TestComponent />

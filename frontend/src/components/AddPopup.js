@@ -208,6 +208,8 @@ export default function AddPopup({ createMode }) {
         ClearFields()
         setOption("")
         TestToggle(0)
+        window.location.reload() // remove this when the rerendering issue is solved
+
     }
     function changeOption(category) {
         setOption(AllOptions[category])
