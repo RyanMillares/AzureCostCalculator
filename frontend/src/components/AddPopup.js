@@ -216,7 +216,7 @@ export default function AddPopup({ createMode }) {
         ClearFields()
     }
     useEffect(() => {
-
+        // find future solution for rerendering
 
     }, [permVal])
 
@@ -245,7 +245,7 @@ export default function AddPopup({ createMode }) {
 
                     }}>
                         <CardHeader
-                            title={getToggle() == 1 ? 'Create Shift-and-Lift Options' : 'Create PaaS Options'}
+                            title={getToggle() == 1 ? 'Create Lift-and-Shift Options' : 'Create PaaS Options'}
                             titleTypographyProps={{ align: 'center' }}
                             subheaderTypographyProps={{
                                 align: 'center',
@@ -396,14 +396,13 @@ export default function AddPopup({ createMode }) {
                                 <Grid item xs={12} md={12}>
 
                                     <Typography variant="h6" align="center" color="text.secondary">
-                                        Bottom Text
+                                       
                                     </Typography>
                                 </Grid>
                             </Grid>
                             <Grid style={{ float: 'right' }}>
                                 <Button variant="outlined" onClick={() => clearAll()}>Close</Button>&nbsp;&nbsp;
                                 <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'} onClick={() => submitForm()}>Add Option</Button>
-
 
                             </Grid>
 
@@ -413,8 +412,7 @@ export default function AddPopup({ createMode }) {
                     </Card>
                     )
 
-            }
-            
+            }   
 
         </>
 

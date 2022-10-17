@@ -40,18 +40,6 @@ namespace AzureCostCalculatorAPI.Controllers
 
         public async Task<IActionResult> Post(string name, int cpu, int ram, int storage, int cost)
         {
-            /**
-            string[] inputs = rawInput.Split(',');
-
-            PaaSWebPlan plan = new PaaSWebPlan();
-            plan.PWID = null;
-            plan.Name = inputs[0];
-            plan.CPU = Int16.Parse(inputs[1]);
-            plan.RAM = Int16.Parse(inputs[2]);
-            plan.Storage = Int16.Parse(inputs[3]);
-            plan.Cost = Int16.Parse(inputs[4]);
-            
-            **/
             PaaSWebPlan plan = new PaaSWebPlan();
             plan.PWID = Guid.NewGuid();
             plan.Name = name;
@@ -71,9 +59,28 @@ namespace AzureCostCalculatorAPI.Controllers
  
             return Ok();
 
+        }
+        [HttpPut]
+        public async Task<IActionResult> Put(Guid pwid, string name, int cpu, int ram, int storage, int cost)
+        {
+            PaaSWebPlan plan = new PaaSWebPlan();
+            plan.PWID = pwid;
+            plan.Name = name;
+            plan.CPU = cpu;
+            plan.RAM = ram;
+            plan.Storage = storage;
+            plan.Cost = cost;
 
+            string query = "UPDATE PaaS_Web SET name = @name, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE pwid = @pwid";
 
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+            using (var conn = new SqlConnection(myConnectorString))
+            {
+                await conn.OpenAsync();
+                var affectedRows = await conn.QueryAsync<PaaSWebPlan>(query, plan);
 
+            }
+            return Ok();
         }
     }
 }

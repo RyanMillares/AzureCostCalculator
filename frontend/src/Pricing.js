@@ -35,7 +35,9 @@ import FormControl from '@mui/material/FormControl';
 //import globalnames from './globalvars.json' assert {type: 'json' };
 import globalnames from './globalvars.json'
 import AddPopup from './components/AddPopup'
-
+import ClearIcon from '@mui/icons-material/Clear';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 const theme = createTheme({
     typography: {
         fontFamily: ['"Segoe UI Light"']
@@ -78,6 +80,8 @@ function PricingContent() {
 
     const [serverSizes, setSizes] = useState({})
 
+    const [instances, setInstances] = useState(1)
+
     //UI for PaaS
     const [createMode, setMode] = useState(0)
 
@@ -91,142 +95,27 @@ function PricingContent() {
         'API Tier': 'IaaSApi',
         'Database Tier': 'IaaSDB'
     }
-    const [selectedOption, setOption] = useState("")
-
-    // PaaS Website Fields
-    const [PaasWebName, setPaasWebName] = useState("")
-    const [PaasWebRam, setPaasWebRam] = useState(0)
-    const [PaasWebCpu, setPaasWebCpu] = useState(0)
-    const [PaasWebStorage, setPaasWebStorage] = useState(0)
-    const [PaasWebCost, setPaasWebCost] = useState(0)
-
-    // PaaS AppService Fields
-    const [PaasAppName, setPaasAppName] = useState("")
-    const [PaasAppRam, setPaasAppRam] = useState(0)
-    const [PaasAppCpu, setPaasAppCpu] = useState(0)
-    const [PaasAppStorage, setPaasAppStorage] = useState(0)
-    const [PaasAppCost, setPaasAppCost] = useState(0)
-
-    // PaaS Database Fields
-    const [PaasDbType, setPaasDbType] = useState("")
-    const [PaasDbHardware, setPaasDbHardware] = useState("")
-    const [PaasDbStorage, setPaasDbStorage] = useState("")
-    const [PaasDbInstance, setPaasDbInstance] = useState("")
-    const [PaasDbCost, setPaasDbCost] = useState(0)
-
-    // IaaS Web Fields
-    const [IaasWebVm, setIaasWebVm] = useState("")
-    const [IaasWebRam, setIaasWebRam] = useState(0)
-    const [IaasWebCpu, setIaasWebCpu] = useState(0)
-    const [IaasWebStorage, setIaasWebStorage] = useState(0)
-    const [IaasWebCost, setIaasWebCost] = useState(0)
-
-    // IaaS API Fields
-    const [IaasApiVm, setIaasApiVm] = useState("")
-    const [IaasApiRam, setIaasApiRam] = useState(0)
-    const [IaasApiCpu, setIaasApiCpu] = useState(0)
-    const [IaasApiStorage, setIaasApiStorage] = useState(0)
-    const [IaasApiCost, setIaasApiCost] = useState(0)
-
-    // IaaS Database Fields
-    const [IaasDbVm, setIaasDbVm] = useState("")
-    const [IaasDbRam, setIaasDbRam] = useState(0)
-    const [IaasDbCpu, setIaasDbCpu] = useState(0)
-    const [IaasDbStorage, setIaasDbStorage] = useState(0)
-    const [IaasDbCost, setIaasDbCost] = useState(0)
 
     const [testVal, setVal] = useState(0)
     const [permVal, setPerm] = useState(0)
 
-    function clearAll() {
-        setOption("")
-        setMode(0)
-        TestToggle(0)
-        clearPaasFields()
-        clearIaasFields()
+    function editRecord() {
+        const apiServerNameObj = JSON.stringify(globalnames);
+
+        const name = JSON.parse(apiServerNameObj);
+        const apiServerName = name.serverName;
+        let postUrl = "https://" + apiServerName + ":7056/api/PaaSWeb";
+        postUrl += ("?pwid=9e460b38-e0ce-48ed-abaf-d0cfa28c3ebf&name=UrlPut&cpu=1&ram=5&storage=12&cost=42")
+        axios.put(postUrl, {
+            headers: {
+                //'Content-Type': 'application/x-www-form-urlencoded',
+                'Access-Control-Allow-Methods': 'POST, PUT, GET, OPTIONS'
+
+            },
+        })
+
+
     }
-
-
-    function clearPaasFields() {
-        setIaasWebVm("")
-        setIaasWebCost(0)
-        setIaasWebRam(0)
-        setIaasWebStorage(0)
-        setIaasWebCpu(0)
-
-        setIaasApiVm("")
-        setIaasApiCost(0)
-        setIaasApiRam(0)
-        setIaasApiStorage(0)
-        setIaasApiCpu(0)
-
-        setIaasDbVm("")
-        setIaasDbCost(0)
-        setIaasDbRam(0)
-        setIaasDbStorage(0)
-        setIaasDbCpu(0)
-    }
-    function clearIaasFields() {
-        setPaasWebName("")
-        setPaasWebCost(0)
-        setPaasWebRam(0)
-        setPaasWebStorage(0)
-        setPaasWebCpu(0)
-
-        setPaasAppName("")
-        setPaasAppCost(0)
-        setPaasAppRam(0)
-        setPaasAppStorage(0)
-        setPaasAppCpu(0)
-
-        setPaasDbCost(0)
-        setPaasDbHardware("")
-        setPaasDbInstance("")
-        setPaasDbType("")
-        setPaasDbStorage("")
-    }
-    function validToSubmit(option) {
-        // return to this and validate even harder
-        switch (option) {
-            case "PaaSWeb":
-                return (PaasWebName.length > 0 &&
-                    (!isNaN(PaasWebCost) && PaasWebCost > 0) &&
-                    (!isNaN(PaasWebRam) && PaasWebRam > 0) &&
-                    (!isNaN(PaasWebStorage) && PaasWebStorage > 0) &&
-                    (!isNaN(PaasWebCpu) && PaasWebCpu > 0))
-
-            case "PaaSApp":
-                return (PaasAppName.length > 0 &&
-                    (!isNaN(PaasAppCost) && PaasAppCost > 0) &&
-                    (!isNaN(PaasAppRam) && PaasAppRam > 0) &&
-                    (!isNaN(PaasAppStorage) && PaasAppStorage > 0) &&
-                    (!isNaN(PaasAppCpu) && PaasAppCpu > 0))
-            case "PaaSDB":
-                return ((!isNaN(PaasDbCost) && PaasDbCost > 0) &&
-                    PaasDbHardware.length > 0 && PaasDbInstance.length > 0 && PaasDbStorage.length > 0 && PaasDbType.length > 0)
-            case "IaaSWeb":
-                return (IaasWebVm.length > 0 &&
-                    (!isNaN(IaasWebCost) && IaasWebCost > 0) &&
-                    (!isNaN(IaasWebRam) && IaasWebRam > 0) &&
-                    (!isNaN(IaasWebStorage) && IaasWebStorage > 0) &&
-                    (!isNaN(IaasWebCpu) && IaasWebCpu > 0))
-            case "IaaSApi":
-                return (IaasApiVm.length > 0 &&
-                    (!isNaN(IaasApiCost) && IaasApiCost > 0) &&
-                    (!isNaN(IaasApiRam) && IaasApiRam > 0) &&
-                    (!isNaN(IaasApiStorage) && IaasApiStorage > 0) &&
-                    (!isNaN(IaasApiCpu) && IaasApiCpu > 0))
-            case "IaaSDB":
-                return (IaasDbVm.length > 0 &&
-                    (!isNaN(IaasDbCost) && IaasDbCost > 0) &&
-                    (!isNaN(IaasDbRam) && IaasDbRam > 0) &&
-                    (!isNaN(IaasDbStorage) && IaasDbStorage > 0) &&
-                    (!isNaN(IaasDbCpu) && IaasDbCpu > 0))
-            default:
-                return false
-        }
-    }
-
 
     function setServerSizes(sizes) {
         //console.log(sizes)
@@ -254,79 +143,9 @@ function PricingContent() {
     }
 
     // this implementation is not connected to the database; all submitted data is lost upon a refresh
-    function submitForm() {
-        submitData(selectedOption)
-        clearAll()
-    }
 
 
- 
 
-    
-    function createUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
-    
-
-    function submitData(option) {
-        const apiServerNameObj = JSON.stringify(globalnames);
-
-        const name = JSON.parse(apiServerNameObj);
-        const apiServerName = name.serverName;
-        const postUrl = "https://" + apiServerName + ":7056/api/" + option;
-        switch (option) {
-            // all vars with numbers will be changed to have better names
-            case "PaaSWeb":
-               
-                var newTierString = "name="+PaasWebName + "&cpu="
-                    + PaasWebCpu + "&ram=" + PaasWebRam + "&storage=" + PaasWebStorage + "&cost=" + PaasWebCost
-        
-                let newres = axios.post(postUrl + "?" + newTierString)
-
-                break;
-
-            case "PaaSApp":
-                var newTierString1 = "name=" + PaasAppName + "&cpu="
-                    + PaasAppCpu + "&ram=" + PaasAppRam + "&storage=" + PaasAppStorage + "&cost=" + PaasAppCost
-                let res = axios.post(postUrl + "?" + newTierString1)
-
-
-                break;
-            case "PaaSDB":
-
-                var newTierString2 = "type=" + PaasDbType + "&hardware="
-                    + PaasDbHardware + "&instance=" + PaasDbInstance + "&storage=" + PaasDbStorage + "&cost=" + PaasDbCost
-                axios.post(postUrl + "?" + newTierString2)
-                break;
-
-            case "IaaSWeb":
-
-                var newTierString3 = "vm=" + IaasWebVm + "&cpu="
-                    + IaasWebCpu + "&ram=" + IaasWebRam + "&storage=" + IaasWebStorage + "&cost=" + IaasWebCost
-
-                axios.post(postUrl + "?" + newTierString3)
-                break;
-            case "IaaSApi":
-                var newTierString4 = "vm=" + IaasApiVm + "&cpu="
-                    + IaasApiCpu + "&ram=" + IaasApiRam + "&storage=" + IaasApiStorage + "&cost=" + IaasApiCost
-
-                axios.post(postUrl + "?" + newTierString4)
-                break;
-            case "IaaSDB":
-                var newTierString5 = "vm=" + IaasDbVm + "&cpu="
-                    + IaasDbCpu + "&ram=" + IaasDbRam + "&storage=" + IaasDbStorage + "&cost=" + IaasDbCost
-
-                axios.post(postUrl + "?" + newTierString5)
-                break;
-            default:
-                break;
-        }
-        alert("New Tier Added!")
-        window.location.reload()
-    }
 
     const numServers = {
         'Small': [3, 6, 9],
@@ -470,7 +289,7 @@ function PricingContent() {
                         <Grid item xs={12} md={6}>
                             <Card>
                                 <CardHeader
-                                    title="Shift-and-Lift" //IaaS
+                                    title="Lift-and-Shift" //IaaS
                                     titleTypographyProps={{ align: 'center' }}
                                     subheaderTypographyProps={{
                                         align: 'center',
@@ -571,7 +390,7 @@ function PricingContent() {
                                                 ${((webPrice + apiPrice + dbPrice) * (servers / 3)).toLocaleString()}
                                             </Typography>
                                             <Typography variant="h6" align="center" color="text.secondary">
-                                                Total Cost
+                                                Monthly Cost
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -599,13 +418,10 @@ function PricingContent() {
                                     action={
                                         <Button title="Add PaaS Options" variant="contained"
                                             onClick={() => TestToggle(2)}
-                                            //disabled={getToggle() != 0} 
+                                            
                                         ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
                                     }
                                 />
-
-
-
 
 
                                 <CardContent>
@@ -687,13 +503,47 @@ function PricingContent() {
                                             </Typography>
                                         </Grid>
                                     </Grid>
-                                    <Grid container sx={{ mt: 2 }}>
-                                        <Grid item xs={12} md={12}>
-                                            <Typography variant="h2" align="center">
+                                    <Grid container sx={{ mt: 4 }}>
+                                        <Grid item xs={12} md={3}>
+                                            <Typography variant="h3" align="center">
                                                 ${((websitePrice + appservicePrice + databasePrice)).toLocaleString()}
                                             </Typography>
                                             <Typography variant="h6" align="center" color="text.secondary">
-                                                Total Cost
+                                                Per Instance
+                                            </Typography>
+                                        </Grid>
+                                        <Grid style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} item xs={12} md={1}>
+                                            <ClearIcon fontSize = "small" sx={{ color: 'black' }}></ClearIcon>
+                                        </Grid>
+                                        <Grid style={{marginTop:'2vh'}} item xs={12} md={3}>
+                                            <Typography variant="h6" align="center">
+                                                {(instances).toLocaleString()} Instance{Math.abs(instances) != 1 ? 's' : ''}
+                                            </Typography>
+                                            <div align = "center">
+                                                
+                                                <IconButton color="primary" title={(instances > 1) ? "Remove Instances" : "Cannot Have Less Than One Instance"} style={{ backgroundColor: ((instances > 1) ? 'white' : '#e8e8e8') }}
+                                                    onClick={() => { if (instances > 1) { setInstances((instances - 1)) } }}
+                                                    >
+                                                    <RemoveIcon fontSize="small" sx={{ color: ((instances > 1) ? '#FF5800' : 'darkgray') }} />
+                                                </IconButton>&nbsp;
+                                                <IconButton  color="primary" title="Add Instances" style={{ backgroundColor: 'white' } }
+                                                    onClick={() => setInstances((instances + 1))}>
+                                                    <AddIcon fontSize="small" sx={{ color: '#FF5800' }} />
+                                                </IconButton>
+                                               
+                                            </div>
+                                            
+                                            
+                                        </Grid>
+                                        <Grid style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} item xs={12} md={1}>
+                                            <b>=</b>
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
+                                            <Typography variant="h3" align="center">
+                                                ${((websitePrice + appservicePrice + databasePrice) * instances).toLocaleString()}
+                                            </Typography>
+                                            <Typography variant="h6" align="center" color="text.secondary">
+                                                Monthly Cost
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -717,17 +567,26 @@ function PricingContent() {
                                 )
 
                         }
-                        <TextField style={{ flexGrow: '1',marginLeft:'10px' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
-                        
-                        <Button variant="outlined" onClick={() => TestToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
-                        <Button variant="outlined" onClick={() => alert(getToggle())}>Get Toggle</Button>&nbsp;&nbsp;
-
                         {
-                            getToggle() == 4 && (
-                                <TestComponent />
+                            false && (
+                                <>
+                                    <TextField style={{ flexGrow: '1', marginLeft: '10px' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
 
+                                    <Button variant="outlined" onClick={() => TestToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
+                                    <Button variant="outlined" onClick={() => alert(getToggle())}>Get Toggle</Button>&nbsp;&nbsp;
+
+                                    {
+                                        getToggle() == 4 && (
+                                            <TestComponent />
+
+                                        )
+                                    }
+                                </>
                                 )
                         }
+                        <Button variant="outlined" onClick={() => editRecord()}>Put Value</Button>&nbsp;&nbsp;
+
+
 
                         
 
