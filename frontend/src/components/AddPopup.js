@@ -27,6 +27,8 @@ import FormControl from '@mui/material/FormControl';
 
 import { getToggle, setToggle } from '../ToggleContext'
 import globalnames from '../globalvars.json'
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 //import * as MUI from '@mui/material'
 
@@ -223,25 +225,10 @@ export default function AddPopup({ createMode }) {
     return (
         <>
             {
-                getToggle() > 0 && (
+                true && (
                     <Card style={{
 
-                        boxShadow: '0 0 0 9999px #000000b0',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 'auto',
-                        width: '51vw',
-                        backgroundColor: 'white',
-                        borderStyle: 'solid',
-                        borderColor: '#FF8800',
-                        borderWidth: '2px',
-                        borderRadius: '10px',
-
-                        paddingBottom: '3px',
-                        position: 'absolute',
-                        left: '24vw',
-                        top: '15vh',
-                        zIndex: '1'
+                        
 
                     }}>
                         <CardHeader

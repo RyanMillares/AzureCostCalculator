@@ -7,6 +7,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -105,7 +107,7 @@ function PricingContent() {
         const name = JSON.parse(apiServerNameObj);
         const apiServerName = name.serverName;
         let postUrl = "https://" + apiServerName + ":7056/api/PaaSWeb";
-        postUrl += ("?pwid=9e460b38-e0ce-48ed-abaf-d0cfa28c3ebf&name=UrlPut&cpu=1&ram=5&storage=12&cost=42")
+        postUrl += ("?pwid=9e460b38-e0ce-48ed-abaf-d0cfa28c3ebf&name=PutTesting&cpu=1&ram=5&storage=12&cost=42")
         axios.put(postUrl, {
             headers: {
                 //'Content-Type': 'application/x-www-form-urlencoded',
@@ -153,7 +155,7 @@ function PricingContent() {
         'Large': [21, 24, 27],
         'XL': [30, 33, 36]
     }
-  
+
     function TestToggle(toggleVal) {
 
         setToggle(toggleVal)
@@ -215,7 +217,7 @@ function PricingContent() {
                         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                             Azure Cost Calculator
                         </Typography>
-                        <img src={Logo} alt="Avanade Logo"/>
+                        <img src={Logo} alt="Avanade Logo" />
                         <IconButton ></IconButton>
                     </Toolbar>
                 </AppBar>
@@ -303,7 +305,7 @@ function PricingContent() {
                                     action={
                                         <Button title="Add Shift-and-Lift Options" variant="contained"
                                             onClick={() => TestToggle(1)}
-                                            //disabled={getToggle() != 0}
+                                        //disabled={getToggle() != 0}
                                         ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
                                     }
                                 />
@@ -416,10 +418,40 @@ function PricingContent() {
                                                 : theme.palette.grey[700],
                                     }}
                                     action={
-                                        <Button title="Add PaaS Options" variant="contained"
-                                            onClick={() => TestToggle(2)}
-                                            
-                                        ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+                                        <Popup
+                                            trigger={<Button title="Add PaaS Options" variant="contained"
+                                                //onClick={() => TestToggle(2)}
+
+                                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>}
+                                            modal
+                                            nested
+                                        >
+                                            {close => (
+                                                <div className="modal">
+                                                    <Button className="close" onClick={close}>
+                                                        &times;
+                                                    </Button>
+                                                    <AddPopup
+                                                        createMode={2}
+                                                    />
+
+                                                    <div className="actions">
+
+                                                        <Button
+                                                            className="button"
+                                                            onClick={() => {
+                                                                console.log('modal closed ');
+                                                                close();
+                                                            }}
+                                                        >
+                                                            close modal
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Popup>
+
+
                                     }
                                 />
 
@@ -513,27 +545,27 @@ function PricingContent() {
                                             </Typography>
                                         </Grid>
                                         <Grid style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} item xs={12} md={1}>
-                                            <ClearIcon fontSize = "small" sx={{ color: 'black' }}></ClearIcon>
+                                            <ClearIcon fontSize="small" sx={{ color: 'black' }}></ClearIcon>
                                         </Grid>
-                                        <Grid style={{marginTop:'2vh'}} item xs={12} md={3}>
+                                        <Grid style={{ marginTop: '2vh' }} item xs={12} md={3}>
                                             <Typography variant="h6" align="center">
                                                 {(instances).toLocaleString()} Instance{Math.abs(instances) != 1 ? 's' : ''}
                                             </Typography>
-                                            <div align = "center">
-                                                
+                                            <div align="center">
+
                                                 <IconButton color="primary" title={(instances > 1) ? "Remove Instances" : "Cannot Have Less Than One Instance"} style={{ backgroundColor: ((instances > 1) ? 'white' : '#e8e8e8') }}
                                                     onClick={() => { if (instances > 1) { setInstances((instances - 1)) } }}
-                                                    >
+                                                >
                                                     <RemoveIcon fontSize="small" sx={{ color: ((instances > 1) ? '#FF5800' : 'darkgray') }} />
                                                 </IconButton>&nbsp;
-                                                <IconButton  color="primary" title="Add Instances" style={{ backgroundColor: 'white' } }
+                                                <IconButton color="primary" title="Add Instances" style={{ backgroundColor: 'white' }}
                                                     onClick={() => setInstances((instances + 1))}>
                                                     <AddIcon fontSize="small" sx={{ color: '#FF5800' }} />
                                                 </IconButton>
-                                               
+
                                             </div>
-                                            
-                                            
+
+
                                         </Grid>
                                         <Grid style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} item xs={12} md={1}>
                                             <b>=</b>
@@ -555,16 +587,16 @@ function PricingContent() {
                         {
                             // additional conditions can be applied here to check for admin access in future
                             // change to something perm false when testing component
-                            
+
                         }
 
                         {
                             getToggle() > 0 && (
                                 <AddPopup
                                     createMode={getToggle()}
-    
+
                                 />
-                                )
+                            )
 
                         }
                         {
@@ -582,19 +614,19 @@ function PricingContent() {
                                         )
                                     }
                                 </>
-                                )
+                            )
                         }
                         <Button variant="outlined" onClick={() => editRecord()}>Put Value</Button>&nbsp;&nbsp;
 
 
 
-                        
+
 
 
 
                     </Grid>
                 </Container>
-                
+
             </ThemeProvider>
         </React.Fragment>
     );

@@ -17,6 +17,7 @@
     "react-native-network-info": "^5.2.1",
     "react-native-web": "^0.18.9",
     "react-scripts": "5.0.1",
+    "reactjs-popup": "^2.0.5",
     "use-force-update": "^1.0.10",
     "web-vitals": "^2.1.4"
   },
