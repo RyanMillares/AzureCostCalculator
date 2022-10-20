@@ -34,7 +34,7 @@ import 'reactjs-popup/dist/index.css';
 
 
 
-export default function AddPopup({ createMode }) {
+export default function AddPopup({ createMode}) {
 
     const theme = createTheme({
         typography: {
@@ -228,11 +228,11 @@ export default function AddPopup({ createMode }) {
                 true && (
                     <Card style={{
 
-                        
+                        boxShadow: 'none'
 
                     }}>
                         <CardHeader
-                            title={getToggle() == 1 ? 'Create Lift-and-Shift Options' : 'Create PaaS Options'}
+                            title={createMode == 1 ? 'Create Lift-and-Shift Options' : 'Create PaaS Options'}
                             titleTypographyProps={{ align: 'center' }}
                             subheaderTypographyProps={{
                                 align: 'center',
@@ -268,7 +268,7 @@ export default function AddPopup({ createMode }) {
                                             variant="outlined"
                                         >
                                             {
-                                                getToggle() == 1 && (
+                                                createMode == 1 && (
                                                     Object.keys(IaasOptions).map(category => {
                                                         return <MenuItem value={category} onClick={() => changeOption(category)}>{category}</MenuItem>
                                                     })
@@ -276,7 +276,7 @@ export default function AddPopup({ createMode }) {
 
                                             }
                                             {
-                                                getToggle() == 2 && (
+                                                createMode == 2 && (
                                                     Object.keys(PaasOptions).map(category => {
                                                         return <MenuItem value={category} onClick={() => changeOption(category)}>{category}</MenuItem>
                                                     })
@@ -388,7 +388,6 @@ export default function AddPopup({ createMode }) {
                                 </Grid>
                             </Grid>
                             <Grid style={{ float: 'right' }}>
-                                <Button variant="outlined" onClick={() => clearAll()}>Close</Button>&nbsp;&nbsp;
                                 <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'} onClick={() => submitForm()}>Add Option</Button>
 
                             </Grid>

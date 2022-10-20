@@ -8,7 +8,8 @@ import AppBar from '@mui/material/AppBar';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+//import 'reactjs-popup/dist/index.css';
+import './styles.css';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -37,6 +38,7 @@ import FormControl from '@mui/material/FormControl';
 //import globalnames from './globalvars.json' assert {type: 'json' };
 import globalnames from './globalvars.json'
 import AddPopup from './components/AddPopup'
+import DropdownMenu from './components/DropdownMenu'
 import ClearIcon from '@mui/icons-material/Clear';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -146,15 +148,14 @@ function PricingContent() {
 
     // this implementation is not connected to the database; all submitted data is lost upon a refresh
 
-
-
-
     const numServers = {
         'Small': [3, 6, 9],
         'Medium': [12, 15, 18],
         'Large': [21, 24, 27],
         'XL': [30, 33, 36]
     }
+
+    
 
     function TestToggle(toggleVal) {
 
@@ -200,6 +201,7 @@ function PricingContent() {
             setPaasWeb(values[5].data.sort((a, b) => a.cost - b.cost));
             setServerSizes(values[6].data);
         })
+        
     }, [getToggle()])
 
     return (
@@ -303,10 +305,47 @@ function PricingContent() {
                                                 : theme.palette.grey[700],
                                     }}
                                     action={
-                                        <Button title="Add Shift-and-Lift Options" variant="contained"
-                                            onClick={() => TestToggle(1)}
-                                        //disabled={getToggle() != 0}
-                                        ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+                                        <Popup
+
+                                            trigger={<Button title="Add Lift-And-Shift Options" variant="contained"
+                                            //onClick={() => TestToggle(2)}
+
+                                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>}
+                                            modal
+                                            nested
+                                        >
+                                            {close => (
+                                                <div className="modal">
+                                                    <button className="close" onClick={close} >
+                                                        &times;
+                                                    </button>
+                                                    <AddPopup
+                                                        createMode={1}
+
+                                                    />
+
+                                                    <br />
+                                                    {
+                                                        false && (
+                                                            <div className="actions" >
+
+                                                                <Button
+                                                                    variant="outlined"
+                                                                    className="button"
+                                                                    onClick={() => {
+                                                                        console.log('modal closed ');
+                                                                        close();
+                                                                    }}
+                                                                >
+                                                                    close modal
+                                                                </Button>
+                                                            </div>
+
+                                                        )
+                                                    }
+                                                </div>
+                                            )}
+                                        </Popup>
                                     }
                                 />
                                 <CardContent>
@@ -418,39 +457,9 @@ function PricingContent() {
                                                 : theme.palette.grey[700],
                                     }}
                                     action={
-                                        <Popup
-                                            trigger={<Button title="Add PaaS Options" variant="contained"
-                                                //onClick={() => TestToggle(2)}
-
-                                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>}
-                                            modal
-                                            nested
-                                        >
-                                            {close => (
-                                                <div className="modal">
-                                                    <Button className="close" onClick={close}>
-                                                        &times;
-                                                    </Button>
-                                                    <AddPopup
-                                                        createMode={2}
-                                                    />
-
-                                                    <div className="actions">
-
-                                                        <Button
-                                                            className="button"
-                                                            onClick={() => {
-                                                                console.log('modal closed ');
-                                                                close();
-                                                            }}
-                                                        >
-                                                            close modal
-                                                        </Button>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </Popup>
-
+                                        <DropdownMenu
+                                            state={2}
+                                        />
 
                                     }
                                 />
