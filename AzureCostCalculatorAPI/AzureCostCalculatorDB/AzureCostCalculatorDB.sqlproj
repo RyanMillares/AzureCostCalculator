@@ -68,12 +68,12 @@
     <Build Include="dbo\Tables\IaaS_Web.sql" />
     <Build Include="dbo\Tables\IaaS_DB.sql" />
     <Build Include="dbo\Tables\IaaS_API.sql" />
-    <None Include="Scripts\create-tables.sql" />
-    <None Include="Scripts\AzureCostCalculatorDB.sql" />
-    <None Include="Scripts\import-tables.sql" />
-    <None Include="Scripts\update-tables.sql" />
+    <None Include="Scripts\SeedTestData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="read-me-db.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\PostDeployment.sql" />
   </ItemGroup>
 </Project>
