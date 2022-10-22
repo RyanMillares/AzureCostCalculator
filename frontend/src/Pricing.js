@@ -109,7 +109,7 @@ function PricingContent() {
         const name = JSON.parse(apiServerNameObj);
         const apiServerName = name.serverName;
         let postUrl = "https://" + apiServerName + ":7056/api/PaaSWeb";
-        postUrl += ("?pwid=9e460b38-e0ce-48ed-abaf-d0cfa28c3ebf&name=PutTesting&cpu=1&ram=5&storage=12&cost=42")
+        postUrl += ("?pwid=2DE29B11-1F25-4D21-B860-05BFC02322DF&name=NewTest&cpu=1&ram=5&storage=12&cost=42")
         axios.put(postUrl, {
             headers: {
                 //'Content-Type': 'application/x-www-form-urlencoded',
@@ -444,11 +444,12 @@ function PricingContent() {
 
                             <Card>
 
-                                <CardHeader
+                                <CardHeader style={{ maxHeight: '64px' } }
                                     title='PaaS'
                                     titleTypographyProps={{ align: 'center' }}
                                     subheaderTypographyProps={{
                                         align: 'center',
+                                        
                                     }}
                                     sx={{
                                         backgroundColor: (theme) =>
@@ -458,7 +459,7 @@ function PricingContent() {
                                     }}
                                     action={
                                         <DropdownMenu
-                                            state={2}
+                                            state={2 }
                                         />
 
                                     }
@@ -625,7 +626,8 @@ function PricingContent() {
                                 </>
                             )
                         }
-                        <Button variant="outlined" onClick={() => editRecord()}>Put Value</Button>&nbsp;&nbsp;
+                        <Button variant="outlined" onClick={() => editRecord()}>Edit Record</Button>&nbsp;&nbsp;
+
 
 
 

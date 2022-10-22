@@ -180,6 +180,7 @@ export default function AddPopup({ createMode}) {
        
     }
 
+
     // sends the data and clears the input fields, then closes the window
     function submitForm() {
 

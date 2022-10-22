@@ -16,16 +16,16 @@ public class IaaSAPIController : ControllerBase
     
     public IaaSAPIController(IIaaSAPIRepository repo)
     {
-        this.repo = repo;
+        _repo = repo;
     }
 
-    private IIaaSAPIRepository repo;
+    private readonly IIaaSAPIRepository _repo;
 
     [HttpGet]
     // Returns a list of all the IaaS API plans
     public async Task<List<IaaSAPIPlan>> GetIaaSAPIPlan()
     {
-        return await repo.GetIaaSAPIPlans();
+        return await _repo.GetIaaSAPIPlans();
     }
     [HttpPost]
     public async Task<IActionResult> Post(string vm, int cpu, int ram, int storage, int cost)
