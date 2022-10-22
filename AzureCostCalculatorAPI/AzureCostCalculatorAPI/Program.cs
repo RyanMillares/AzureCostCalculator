@@ -1,30 +1,34 @@
 using AzureCostCalculatorAPI.Respositories;
 
+var corsPolicy = "AnyOrigin";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AnyOrigin", builder =>
+    options.AddPolicy(corsPolicy, builder =>
     {
         builder.AllowAnyOrigin();
-        builder.WithOrigins("localhost:3000",
+        builder.WithOrigins(
+            "localhost:3000",
             "*",
-            "http://localhost:3000");
+            "http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
-
+// Setup services
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IIaaSAPIRepository, IaaSAPIRepository>();
-var app = builder.Build();
-app.UseCors("AnyOrigin");
 
 // Configure the HTTP request pipeline.
+var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -32,9 +36,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors(corsPolicy);
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
