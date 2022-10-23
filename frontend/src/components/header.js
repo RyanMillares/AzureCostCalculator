@@ -14,6 +14,7 @@ import {
     NavbarText,
 } from 'reactstrap';
 
+import logo from './../img/avanade-logo.png';
 function Header(args) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -22,7 +23,21 @@ function Header(args) {
     return (
         <div>
             <Navbar {...args} color="primary">
-                <NavbarBrand href="/">Azure Cost Calculator</NavbarBrand>
+
+                <NavbarBrand href="/">
+                    <img
+                        alt="Avanade Logo"
+                        src={logo}
+                        style={{
+                            height: 40,
+                            width: 40
+                        }}
+                    />
+                    <span className="nav-text">
+                        Azure Cost Calculator
+                    </span>
+
+                </NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="me-auto" navbar>
