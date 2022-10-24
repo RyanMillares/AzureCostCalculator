@@ -10,7 +10,11 @@ import '../styles.css';
 import AddPopup from '../components/AddPopup';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Typography from '@mui/material/Typography';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 
 
 export default function DropdownMenu({state}) {

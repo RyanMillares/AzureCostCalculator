@@ -8,6 +8,8 @@ import AppBar from '@mui/material/AppBar';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import Popup from 'reactjs-popup';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 //import 'reactjs-popup/dist/index.css';
 import './styles.css';
 
