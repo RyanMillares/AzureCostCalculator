@@ -3,7 +3,7 @@ import {
     Row,
     Col
 } from 'reactstrap';
-import Pricing from '../Pricing2';
+import Pricing from './../components/Pricing';
 import Header from './header';
 
 const App = () => {

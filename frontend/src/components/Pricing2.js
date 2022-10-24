@@ -26,8 +26,8 @@ import TextField from '@mui/material/TextField';
 //import Avatar from '@mui/material/Avatar';
 // import Logo from './AvanadeLogo.png';
 
-import { getToggle, setToggle } from './ToggleContext'
-import TestComponent from './components/TestComponent'
+import { getToggle, setToggle } from '../ToggleContext'
+import TestComponent from './TestComponent'
 
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
@@ -35,12 +35,12 @@ import FormControl from '@mui/material/FormControl';
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, NavbarBrand } from 'reactstrap';
-import Header from './components/header';
+import Header from './header';
 // end bootstrap
 
 //import globalnames from './globalvars.json' assert {type: 'json' };
-import globalnames from './globalvars.json'
-import AddPopup from './components/AddPopup'
+import globalnames from '../globalvars.json'
+import AddPopup from './AddPopup'
 import ClearIcon from '@mui/icons-material/Clear';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';

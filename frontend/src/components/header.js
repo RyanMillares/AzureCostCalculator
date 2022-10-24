@@ -22,16 +22,13 @@ function Header(args) {
 
     return (
         <div>
-            <Navbar {...args} color="primary">
+            <Navbar {...args} color="primary" dark="true">
 
                 <NavbarBrand href="/">
                     <img
                         alt="Avanade Logo"
                         src={logo}
-                        style={{
-                            height: 40,
-                            width: 40
-                        }}
+
                     />
                     <span className="nav-text">
                         Azure Cost Calculator
