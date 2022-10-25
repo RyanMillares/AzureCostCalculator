@@ -135,19 +135,19 @@ export default function AddPopup({ createMode}) {
 
             // NOTE: IaaS VMs have a specific char limit, IMPLEMENT THIS then delete this comment
             case "IaaSWeb":
-                return (inputFirst.length > 0 &&
+                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
                     (!isNaN(inputSecond) && inputSecond > 0) &&
                     (!isNaN(inputThird) && inputThird > 0) &&
                     (!isNaN(inputFourth) && inputFourth > 0) &&
                     (!isNaN(inputFifth) && inputFifth > 0))
             case "IaaSApi":
-                return (inputFirst.length > 0 &&
+                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
                     (!isNaN(inputSecond) && inputSecond > 0) &&
                     (!isNaN(inputThird) && inputThird > 0) &&
                     (!isNaN(inputFourth) && inputFourth > 0) &&
                     (!isNaN(inputFifth) && inputFifth > 0))
             case "IaaSDB":
-                return (inputFirst.length > 0 &&
+                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
                     (!isNaN(inputSecond) && inputSecond > 0) &&
                     (!isNaN(inputThird) && inputThird > 0) &&
                     (!isNaN(inputFourth) && inputFourth > 0) &&
@@ -225,6 +225,7 @@ export default function AddPopup({ createMode}) {
 
     return (
         <>
+            
             {
                 true && (
                     <Card style={{

@@ -8,12 +8,16 @@ import Popup from 'reactjs-popup';
 //import 'reactjs-popup/dist/index.css';
 import '../styles.css';
 import AddPopup from '../components/AddPopup';
+import EditPopup from '../components/EditPopup';
+
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Typography from '@mui/material/Typography';
 import Dropdown from 'react-bootstrap/Dropdown';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CreateIcon from '@mui/icons-material/Create';
 
 
 
@@ -42,24 +46,24 @@ export default function DropdownMenu({state}) {
 
     return (
         <>
-            <div className="dropdown dropdown-6">
-                <div>
-                   ...
-                </div>
-                <div class="dropdown_menu dropdown_menu--animated dropdown_menu-6">
-                    <div class="dropdown_item-2 responsive_text4" id="fillerItem"><Popup
+            <Dropdown>
+                <Dropdown.Toggle variant="success" style={{ backgroundColor: '#FF5800', border: 'none', boxShadow:  '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)'}} id="dropdown-basic">
+                    <SettingsIcon sx={{ color: 'white' }}></SettingsIcon> 
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item><Popup
 
                         trigger={
-                            <Button title={'Add ' + (state == 1 ? 'Lift-And-Shift' : 'PaaS') + ' Options'} variant="contained"
-                            //onClick={() => TestToggle(2)}
-
-                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+                            <div title={'Add ' + (state == 1 ? 'Lift-And-Shift' : 'PaaS') + ' Options'}>
+                                <AddIcon sx={{ color: '#FF5800' }}></AddIcon> <a style={{ fontFamily: "Segoe UI Light", color: '#FF5800' }}> Add Options</a>
+                            </div>
                         }
                         modal
                         nested
                     >
                         {close => (
-                            <div className="modal">
+                            <div className="modal1">
                                 <button className="close" onClick={close} >
                                     &times;
                                 </button>
@@ -89,14 +93,52 @@ export default function DropdownMenu({state}) {
                                 }
                             </div>
                         )}
-                    </Popup></div>
-                    <div class="dropdown_item-5 responsive_text4" style={{ borderRadius: '0px 0px 10px 10px' }} id="dropItem">
-                        <button className="text-white-800" >
-                            Edit Options
-                        </button>
-                    </div>
-                </div>
-            </div>
+                    </Popup></Dropdown.Item>
+                    <Dropdown.Item><Popup
+
+                        trigger={
+                            <div title={'Edit ' + (state == 1 ? 'Lift-And-Shift' : 'PaaS') + ' Options'}>
+                                <CreateIcon sx={{ color: '#FF5800' }}></CreateIcon> <a style={{ fontFamily: "Segoe UI Light", color: '#FF5800' }}> Edit Options</a>
+                            </div>
+                        }
+                        modal
+                        nested
+                    >
+                        {close => (
+                            <div className="modal1">
+                                <button className="close" onClick={close} >
+                                    &times;
+                                </button>
+                                <EditPopup
+                                    createMode={state}
+
+                                />
+
+                                <br />
+                                {
+                                    false && (
+                                        <div className="actions" >
+
+                                            <Button
+                                                variant="outlined"
+                                                className="button"
+                                                onClick={() => {
+                                                    console.log('modal closed ');
+                                                    close();
+                                                }}
+                                            >
+                                                close modal
+                                            </Button>
+                                        </div>
+
+                                    )
+                                }
+                            </div>
+                        )}
+                    </Popup></Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+         
 
 
             

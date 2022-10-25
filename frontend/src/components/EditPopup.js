@@ -24,7 +24,7 @@ import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 
-
+import EditForm from './EditForm';
 import { getToggle, setToggle } from '../ToggleContext'
 import globalnames from '../globalvars.json'
 import Popup from 'reactjs-popup';
@@ -45,7 +45,15 @@ export default function EditPopup({ createMode }) {
             },
         },
     });
+    const AllOptions = {
+        'Web Tier': 'IaaSWeb',
+        'API Tier': 'IaaSApi',
+        'Database Tier': 'IaaSDB',
+        'Website Tier': 'PaaSWeb',
+        'AppService Tier': 'PaaSApp',
+        'Database Tier': 'PaaSDB'
 
+    }
     const IaasOptions = {
         'Web Tier': 'IaaSWeb',
         'API Tier': 'IaaSApi',
@@ -56,23 +64,113 @@ export default function EditPopup({ createMode }) {
         'AppService Tier': 'PaaSApp',
         'Database Tier': 'PaaSDB'
     }
+    const inputNames = {
+        'IaaSWeb': ['VM', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'IaaSApi': ['VM', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'IaaSDB': ['VM', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'PaaSWeb': ['Name', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'PaaSApp': ['Name', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'PaaSDB': ['Type', 'Hardware', 'Storage', 'Instance', 'Cost']
+    }
+    const idNames = {
+        'IaaSWeb': 'iwid',
+        'IaaSApi': 'iaid',
+        'IaaSDB': 'idid',
+        'PaaSWeb': 'pwid',
+        'PaaSApp': 'paid',
+        'PaaSDB': 'pdid'
+    }
+
     const [serverSizes, setSizes] = useState({})
     const [selectedOption, setOption] = useState("")
     const [selectedTier, setTier] = useState({})
 
     const [data, setData] = useState({})
+    // input fields
+    const [inputFirst, setFirst] = useState("")
+    const [inputSecond, setSecond] = useState("")
+    const [inputThird, setThird] = useState("")
+    const [inputFourth, setFourth] = useState("")
+    const [inputFifth, setFifth] = useState("")
 
+    function validToSubmit(option) {
+        // return to this and validate even harder
+        switch (option) {
+            case "PaaSWeb":
+                return (inputFirst.length > 0 &&
+                    (!isNaN(inputSecond) && inputSecond > 0) &&
+                    (!isNaN(inputThird) && inputThird > 0) &&
+                    (!isNaN(inputFourth) && inputFourth > 0) &&
+                    (!isNaN(inputFifth) && inputFifth > 0))
+
+            case "PaaSApp":
+                return (inputFirst.length > 0 &&
+                    (!isNaN(inputSecond) && inputSecond > 0) &&
+                    (!isNaN(inputThird) && inputThird > 0) &&
+                    (!isNaN(inputFourth) && inputFourth > 0) &&
+                    (!isNaN(inputFifth) && inputFifth > 0))
+            case "PaaSDB":
+                return (inputFirst.length > 0 &&
+                    (inputSecond.length > 0) &&
+                    (inputThird.length > 0) &&
+                    (inputFourth.length > 0) &&
+                    (!isNaN(inputFifth) && inputFifth > 0))
+
+            // NOTE: IaaS VMs have a specific char limit, IMPLEMENT THIS then delete this comment
+            case "IaaSWeb":
+                return (inputFirst.length > 0 &&
+                    (!isNaN(inputSecond) && inputSecond > 0) &&
+                    (!isNaN(inputThird) && inputThird > 0) &&
+                    (!isNaN(inputFourth) && inputFourth > 0) &&
+                    (!isNaN(inputFifth) && inputFifth > 0))
+            case "IaaSApi":
+                return (inputFirst.length > 0 &&
+                    (!isNaN(inputSecond) && inputSecond > 0) &&
+                    (!isNaN(inputThird) && inputThird > 0) &&
+                    (!isNaN(inputFourth) && inputFourth > 0) &&
+                    (!isNaN(inputFifth) && inputFifth > 0))
+            case "IaaSDB":
+                return (inputFirst.length > 0 &&
+                    (!isNaN(inputSecond) && inputSecond > 0) &&
+                    (!isNaN(inputThird) && inputThird > 0) &&
+                    (!isNaN(inputFourth) && inputFourth > 0) &&
+                    (!isNaN(inputFifth) && inputFifth > 0))
+            default:
+                return false
+        }
+    }
+
+    function ClearFields() {
+        setFirst("")
+        setSecond("")
+        setThird("")
+        setFourth("")
+        setFifth("")
+    }
+    function changeOption(category) {
+        setTier({})
+
+        setOption(AllOptions[category])
+        console.log(AllOptions[category])
+        ClearFields()
+    }
     
     function isNullUndefEmptyStr(obj) {
         Object.values(obj).every(value => {
             // check for multiple conditions
-            if (value === null || value === undefined || value === '') {
+            if (Object.keys(obj).length == 0) {
                 return true;
             }
             return false;
         });
     }
+    function submitForm() {
 
+    }
+    function getIdentifier(option) {
+
+    }
+    console.log(selectedTier)
 
     useEffect(() => {
         // find future solution for rerendering
@@ -107,7 +205,7 @@ export default function EditPopup({ createMode }) {
                 'IaaSWeb': values[2].data.sort((a, b) => a.cost - b.cost),
                 'PaaSApp': values[3].data.sort((a, b) => a.cost - b.cost),
                 'PaaSDB': values[4].data.sort((a, b) => a.cost - b.cost),
-                'PaaSDB': values[5].data.sort((a, b) => a.cost - b.cost)
+                'PaaSWeb': values[5].data.sort((a, b) => a.cost - b.cost)
 
 
 
@@ -180,6 +278,7 @@ export default function EditPopup({ createMode }) {
                         </FormControl>
                     </Grid>
 
+
                 </Grid>
                 <br />
                 {
@@ -207,10 +306,10 @@ export default function EditPopup({ createMode }) {
                                         variant="outlined"
                                     >
                                         {
-                                            data[selectedOption].map(option => {
-                                                return <MenuItem value={option[1} onClick={() => setTier(option)}>{option[1}</MenuItem>
+                                            data[selectedOption].map(tier => {
+                                                return <MenuItem value={tier[inputNames[selectedOption][0].toLowerCase()] + ", " + "$" + tier.cost + tier[idNames[selectedOption].toLowerCase()]} onClick={() => setTier(tier)}>{tier[inputNames[selectedOption][0].toLowerCase()] + ", " + "$" + tier.cost}</MenuItem>
 
-                                            }
+                                            })
 
 
                                         }
@@ -226,103 +325,24 @@ export default function EditPopup({ createMode }) {
 
                 }
                 {
-                    <>
-                        <Grid>
-                            <Typography sx={{
-                                fontFamily: 'Segoe UI Light',
-                                fontWeight: 'bold',
-                                verticalAlign: 'middle',
-                                textAlign: 'center',
+                    Object.keys(selectedTier).length != 0 && (
+                        <>
+                            <EditForm
+                                data={selectedTier}
+                                option={selectedOption}
+                            />
+                        </>
+                        )
 
-                            }}>
-                                Add {getCategory(selectedOption)} </Typography>
-                        </Grid><br />
-
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
-
-
-                            <Grid style={{
-                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                alignItems: 'center'
-                            }}>
-                                <Typography sx={{
-                                    fontFamily: 'Segoe UI Light',
-                                    verticalAlign: 'middle',
-                                    textAlign: 'center',
-
-                                }}>
-                                    {inputNames[selectedOption][0]} </Typography>&nbsp;
-                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputFirst} label={inputNames[selectedOption][0]} onChange={(e) => setFirst(e.target.value)} variant="outlined" />
-                            </Grid>
-                            <Grid style={{
-                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                alignItems: 'center'
-                            }}>
-                                <Typography sx={{
-                                    fontFamily: 'Segoe UI Light',
-                                    verticalAlign: 'middle',
-                                    textAlign: 'center',
-
-                                }}>
-                                    {inputNames[selectedOption][1]} </Typography>&nbsp;
-                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputSecond} label={inputNames[selectedOption][1]} onChange={(e) => setSecond(e.target.value)} variant="outlined" />
-                            </Grid>
-                            <Grid style={{
-                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                alignItems: 'center'
-                            }}>
-                                <Typography sx={{
-                                    fontFamily: 'Segoe UI Light',
-                                    verticalAlign: 'middle',
-                                    textAlign: 'center',
-
-                                }}>
-                                    {inputNames[selectedOption][2]} </Typography>&nbsp;
-                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputThird} label={inputNames[selectedOption][2]} onChange={(e) => setThird(e.target.value)} variant="outlined" />
-                            </Grid>
-                            <Grid style={{
-                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                alignItems: 'center'
-                            }}>
-                                <Typography sx={{
-                                    fontFamily: 'Segoe UI Light',
-                                    verticalAlign: 'middle',
-                                    textAlign: 'center',
-
-                                }}>
-                                    {inputNames[selectedOption][3]} </Typography>&nbsp;
-                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputFourth} label={inputNames[selectedOption][3]} onChange={(e) => setFourth(e.target.value)} variant="outlined" />
-                            </Grid>
-                            <Grid style={{
-                                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
-                                alignItems: 'center'
-                            }}>
-                                <Typography sx={{
-                                    fontFamily: 'Segoe UI Light',
-                                    verticalAlign: 'middle',
-                                    textAlign: 'center',
-
-                                }}>
-                                    {inputNames[selectedOption][4]} </Typography>&nbsp;
-                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputFifth} label={inputNames[selectedOption][4]} onChange={(e) => setFifth(e.target.value)} variant="outlined" />
-                            </Grid>
-
-                        </div>
-
-                    </>
                 }
 
                 <Grid container sx={{ mt: 2 }}>
                     <Grid item xs={12} md={12}>
 
                         <Typography variant="h6" align="center" color="text.secondary">
-
+                            
                         </Typography>
                     </Grid>
-                </Grid>
-                <Grid style={{ float: 'right' }}>
-                    <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'} onClick={() => submitForm()}>Add Option</Button>
-
                 </Grid>
 
             </CardContent>

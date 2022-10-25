@@ -1,10 +1,10 @@
-.modal {
+.modal1 {
     font-size: 12px;
     border-radius: 4px;
     box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 }
 
-    .modal > .header {
+    .modal1 > .header {
         width: 100%;
         border-bottom: 1px solid gray;
         font-size: 18px;
@@ -12,12 +12,12 @@
         padding: 5px;
     }
 
-    .modal > .content {
+    .modal1 > .content {
         width: 100%;
         padding: 10px 5px;
     }
 
-    .modal > .actions {
+    .modal1 > .actions {
         width: 100%;
         padding: 10px 10px;
         margin: auto;
@@ -25,7 +25,7 @@
 
     }
 
-    .modal > .close {
+    .modal1 > .close {
         cursor: pointer;
         position: absolute;
         display: block;
@@ -41,7 +41,7 @@
         border-color: #FF9900;
         transition: background 100ms ease-in-out, border-color 100ms ease-in-out;
     }
-        .modal > .close:hover {
+        .modal1 > .close:hover {
             background-color: #FFF8F5;
             border-color: #FF5800;
             transition: background 250ms ease-in-out, border-color 250ms ease-in-out;

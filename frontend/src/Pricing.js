@@ -317,7 +317,7 @@ function PricingContent() {
                                             nested
                                         >
                                             {close => (
-                                                <div className="modal">
+                                                <div className="modal1">
                                                     <button className="close" onClick={close} >
                                                         &times;
                                                     </button>
