@@ -61,15 +61,8 @@ namespace AzureCostCalculatorAPI.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> Put(Guid pwid, string name, int cpu, int ram, int storage, int cost)
+        public async Task<IActionResult> Put(PaaSWebPlan plan)
         {
-            PaaSWebPlan plan = new PaaSWebPlan();
-            plan.PWID = pwid;
-            plan.Name = name;
-            plan.CPU = cpu;
-            plan.RAM = ram;
-            plan.Storage = storage;
-            plan.Cost = cost;
 
             string query = "UPDATE PaaS_Web SET name = @name, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE pwid = @pwid";
 

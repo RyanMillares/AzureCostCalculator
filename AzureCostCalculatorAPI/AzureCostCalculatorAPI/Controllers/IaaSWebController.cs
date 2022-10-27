@@ -67,5 +67,20 @@ namespace AzureCostCalculatorAPI.Controllers
             return Ok();
 
         }
+        [HttpPut]
+        public async Task<IActionResult> Put(IaaSWebPlan plan)
+        {
+
+            string query = "UPDATE IaaS_Web SET vm = @vm, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE iwid = @iwid";
+
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+            using (var conn = new SqlConnection(myConnectorString))
+            {
+                await conn.OpenAsync();
+                var affectedRows = await conn.QueryAsync<IaaSWebPlan>(query, plan);
+
+            }
+            return Ok();
+        }
     }
 }

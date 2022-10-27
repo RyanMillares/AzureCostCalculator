@@ -50,4 +50,19 @@ public class IaaSAPIController : ControllerBase
         return Ok();
 
     }
+    [HttpPut]
+    public async Task<IActionResult> Put(IaaSAPIPlan plan)
+    {
+
+        string query = "UPDATE IaaS_API SET vm = @vm, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE iaid = @iaid";
+
+        var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+        using (var conn = new SqlConnection(myConnectorString))
+        {
+            await conn.OpenAsync();
+            var affectedRows = await conn.QueryAsync<IaaSAPIPlan>(query, plan);
+
+        }
+        return Ok();
+    }
 }

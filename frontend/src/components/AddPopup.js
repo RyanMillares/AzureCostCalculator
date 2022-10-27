@@ -70,7 +70,7 @@ export default function AddPopup({ createMode}) {
     const AllOptions = {
         'Web Tier': 'IaaSWeb',
         'API Tier': 'IaaSApi',
-        'Database Tier': 'IaaSDB',
+        'DB Tier': 'IaaSDB',
         'Website Tier': 'PaaSWeb',
         'AppService Tier': 'PaaSApp',
         'Database Tier': 'PaaSDB'
@@ -79,7 +79,7 @@ export default function AddPopup({ createMode}) {
     const IaasOptions = {
         'Web Tier': 'IaaSWeb',
         'API Tier': 'IaaSApi',
-        'Database Tier': 'IaaSDB'
+        'DB Tier': 'IaaSDB'
     }
     const PaasOptions = {
         'Website Tier': 'PaaSWeb',
@@ -175,6 +175,7 @@ export default function AddPopup({ createMode}) {
         })
         // remove the last & at end
         const postString = postUrl.slice(0, -1)
+        console.log(postString)
         axios.post(postString)
 
        
@@ -188,7 +189,7 @@ export default function AddPopup({ createMode}) {
         alert("New Tier Added!")
 
         clearAll()
-        window.location.reload()
+        //window.location.reload()
     }
 
     // sets both the current option and category

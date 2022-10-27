@@ -164,9 +164,7 @@ export default function EditPopup({ createMode }) {
             return false;
         });
     }
-    function submitForm() {
 
-    }
     function getIdentifier(option) {
 
     }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
+import globalnames from '../globalvars.json'
 
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
@@ -29,12 +30,12 @@ export default function EditPopup({ data, option }) {
     const [editFourth, setFourthEdit] = useState("")
     const [editFifth, setFifthEdit] = useState("")
     const inputNames = {
-        'IaaSWeb': ['iwid', 'VM', 'CPU', 'RAM', 'Storage', 'Cost'],
-        'IaaSApi': ['iaid', 'VM', 'CPU', 'RAM', 'Storage', 'Cost'],
-        'IaaSDB': ['idid', 'VM', 'CPU', 'RAM', 'Storage', 'Cost'],
-        'PaaSWeb': ['pwid', 'Name', 'CPU', 'RAM', 'Storage', 'Cost'],
-        'PaaSApp': ['paid', 'Name', 'CPU', 'RAM', 'Storage', 'Cost'],
-        'PaaSDB': ['pdid', 'Type', 'Hardware', 'Storage', 'Instance', 'Cost']
+        'IaaSWeb': ['IWID', 'VM', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'IaaSApi': ['IAID', 'VM', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'IaaSDB': ['IDID', 'VM', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'PaaSWeb': ['PWID', 'Name', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'PaaSApp': ['PAID', 'Name', 'CPU', 'RAM', 'Storage', 'Cost'],
+        'PaaSDB': ['PDID', 'Type', 'Hardware', 'Storage', 'Instance', 'Cost']
     }
 
     function switchToEdit() {
@@ -68,6 +69,20 @@ export default function EditPopup({ data, option }) {
 
     // Confirm Edit button should call this
     function submitEdit() {
+        const apiServerNameObj = JSON.stringify(globalnames);
+
+        const name = JSON.parse(apiServerNameObj);
+        const apiServerName = name.serverName;
+        let putUrl = "https://" + apiServerName + ":7056/api/" + option;
+        const newEdits = [uuid, editFirst, editSecond, editThird, editFourth, editFifth]
+
+        let putObj = {}
+        
+        inputNames[option].forEach((label, index) => {
+            putObj[label] = newEdits[index]
+        })
+        console.log(putObj)
+        axios.put(putUrl, putObj)
 
         alert("Some notification about editing")
         switchToView()
@@ -91,44 +106,44 @@ export default function EditPopup({ data, option }) {
         // return to this and validate even harder
         switch (option) {
             case "PaaSWeb":
-                return (inputFirst.length > 0 &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
+                return (editFirst.length > 0 &&
+                    (!isNaN(editSecond) && editSecond > 0) &&
+                    (!isNaN(editThird) && editThird > 0) &&
+                    (!isNaN(editFourth) && editFourth > 0) &&
+                    (!isNaN(editFifth) && editFifth > 0))
 
             case "PaaSApp":
-                return (inputFirst.length > 0 &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
+                return (editFirst.length > 0 &&
+                    (!isNaN(editSecond) && editSecond > 0) &&
+                    (!isNaN(editThird) && editThird > 0) &&
+                    (!isNaN(editFourth) && editFourth > 0) &&
+                    (!isNaN(editFifth) && editFifth > 0))
             case "PaaSDB":
-                return (inputFirst.length > 0 &&
-                    (inputSecond.length > 0) &&
-                    (inputThird.length > 0) &&
-                    (inputFourth.length > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
+                return (editFirst.length > 0 &&
+                    (editSecond.length > 0) &&
+                    (editThird.length > 0) &&
+                    (editFourth.length > 0) &&
+                    (!isNaN(editFifth) && editFifth > 0))
 
             // NOTE: IaaS VMs have a specific char limit, IMPLEMENT THIS then delete this comment
             case "IaaSWeb":
-                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
+                return ((editFirst.length > 0 && editFirst.length < 8) &&
+                    (!isNaN(editSecond) && editSecond > 0) &&
+                    (!isNaN(editThird) && editThird > 0) &&
+                    (!isNaN(editFourth) && editFourth > 0) &&
+                    (!isNaN(editFifth) && editFifth > 0))
             case "IaaSApi":
-                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
+                return ((editFirst.length > 0 && editFirst.length < 8) &&
+                    (!isNaN(editSecond) && editSecond > 0) &&
+                    (!isNaN(editThird) && editThird > 0) &&
+                    (!isNaN(editFourth) && editFourth > 0) &&
+                    (!isNaN(editFifth) && editFifth > 0))
             case "IaaSDB":
-                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
+                return ((editFirst.length > 0 && editFirst.length < 8) &&
+                    (!isNaN(editSecond) && editSecond > 0) &&
+                    (!isNaN(editThird) && editThird > 0) &&
+                    (!isNaN(editFourth) && editFourth > 0) &&
+                    (!isNaN(editFifth) && editFifth > 0))
             default:
                 return false
         }

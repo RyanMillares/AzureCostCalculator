@@ -48,5 +48,20 @@ namespace AzureCostCalculatorAPI.Controllers
 
 
         }
+        [HttpPut]
+        public async Task<IActionResult> Put(PaaSDBPlan plan)
+        {
+
+            string query = "UPDATE PaaS_DB SET type = @type, hardware = @hardware, instance = @instance, storage = @storage, cost = @cost WHERE pdid = @pdid";
+
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+            using (var conn = new SqlConnection(myConnectorString))
+            {
+                await conn.OpenAsync();
+                var affectedRows = await conn.QueryAsync<PaaSDBPlan>(query, plan);
+
+            }
+            return Ok();
+        }
     }
 }

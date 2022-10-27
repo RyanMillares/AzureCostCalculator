@@ -157,7 +157,7 @@ function PricingContent() {
         'XL': [30, 33, 36]
     }
 
-    
+
 
     function TestToggle(toggleVal) {
 
@@ -203,7 +203,7 @@ function PricingContent() {
             setPaasWeb(values[5].data.sort((a, b) => a.cost - b.cost));
             setServerSizes(values[6].data);
         })
-        
+
     }, [getToggle()])
 
     return (
@@ -307,47 +307,9 @@ function PricingContent() {
                                                 : theme.palette.grey[700],
                                     }}
                                     action={
-                                        <Popup
-
-                                            trigger={<Button title="Add Lift-And-Shift Options" variant="contained"
-                                            //onClick={() => TestToggle(2)}
-
-                                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>}
-                                            modal
-                                            nested
-                                        >
-                                            {close => (
-                                                <div className="modal1">
-                                                    <button className="close" onClick={close} >
-                                                        &times;
-                                                    </button>
-                                                    <AddPopup
-                                                        createMode={1}
-
-                                                    />
-
-                                                    <br />
-                                                    {
-                                                        false && (
-                                                            <div className="actions" >
-
-                                                                <Button
-                                                                    variant="outlined"
-                                                                    className="button"
-                                                                    onClick={() => {
-                                                                        console.log('modal closed ');
-                                                                        close();
-                                                                    }}
-                                                                >
-                                                                    close modal
-                                                                </Button>
-                                                            </div>
-
-                                                        )
-                                                    }
-                                                </div>
-                                            )}
-                                        </Popup>
+                                        <DropdownMenu
+                                            state={1}
+                                        />
                                     }
                                 />
                                 <CardContent>
@@ -446,12 +408,12 @@ function PricingContent() {
 
                             <Card>
 
-                                <CardHeader style={{ maxHeight: '64px' } }
+                                <CardHeader style={{ maxHeight: '64px' }}
                                     title='PaaS'
                                     titleTypographyProps={{ align: 'center' }}
                                     subheaderTypographyProps={{
                                         align: 'center',
-                                        
+
                                     }}
                                     sx={{
                                         backgroundColor: (theme) =>
@@ -461,7 +423,7 @@ function PricingContent() {
                                     }}
                                     action={
                                         <DropdownMenu
-                                            state={2 }
+                                            state={2}
                                         />
 
                                     }
@@ -495,12 +457,10 @@ function PricingContent() {
                                                 >
                                                     {
                                                         paasApp.map(e => {
-                                                            return <MenuItem value={e.paid} onClick={() => setAppservicePrice(e.cost)}>{e.name} {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
+                                                            return <MenuItem value={e.paid} onClick={() => setAppservicePrice(e.cost)}>{e.name}, {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
                                                         })
                                                     }
-                                                    {/* <MenuItem value="S1" onClick={() => setAppservicePrice(44)}>Standard - S1 1 Core, 1.75 GB RAM, 50 GB Storage, Price: 44</MenuItem>
-                            <MenuItem value="S2" onClick={() => setAppservicePrice(88)}>Standard - S2 2 Cores, 3.5 GB RAM, 50 GB Storage, Price: 88</MenuItem>
-                            <MenuItem value="S3" onClick={() => setAppservicePrice(175)}>Standard - S3 4 Cores, 7 GB RAM, 50 GB Storage, Price: 175</MenuItem> */}
+
                                                 </Select>
                                             </FormControl>
                                         </Grid>
