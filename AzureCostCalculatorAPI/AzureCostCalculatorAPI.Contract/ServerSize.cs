@@ -3,7 +3,7 @@
     public class ServerSize
     {
         public Guid SSid { get; set; }
-        public string? Size { get; set; }
-        public int? Servers { get; set; }
+        public string Size { get; set; } = string.Empty;
+        public int Servers { get; set; }
     }
 }

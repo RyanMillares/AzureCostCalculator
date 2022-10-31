@@ -1,14 +1,9 @@
 ﻿namespace AzureCostCalculatorAPI.Contract
 {
-    public class IaaSWebPlan
+    public class IaaSWebPlan : PlanBase
     {
         public Guid IWID { get; set; }
-        public string? Name { get; set; }    
-        public string? VM { get; set; }
-        public int? CPU { get; set; }
-        public int? RAM { get; set; }
-        public int? Storage { get; set; }
-        public int? Cost { get; set; }
-
+        public string Name { get; set; } = string.Empty;
+        public string VM { get; set; } = string.Empty;
     }
 }

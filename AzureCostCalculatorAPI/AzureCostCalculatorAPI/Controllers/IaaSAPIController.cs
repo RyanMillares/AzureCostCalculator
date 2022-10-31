@@ -1,9 +1,6 @@
 ﻿using AzureCostCalculatorAPI.Contract;
 using AzureCostCalculatorAPI.Respositories;
-using Dapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Data.SqlClient;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,56 +10,53 @@ namespace AzureCostCalculatorAPI.Controllers;
 [ApiController]
 public class IaaSAPIController : ControllerBase
 {
+    private readonly IIaaSAPIRepository _repo;
+    private readonly ILogger<IaaSAPIController> _logger;
     
-    public IaaSAPIController(IIaaSAPIRepository repo)
+    public IaaSAPIController(IIaaSAPIRepository repo, ILogger<IaaSAPIController> logger)
     {
         _repo = repo;
+        _logger = logger;
     }
-
-    private readonly IIaaSAPIRepository _repo;
 
     [HttpGet]
-    // Returns a list of all the IaaS API plans
-    public async Task<List<IaaSAPIPlan>> GetIaaSAPIPlan()
+    public async Task<IActionResult> GetAll()
     {
-        return await _repo.GetIaaSAPIPlans();
+        try
+        {
+            var plans = await _repo.GetAllIaaSApiPlans();
+
+            if (plans is not null && plans.Any())
+            {
+                return Ok(plans);
+            }
+                        
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "TODO: Say something useful.");
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
+
     [HttpPost]
-    public async Task<IActionResult> Post(string vm, int cpu, int ram, int storage, int cost)
+    public IActionResult Create([FromBody] IaaSAPIPlan model)
     {
-        IaaSAPIPlan plan = new IaaSAPIPlan();
-        plan.IAID = Guid.NewGuid();
-        plan.VM = vm;
-        plan.CPU = cpu;
-        plan.RAM = ram;
-        plan.Storage = storage;
-        plan.Cost = cost;
-        String query = "INSERT INTO IaaS_API (iaid, vm,cpu,ram,storage,cost) VALUES (default, @vm, @cpu, @ram, @storage, @cost)";
-
-        var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-        using (var conn = new SqlConnection(myConnectorString))
+        if (!ModelState.IsValid)
         {
-            await conn.OpenAsync();
-            var affectedRows = await conn.QueryAsync<IaaSAPIPlan>(query, plan);
-
+            return BadRequest();
         }
 
-        return Ok();
-
-    }
-    [HttpPut]
-    public async Task<IActionResult> Put(IaaSAPIPlan plan)
-    {
-
-        string query = "UPDATE IaaS_API SET vm = @vm, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE iaid = @iaid";
-
-        var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-        using (var conn = new SqlConnection(myConnectorString))
+        try
         {
-            await conn.OpenAsync();
-            var affectedRows = await conn.QueryAsync<IaaSAPIPlan>(query, plan);
-
+            _repo.CreateIaaSApiPlan(model);
+            return StatusCode(StatusCodes.Status201Created);
         }
-        return Ok();
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "TODO: Say something useful.");
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 }
