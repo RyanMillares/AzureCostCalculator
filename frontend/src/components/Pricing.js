@@ -205,7 +205,20 @@ function PricingContent() {
             <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
             <CssBaseline />
             <ThemeProvider theme={theme}>
-
+                <AppBar
+                    position="static"
+                    color="primary"
+                    elevation={0}
+                    sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+                >
+                    <Toolbar sx={{ flexWrap: 'wrap' }}>
+                        <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+                            Azure Cost Calculator
+                        </Typography>
+                        <img src={logo} alt="Avanade Logo" />
+                        <IconButton ></IconButton>
+                    </Toolbar>
+                </AppBar>
                 <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={6}>

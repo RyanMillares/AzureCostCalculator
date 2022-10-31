@@ -4,9 +4,9 @@ import useForceUpdate from 'use-force-update';
 
 import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
+
 import AddIcon from '@mui/icons-material/Add';
-//import Button from '@mui/material/Button';
+
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -17,7 +17,7 @@ import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import Container from '@mui/material/Container';
+
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
@@ -34,8 +34,17 @@ import FormControl from '@mui/material/FormControl';
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, NavbarBrand } from 'reactstrap';
-import Header from './header';
+import {
+    Button,
+    Input,
+    Form,
+    FormGroup,
+    Label,
+    Container,
+    Row,
+    Col
+} from 'reactstrap';
+
 // end bootstrap
 
 //import globalnames from './globalvars.json' assert {type: 'json' };
@@ -210,345 +219,386 @@ function PricingContent() {
         <React.Fragment>
             <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
             <CssBaseline />
-            <ThemeProvider theme={theme}>
 
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">App Size</InputLabel>
-                    <Select
-                        label="App Size"
-                        variant="outlined"
-                    >
-                        {
-
-                            Object.keys(serverSizes).map(p => {
-                                return <MenuItem
-                                    value={p}
-                                    selected onClick={(e) => {
-                                        setAppSize(p);
-                                        setSizeSelected(true);
-                                    }}
+            <Row>
+                <Col>
+                    <Form>
+                        <FormGroup className='sizing'>
+                            <div className="form-floating">
+                                <Input
+                                    id="app-size"
+                                    name="app_size"
+                                    type="select"
                                 >
-                                    {p}
-                                </MenuItem>
-                            }
-                            )}
+                                    {Object.keys(serverSizes).map(size => {
+                                        return <option
+                                            value={size}
+                                            selected
+                                            onClick={(e) => {
+                                                setAppSize(size);
+                                                setSizeSelected(true);
+                                            }}>
+                                            {size}
+                                        </option>
+                                    }
+                                    )}
+                                </Input>
+                                <Label for="app-size">
+                                    App Size
+                                </Label>
+                            </div>
+                        </FormGroup>
 
-
-                    </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
-                    <Select
-                        label="Number of Servers"
-                        variant="outlined"
-                        disabled={!sizeSelected}
-                    >
-                        {
-                            Object.keys(serverSizes).length > 0 && (
-
-                                serverSizes[appSize].map(p => {
-                                    return <MenuItem
-                                        value={p}
-                                        selected onClick={(e) => {
-                                            setServers(p)
-                                        }}
-                                    >
-                                        {p}
-                                    </MenuItem>
+                        <FormGroup className='sizing'>
+                            <Label for="app-size">
+                                Lift-and-Shift
+                            </Label>
+                            <Input
+                                id="app-size"
+                                name="app_size"
+                                type="select"
+                            >
+                                {Object.keys(serverSizes).map(size => {
+                                    return <option
+                                        value={size}
+                                        selected
+                                        onClick={(e) => {
+                                            setAppSize(size);
+                                            setSizeSelected(true);
+                                        }}>
+                                        {size}
+                                    </option>
                                 }
+                                )}
+                            </Input>
+                        </FormGroup>
+
+
+                    </Form>
+
+                    <Card>
+                        <CardHeader
+                            title="Lift-and-Shift" //IaaS
+                            titleTypographyProps={{ align: 'center' }}
+                            subheaderTypographyProps={{
+                                align: 'center',
+                            }}
+                            sx={{
+                                backgroundColor: (theme) =>
+                                    theme.palette.mode === 'light'
+                                        ? theme.palette.grey[200]
+                                        : theme.palette.grey[700],
+                            }}
+                            action={
+                                <Button title="Add Shift-and-Lift Options" variant="contained"
+                                    onClick={() => TestToggle(1)}
+                                //disabled={getToggle() != 0}
+                                ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+                            }
+                        />
+                        <CardContent>
+                            <Input
+                                type="select"
+                            />
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Web Tier</InputLabel>
+                                <Select
+                                    label="Web Tier"
+                                    variant="outlined"
+                                >
+                                    {
+                                        iaasWeb.map(e => {
+                                            return <MenuItem value={e.vm} onClick={() => setWebPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
+                                        })
+                                    }
+
+                                </Select>
+                            </FormControl>
+
+
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">API Tier</InputLabel>
+                                <Select
+                                    label="API Tier"
+                                    variant="outlined"
+                                >
+                                    {
+                                        iaasApi.map(e => {
+                                            return <MenuItem value={e.vm} onClick={() => setApiPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
+                                        })
+                                    }
+
+                                </Select>
+                            </FormControl>
+
+
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">DB Tier</InputLabel>
+                                <Select
+                                    label="DB Tier"
+                                    variant="outlined"
+                                >
+                                    {
+                                        iaasDb.map(e => {
+                                            return <MenuItem value={e.vm} onClick={() => setDbPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
+                                        })
+                                    }
+
+                                </Select>
+                            </FormControl>
+
+
+                            <Typography variant="h4" align="center">
+                                ${(webPrice * (servers / 3)).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                Web Cost
+                            </Typography>
+
+
+                            <Typography variant="h4" align="center">
+                                ${(apiPrice * (servers / 3)).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                API Cost
+                            </Typography>
+
+                            <Typography variant="h4" align="center">
+                                ${(dbPrice * (servers / 3)).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                DB Cost
+                            </Typography>
+
+
+                            <Typography variant="h2" align="center">
+                                ${((webPrice + apiPrice + dbPrice) * (servers / 3)).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                Monthly Cost
+                            </Typography>
+
+                        </CardContent>
+                        <CardActions>
+                        </CardActions>
+                    </Card>
+                </Col>
+                <Col>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
+                        <Select
+                            label="Number of Servers"
+                            variant="outlined"
+                            disabled={!sizeSelected}
+                        >
+                            {
+                                Object.keys(serverSizes).length > 0 && (
+
+                                    serverSizes[appSize].map(p => {
+                                        return <MenuItem
+                                            value={p}
+                                            selected onClick={(e) => {
+                                                setServers(p)
+                                            }}
+                                        >
+                                            {p}
+                                        </MenuItem>
+                                    }
+                                    )
                                 )
+                            }
+
+                        </Select>
+                    </FormControl>
+                    <Card>
+
+                        <CardHeader
+                            title='PaaS'
+                            titleTypographyProps={{ align: 'center' }}
+                            subheaderTypographyProps={{
+                                align: 'center',
+                            }}
+                            sx={{
+                                backgroundColor: (theme) =>
+                                    theme.palette.mode === 'light'
+                                        ? theme.palette.grey[200]
+                                        : theme.palette.grey[700],
+                            }}
+                            action={
+                                <Button title="Add PaaS Options" variant="contained"
+                                    onClick={() => TestToggle(2)}
+
+                                ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
+                            }
+                        />
+
+
+                        <CardContent>
+
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Website Tier</InputLabel>
+                                <Select
+                                    label="Website Tier"
+                                    variant="outlined"
+                                >
+                                    {
+                                        paasWeb.map(e => {
+                                            return <MenuItem value={e.pwid} onClick={() => setWebsitePrice(e.cost)}>{e.name}, {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
+                                        })
+                                    }
+
+                                </Select>
+                            </FormControl>
+
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">AppService Tier</InputLabel>
+                                <Select
+                                    label="AppService Tier"
+                                    variant="outlined"
+                                >
+                                    {
+                                        paasApp.map(e => {
+                                            return <MenuItem value={e.paid} onClick={() => setAppservicePrice(e.cost)}>{e.name} {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
+                                        })
+                                    }
+
+                                </Select>
+                            </FormControl>
+
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Database Tier</InputLabel>
+                                <Select
+                                    label="Database Tier"
+                                    variant="outlined"
+                                >
+                                    {
+                                        paasDb.map(e => {
+                                            return <MenuItem value={e.pdid} onClick={() => setDatabasePrice(e.cost)}>{e.type}, {e.hardware}, {e.storage} {e.instance}, Price: {e.cost}</MenuItem>
+                                        })
+                                    }
+
+                                </Select>
+                            </FormControl>
+
+
+                            <Typography variant="h4" align="center">
+                                ${(websitePrice).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                Web Cost
+                            </Typography>
+
+                            <Typography variant="h4" align="center">
+                                ${(appservicePrice).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                API Cost
+                            </Typography>
+
+                            <Typography variant="h4" align="center">
+                                ${(databasePrice).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                DB Cost
+                            </Typography>
+
+
+                            <Typography variant="h3" align="center">
+                                ${((websitePrice + appservicePrice + databasePrice)).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                Per Instance
+                            </Typography>
+
+
+
+                            <Typography variant="h6" align="center">
+                                {(instances).toLocaleString()} Instance{Math.abs(instances) != 1 ? 's' : ''}
+                            </Typography>
+                            <div align="center">
+
+                                <IconButton color="primary" title={(instances > 1) ? "Remove Instances" : "Cannot Have Less Than One Instance"} style={{ backgroundColor: ((instances > 1) ? 'white' : '#e8e8e8') }}
+                                    onClick={() => { if (instances > 1) { setInstances((instances - 1)) } }}
+                                >
+                                    <RemoveIcon fontSize="small" sx={{ color: ((instances > 1) ? '#FF5800' : 'darkgray') }} />
+                                </IconButton>&nbsp;
+                                <IconButton color="primary" title="Add Instances" style={{ backgroundColor: 'white' }}
+                                    onClick={() => setInstances((instances + 1))}>
+                                    <AddIcon fontSize="small" sx={{ color: '#FF5800' }} />
+                                </IconButton>
+
+                            </div>
+
+
+
+                            <Grid style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} item xs={12} md={1}>
+                                <b>=</b>
+                            </Grid>
+
+                            <Typography variant="h3" align="center">
+                                ${((websitePrice + appservicePrice + databasePrice) * instances).toLocaleString()}
+                            </Typography>
+                            <Typography variant="h6" align="center" color="text.secondary">
+                                Monthly Cost
+                            </Typography>
+
+
+                        </CardContent>
+                        <CardActions>
+                        </CardActions>
+                    </Card>
+
+                </Col>
+            </Row>
+
+
+
+
+
+
+
+
+
+
+
+
+            {
+                getToggle() > 0 && (
+                    <AddPopup
+                        createMode={getToggle()}
+
+                    />
+                )
+
+            }
+            {
+                false && (
+                    <>
+                        <TextField style={{ flexGrow: '1', marginLeft: '10px' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
+
+                        <Button variant="outlined" onClick={() => TestToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
+                        <Button variant="outlined" onClick={() => alert(getToggle())}>Get Toggle</Button>&nbsp;&nbsp;
+
+                        {
+                            getToggle() == 4 && (
+                                <TestComponent />
+
                             )
                         }
+                    </>
+                )
+            }
+            <Button variant="outlined" onClick={() => editRecord()}>Put Value</Button>&nbsp;&nbsp;
 
 
-                    </Select>
-                </FormControl>
 
 
 
 
-                <Card>
-                    <CardHeader
-                        title="Lift-and-Shift" //IaaS
-                        titleTypographyProps={{ align: 'center' }}
-                        subheaderTypographyProps={{
-                            align: 'center',
-                        }}
-                        sx={{
-                            backgroundColor: (theme) =>
-                                theme.palette.mode === 'light'
-                                    ? theme.palette.grey[200]
-                                    : theme.palette.grey[700],
-                        }}
-                        action={
-                            <Button title="Add Shift-and-Lift Options" variant="contained"
-                                onClick={() => TestToggle(1)}
-                            //disabled={getToggle() != 0}
-                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
-                        }
-                    />
-                    <CardContent>
 
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Web Tier</InputLabel>
-                            <Select
-                                label="Web Tier"
-                                variant="outlined"
-                            >
-                                {
-                                    iaasWeb.map(e => {
-                                        return <MenuItem value={e.vm} onClick={() => setWebPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
-                                    })
-                                }
 
-                            </Select>
-                        </FormControl>
 
 
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">API Tier</InputLabel>
-                            <Select
-                                label="API Tier"
-                                variant="outlined"
-                            >
-                                {
-                                    iaasApi.map(e => {
-                                        return <MenuItem value={e.vm} onClick={() => setApiPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
-                                    })
-                                }
-
-                            </Select>
-                        </FormControl>
-
-
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">DB Tier</InputLabel>
-                            <Select
-                                label="DB Tier"
-                                variant="outlined"
-                            >
-                                {
-                                    iaasDb.map(e => {
-                                        return <MenuItem value={e.vm} onClick={() => setDbPrice(e.cost)}>{e.vm} CPU: {e.cpu}, RAM: {e.ram}, Storage: {e.storage}, Price: {e.cost}</MenuItem>
-                                    })
-                                }
-
-                            </Select>
-                        </FormControl>
-
-
-                        <Typography variant="h4" align="center">
-                            ${(webPrice * (servers / 3)).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            Web Cost
-                        </Typography>
-
-
-                        <Typography variant="h4" align="center">
-                            ${(apiPrice * (servers / 3)).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            API Cost
-                        </Typography>
-
-                        <Typography variant="h4" align="center">
-                            ${(dbPrice * (servers / 3)).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            DB Cost
-                        </Typography>
-
-
-                        <Typography variant="h2" align="center">
-                            ${((webPrice + apiPrice + dbPrice) * (servers / 3)).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            Monthly Cost
-                        </Typography>
-
-                    </CardContent>
-                    <CardActions>
-                    </CardActions>
-                </Card>
-
-
-                <Card>
-
-                    <CardHeader
-                        title='PaaS'
-                        titleTypographyProps={{ align: 'center' }}
-                        subheaderTypographyProps={{
-                            align: 'center',
-                        }}
-                        sx={{
-                            backgroundColor: (theme) =>
-                                theme.palette.mode === 'light'
-                                    ? theme.palette.grey[200]
-                                    : theme.palette.grey[700],
-                        }}
-                        action={
-                            <Button title="Add PaaS Options" variant="contained"
-                                onClick={() => TestToggle(2)}
-
-                            ><AddIcon sx={{ color: 'white' }}></AddIcon></Button>
-                        }
-                    />
-
-
-                    <CardContent>
-
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Website Tier</InputLabel>
-                            <Select
-                                label="Website Tier"
-                                variant="outlined"
-                            >
-                                {
-                                    paasWeb.map(e => {
-                                        return <MenuItem value={e.pwid} onClick={() => setWebsitePrice(e.cost)}>{e.name}, {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
-                                    })
-                                }
-
-                            </Select>
-                        </FormControl>
-
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">AppService Tier</InputLabel>
-                            <Select
-                                label="AppService Tier"
-                                variant="outlined"
-                            >
-                                {
-                                    paasApp.map(e => {
-                                        return <MenuItem value={e.paid} onClick={() => setAppservicePrice(e.cost)}>{e.name} {e.cpu} Core, {e.ram} GB RAM, {e.storage} GB STORAGE, Price: {e.cost}</MenuItem>
-                                    })
-                                }
-
-                            </Select>
-                        </FormControl>
-
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Database Tier</InputLabel>
-                            <Select
-                                label="Database Tier"
-                                variant="outlined"
-                            >
-                                {
-                                    paasDb.map(e => {
-                                        return <MenuItem value={e.pdid} onClick={() => setDatabasePrice(e.cost)}>{e.type}, {e.hardware}, {e.storage} {e.instance}, Price: {e.cost}</MenuItem>
-                                    })
-                                }
-
-                            </Select>
-                        </FormControl>
-
-
-                        <Typography variant="h4" align="center">
-                            ${(websitePrice).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            Web Cost
-                        </Typography>
-
-                        <Typography variant="h4" align="center">
-                            ${(appservicePrice).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            API Cost
-                        </Typography>
-
-                        <Typography variant="h4" align="center">
-                            ${(databasePrice).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            DB Cost
-                        </Typography>
-
-
-                        <Typography variant="h3" align="center">
-                            ${((websitePrice + appservicePrice + databasePrice)).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            Per Instance
-                        </Typography>
-
-
-
-                        <Typography variant="h6" align="center">
-                            {(instances).toLocaleString()} Instance{Math.abs(instances) != 1 ? 's' : ''}
-                        </Typography>
-                        <div align="center">
-
-                            <IconButton color="primary" title={(instances > 1) ? "Remove Instances" : "Cannot Have Less Than One Instance"} style={{ backgroundColor: ((instances > 1) ? 'white' : '#e8e8e8') }}
-                                onClick={() => { if (instances > 1) { setInstances((instances - 1)) } }}
-                            >
-                                <RemoveIcon fontSize="small" sx={{ color: ((instances > 1) ? '#FF5800' : 'darkgray') }} />
-                            </IconButton>&nbsp;
-                            <IconButton color="primary" title="Add Instances" style={{ backgroundColor: 'white' }}
-                                onClick={() => setInstances((instances + 1))}>
-                                <AddIcon fontSize="small" sx={{ color: '#FF5800' }} />
-                            </IconButton>
-
-                        </div>
-
-
-
-                        <Grid style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} item xs={12} md={1}>
-                            <b>=</b>
-                        </Grid>
-
-                        <Typography variant="h3" align="center">
-                            ${((websitePrice + appservicePrice + databasePrice) * instances).toLocaleString()}
-                        </Typography>
-                        <Typography variant="h6" align="center" color="text.secondary">
-                            Monthly Cost
-                        </Typography>
-
-
-                    </CardContent>
-                    <CardActions>
-                    </CardActions>
-                </Card>
-
-
-                {
-                    getToggle() > 0 && (
-                        <AddPopup
-                            createMode={getToggle()}
-
-                        />
-                    )
-
-                }
-                {
-                    false && (
-                        <>
-                            <TextField style={{ flexGrow: '1', marginLeft: '10px' }} id="outlined-basic" label="Toggle Value" onChange={(e) => setVal(e.target.value)} variant="outlined" />
-
-                            <Button variant="outlined" onClick={() => TestToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
-                            <Button variant="outlined" onClick={() => alert(getToggle())}>Get Toggle</Button>&nbsp;&nbsp;
-
-                            {
-                                getToggle() == 4 && (
-                                    <TestComponent />
-
-                                )
-                            }
-                        </>
-                    )
-                }
-                <Button variant="outlined" onClick={() => editRecord()}>Put Value</Button>&nbsp;&nbsp;
-
-
-
-
-
-
-
-
-
-            </ThemeProvider >
         </React.Fragment >
     );
 }
