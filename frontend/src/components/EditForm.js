@@ -81,12 +81,12 @@ export default function EditPopup({ data, option }) {
         inputNames[option].forEach((label, index) => {
             putObj[label] = newEdits[index]
         })
-        console.log(putObj)
         axios.put(putUrl, putObj)
 
-        alert("Some notification about editing")
+        alert("Successfully edited tier!")
         switchToView()
     }
+    // display a confirmation message before returning to tier summary
     function verifyLeaveEdit() {
         if (window.confirm("Are you sure you want to go back? Data will not be saved.")) {
             switchToView()
@@ -102,6 +102,7 @@ export default function EditPopup({ data, option }) {
             editFifth == inputFifth
             )
     }
+    // bsaic data validations
     function validToSubmit(option) {
         // return to this and validate even harder
         switch (option) {

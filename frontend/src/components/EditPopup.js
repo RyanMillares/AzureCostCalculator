@@ -86,89 +86,16 @@ export default function EditPopup({ createMode }) {
     const [selectedTier, setTier] = useState({})
 
     const [data, setData] = useState({})
-    // input fields
-    const [inputFirst, setFirst] = useState("")
-    const [inputSecond, setSecond] = useState("")
-    const [inputThird, setThird] = useState("")
-    const [inputFourth, setFourth] = useState("")
-    const [inputFifth, setFifth] = useState("")
 
-    function validToSubmit(option) {
-        // return to this and validate even harder
-        switch (option) {
-            case "PaaSWeb":
-                return (inputFirst.length > 0 &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
-
-            case "PaaSApp":
-                return (inputFirst.length > 0 &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
-            case "PaaSDB":
-                return (inputFirst.length > 0 &&
-                    (inputSecond.length > 0) &&
-                    (inputThird.length > 0) &&
-                    (inputFourth.length > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
-
-            // NOTE: IaaS VMs have a specific char limit, IMPLEMENT THIS then delete this comment
-            case "IaaSWeb":
-                return (inputFirst.length > 0 &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
-            case "IaaSApi":
-                return (inputFirst.length > 0 &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
-            case "IaaSDB":
-                return (inputFirst.length > 0 &&
-                    (!isNaN(inputSecond) && inputSecond > 0) &&
-                    (!isNaN(inputThird) && inputThird > 0) &&
-                    (!isNaN(inputFourth) && inputFourth > 0) &&
-                    (!isNaN(inputFifth) && inputFifth > 0))
-            default:
-                return false
-        }
-    }
-
-    function ClearFields() {
-        setFirst("")
-        setSecond("")
-        setThird("")
-        setFourth("")
-        setFifth("")
-    }
+    
+    // chooses which option to pull tiers from (paasweb, paasdb, etc)
     function changeOption(category) {
         setTier({})
 
         setOption(AllOptions[category])
         console.log(AllOptions[category])
-        ClearFields()
     }
     
-    function isNullUndefEmptyStr(obj) {
-        Object.values(obj).every(value => {
-            // check for multiple conditions
-            if (Object.keys(obj).length == 0) {
-                return true;
-            }
-            return false;
-        });
-    }
-
-    function getIdentifier(option) {
-
-    }
-    console.log(selectedTier)
 
     useEffect(() => {
         // find future solution for rerendering
