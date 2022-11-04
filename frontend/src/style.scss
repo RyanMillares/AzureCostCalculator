@@ -1,7 +1,9 @@
 // Override default variables before the import
 
 $primary: rgb(255, 88, 0);
-$font-family-base: "Segoe UI Light", "Helvetica Neue";
+$font-family-base: "Segoe UI Light", "Helvetica Neue", "arial", "sans-serif";
 
 
-@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap/scss/bootstrap';
+
+@import './scss/index'

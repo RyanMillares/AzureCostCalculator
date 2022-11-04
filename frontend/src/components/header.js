@@ -30,9 +30,6 @@ function Header(args) {
                         src={logo}
 
                     />
-                    <span className="nav-text">
-                        Azure Cost Calculator
-                    </span>
 
                 </NavbarBrand>
                 <NavbarToggler onClick={toggle} />
