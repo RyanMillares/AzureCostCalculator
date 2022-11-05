@@ -5,27 +5,7 @@ import ReactSlider from 'react-slider';
 import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import AddIcon from '@mui/icons-material/Add';
 
-
-
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import GlobalStyles from '@mui/material/GlobalStyles';
-
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import IconButton from "@mui/material/IconButton";
-import TextField from '@mui/material/TextField';
-//import Avatar from '@mui/material/Avatar';
-// import Logo from './AvanadeLogo.png';
 
 import { getToggle, setToggle } from '../ToggleContext'
 import TestComponent from './TestComponent'
@@ -37,6 +17,8 @@ import FormControl from '@mui/material/FormControl';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
     Button,
+    CardBody,
+    Card,
     Input,
     Form,
     FormGroup,
@@ -47,7 +29,8 @@ import {
     Table,
     Popover,
     PopoverHeader,
-    PopoverBody
+    PopoverBody,
+    Collapse
 } from 'reactstrap';
 
 // end bootstrap
@@ -75,6 +58,11 @@ const theme = createTheme({
 
 
 function PricingContent() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
+
+
     const [appSize, setAppSize] = useState('Small');
     const [servers, setServers] = useState(0);
     const [sizeSelected, setSizeSelected] = useState(false);
@@ -234,10 +222,14 @@ function PricingContent() {
 
 
                     <div className="slider-container">
-
-                        <h1>Server Quantity</h1>
-
-                        <ToggleContent />
+                        <div className="slider-heading">
+                            <h1>Server Quantity</h1>
+                            <Button className='btn-light' onClick={toggle} style={{ marginBottom: '1rem' }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                </svg>
+                            </Button>
+                        </div>
                         <ReactSlider
                             className="horizontal-slider slider"
                             thumbClassName="example-thumb slider-thumb"
@@ -252,11 +244,45 @@ function PricingContent() {
                             min={0}
                             max={50}
                         />
+                        <Collapse isOpen={isOpen} className="server-list">
+                            <Card>
+                                <CardBody>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Lift/Shift</th>
+                                                <th scope="col">Paas</th>
+                                                <th scope="col">Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Virtual Machines Dsv4 Series</td>
+                                                <td>App</td>
+                                                <td>...</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">2</th>
+                                                <td>Virtual Machines Dsv4 Series</td>
+                                                <td>App</td>
+                                                <td>...</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td colspan="2">Virtual Machines Dsv4 Series</td>
+                                                <td>@twitter</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </CardBody>
+                            </Card>
+                        </Collapse>
                     </div>
 
                     <div className="slider-container">
                         <h1>Server Perfomance</h1>
-                        <ToggleContent />
 
                         <ReactSlider
                             className="horizontal-slider slider"
