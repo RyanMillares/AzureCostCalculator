@@ -588,10 +588,6 @@ function PricingContent() {
                                 </>
                             )
                         }
-                        <Button variant="outlined" onClick={() => editRecord()}>Edit Record</Button>&nbsp;&nbsp;
-
-
-
 
 
 
