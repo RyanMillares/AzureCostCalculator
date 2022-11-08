@@ -31,29 +31,27 @@ import {
 
 function PricingContent() {
     const [isOpen, setIsOpen] = useState(false);
+    const toggle = () => setIsOpen(!isOpen);
 
-    const [serverQuantity, setServerQuantity] = useState(5);
-    function updateServer(valueNow) {
+    const [serverQuantity, setServerQuantity] = useState(0);
+    function updateServerQuantity(valueNow) {
         setServerQuantity(valueNow);
     }
 
-    const [serverPerformance, setServerPerformance] = useState(3);
-    const toggle = () => setIsOpen(!isOpen);
+    const [serverPerformance, setServerPerformance] = useState(1);
+    function updateServerPerformance(valueNow) {
+        setServerPerformance(valueNow);
+    }
+
+    const [serverScaling, setServerScaling] = useState(1);
+    function updateServerScaling(valueNow) {
+        setServerScaling(valueNow);
+    }
 
     const vmPrice = 149;
-    //console.log('sq: ', updateServer())
-    useEffect(() => {
-
-
-
-
-
-
-    });
+    const paasApp = 98;
 
     return (
-
-
         <>
             <Row>
                 <Col sm={{
@@ -74,7 +72,7 @@ function PricingContent() {
                             className="horizontal-slider slider"
                             thumbClassName="example-thumb slider-thumb"
                             trackClassName="example-track slider-track"
-                            defaultValue={[6]}
+                            defaultValue={[serverQuantity]}
                             ariaLabel={['Lower thumb']}
                             ariaValuetext={state => `Thumb value ${state.valueNow}`} // TODO Pass state to parent
                             renderThumb={(props, state) => <div {...props}> <span className='value-now'> {serverQuantity}</span>  </div>}
@@ -83,9 +81,7 @@ function PricingContent() {
                             snapDragDisabled={true}
                             min={0}
                             max={50}
-                            // onChange={state => updateServer(state.valueNow)}
-                            onChange={(value, index) => console.log(`onChange: ${JSON.stringify({ value, index })}`)}
-                            onAfterChange={(value, index) => updateServer(value)}
+                            onChange={(value, index) => updateServerQuantity(value)}
                         />
                         <Collapse isOpen={isOpen} className="server-list">
                             <Card>
@@ -131,15 +127,16 @@ function PricingContent() {
                             className="horizontal-slider slider"
                             thumbClassName="example-thumb slider-thumb"
                             trackClassName="example-track slider-track"
-                            defaultValue={[6]}
+                            defaultValue={[serverPerformance]}
                             ariaLabel={['Lower thumb']}
                             ariaValuetext={state => `Thumb value ${state.valueNow}`}
-                            renderThumb={(props, state) => <div {...props}> <span className='value-now'> {state.valueNow}</span>  </div>}
+                            renderThumb={(props, state) => <div {...props}> <span className='value-now'>{serverPerformance}</span>  </div>}
                             pearling
                             minDistance={1}
                             snapDragDisabled={true}
-                            min={0}
+                            min={1}
                             max={6}
+                            onChange={(value, index) => updateServerPerformance(value)}
                         />
 
                     </div>
@@ -150,15 +147,16 @@ function PricingContent() {
                             className="horizontal-slider slider"
                             thumbClassName="example-thumb slider-thumb"
                             trackClassName="example-track slider-track"
-                            defaultValue={[1]}
+                            defaultValue={[serverScaling]}
                             ariaLabel={['Lower thumb']}
                             ariaValuetext={state => `Thumb value ${state.valueNow}`}
-                            renderThumb={(props, state) => <div {...props}> <span className='value-now'> {state.valueNow}</span>  </div>}
+                            renderThumb={(props, state) => <div {...props}> <span className='value-now'> {serverScaling}</span>  </div>}
                             pearling
                             minDistance={1}
                             snapDragDisabled={true}
-                            min={0}
+                            min={1}
                             max={5}
+                            onChange={(value, index) => updateServerScaling(value)}
                         >
 
                         </ReactSlider>
@@ -169,13 +167,16 @@ function PricingContent() {
             <div className="prices">
 
                 <div className="lift-shift">
-                    <h2>Lift-and-Shift Cost: <strong>${vmPrice * serverQuantity * 30}/month</strong></h2>
+                    <h2>Lift-and-Shift Cost: <strong>${new Intl.NumberFormat().format(vmPrice * serverQuantity * serverPerformance * serverScaling * 30)}/month</strong></h2>
                 </div>
                 <div className="paas">
-                    <h2>Paas Cost: <strong>$5200/month</strong></h2>
+                    <h2>Paas Cost: <strong>${new Intl.NumberFormat().format(paasApp * serverQuantity * serverPerformance * serverScaling * 30)}/month</strong></h2>
                 </div>
                 <div className="difference">
-                    <h2>Difference: <strong>$43k/year</strong></h2>
+                    <h2>Difference: <strong>${new Intl.NumberFormat().format(
+                        ((vmPrice * serverQuantity * serverPerformance * serverScaling * 30) - (paasApp * serverQuantity * serverPerformance * serverScaling * 30))
+                        * 12
+                    )}/year</strong></h2>
                 </div>
             </div>
 
