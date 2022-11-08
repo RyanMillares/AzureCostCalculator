@@ -6,6 +6,9 @@ $btn-padding-x: 0;
 $btn-padding-y: 0;
 $btn-active-bg-shade-amount: 0;
 $btn-hover-bg-shade-amount: 0;
+$font-size-base: 1rem;
+$h1-font-size: $font-size-base * 2;
+$h2-font-size: $font-size-base * 1.5;
 
 
 @import '~bootstrap/scss/bootstrap';

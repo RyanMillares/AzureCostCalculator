@@ -1,33 +1,28 @@
 .slider-container {
     padding-top: 100px;
-    padding-bottom: 200px;
+    padding-bottom: 30px;
     position: relative;
 
-    &:after {
-        content: "";
-        display: block;
-        width: 500px;
-        border: 1px solid #eee;
-        position: absolute;
-        bottom: 0;
-        margin-left: 68px;
-    }
 }
 
-.slider-heading * {
-    display: inline-block;
+.slider-heading {
+    display: flex;
+
+    .btn {
+        margin-left: auto;
+    }
 }
 
 .slider-track {
     background-color: silver;
-    height: 20px;
+    height: 10px;
     border-radius: 20px;
     box-shadow: inset 1px 1px 2px #57575780;
 }
 
 .slider-thumb {
-    height: 30px;
-    width: 30px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
     border: none;
     background-color: white;
@@ -59,7 +54,7 @@
     border: 1px solid #eee;
     padding: 10px;
     width: 50%;
-    margin: auto;
+    margin: 150px auto;
 
     h1 {
         background-color: #eee;
