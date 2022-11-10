@@ -36,7 +36,10 @@ function FetchData() {
                 {console.log('items:', items.toString())}
                 {items.Items.map((item, index) => (
                     <li key={index}>
-                        {item.productId} {item.retailPrice}
+                        <div>
+                            {(index === 5 ? item.retailPrice * 24 * 30 : null)}
+                        </div>
+                        {/* {item.productId} {item.retailPrice} */}
                     </li>
                 ))}
             </ul>
