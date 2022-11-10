@@ -1,9 +1,29 @@
 .prices {
-    h2 {
+    background: #eee;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 50%;
+    margin: 150px auto;
+
+    h1 {
+        background-color: #eee;
         display: flex;
+        padding: 5px 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
 
         strong {
             margin-left: auto;
         }
+    }
+}
+
+h2 {
+    display: flex;
+
+    strong {
+        margin-left: auto;
     }
 }
