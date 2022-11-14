@@ -15,6 +15,9 @@ namespace AzureCostCalculatorAPI.Controllers
     [ApiController]
     public class IaasDbController : ControllerBase
     {
+        // CRUD
+        // 
+
         [HttpGet]
         // Returns a list of all the IaaS API plans
         public async Task<List<IaasDbPlan>> GetIaaSDBPlan()
@@ -25,7 +28,7 @@ namespace AzureCostCalculatorAPI.Controllers
             return IaaSDBData.ToList();
         }
         [HttpPost]
-        public async Task<IActionResult> Post(string vm, int cpu, int ram, int storage, int cost)
+        public async Task<IActionResult> CreateIaasDbPlan(string vm, int cpu, int ram, int storage, int cost)
         {
             IaasDbPlan plan = new IaasDbPlan();
             plan.IdId = Guid.NewGuid();
