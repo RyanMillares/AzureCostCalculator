@@ -1,5 +1,6 @@
-﻿using AzureCostCalculatorAPI.Contract;
+﻿using AzureCostCalculatorAPI.Contract.Entities;
 using Dapper;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using System.Data;
@@ -12,22 +13,22 @@ namespace AzureCostCalculatorAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IaaSDBController : ControllerBase
+    public class IaasDbController : ControllerBase
     {
         [HttpGet]
         // Returns a list of all the IaaS API plans
-        public async Task<List<IaaSDBPlan>> GetIaaSDBPlan()
+        public async Task<List<IaasDbPlan>> GetIaaSDBPlan()
         {
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
             using IDbConnection conn = new SqlConnection(myConnectorString);
-            var IaaSDBData = await conn.QueryAsync<IaaSDBPlan>("select * from IaaS_DB");
+            var IaaSDBData = await conn.QueryAsync<IaasDbPlan>("select * from IaaS_DB");
             return IaaSDBData.ToList();
         }
         [HttpPost]
         public async Task<IActionResult> Post(string vm, int cpu, int ram, int storage, int cost)
         {
-            IaaSDBPlan plan = new IaaSDBPlan();
-            plan.IDID = Guid.NewGuid();
+            IaasDbPlan plan = new IaasDbPlan();
+            plan.IdId = Guid.NewGuid();
             plan.VM = vm;
             plan.CPU = cpu;
             plan.RAM = ram;
@@ -39,7 +40,7 @@ namespace AzureCostCalculatorAPI.Controllers
             using (var conn = new SqlConnection(myConnectorString))
             {
                 await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<IaaSDBPlan>(query, plan);
+                var affectedRows = await conn.QueryAsync<IaasDbPlan>(query, plan);
 
             }
 
@@ -47,7 +48,7 @@ namespace AzureCostCalculatorAPI.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> Put(IaaSDBPlan plan)
+        public async Task<IActionResult> Put(IaasDbPlan plan)
         {
 
             string query = "UPDATE IaaS_DB SET vm = @vm, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE idid = @idid";
@@ -56,7 +57,7 @@ namespace AzureCostCalculatorAPI.Controllers
             using (var conn = new SqlConnection(myConnectorString))
             {
                 await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<IaaSDBPlan>(query, plan);
+                var affectedRows = await conn.QueryAsync<IaasDbPlan>(query, plan);
 
             }
             return Ok();

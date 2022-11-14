@@ -1,3 +1,4 @@
+using AzureCostCalculatorAPI.Mappings;
 using AzureCostCalculatorAPI.Respositories;
 
 var corsPolicy = "AnyOrigin";
@@ -19,22 +20,34 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.ReturnHttpNotAcceptable = true;
+}).AddXmlDataContractSerializerFormatters();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IIaaSAPIRepository, IaaSAPIRepository>();
+builder.Services.AddAutoMapper(typeof(DefaultMappingProfile));
+builder.Services.AddScoped<IIaasApiRepository, IaasApiRepository>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
+
+app.UseHttpsRedirection();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+    app.UseExceptionHandler("/error-development");
+}
+else
+{
+    app.UseExceptionHandler("/error");
 }
 
-app.UseHttpsRedirection();
 app.UseCors(corsPolicy);
 app.UseAuthorization();
 app.MapControllers();

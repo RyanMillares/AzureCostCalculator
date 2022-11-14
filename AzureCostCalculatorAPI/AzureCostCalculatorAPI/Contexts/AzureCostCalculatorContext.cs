@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using AzureCostCalculatorAPI.Contract;
 using AzureCostCalculatorAPI.Controllers;
+using AzureCostCalculatorAPI.Contract.Entities;
 
 namespace AzureCostCalculatorAPI.Contexts
 {
@@ -10,11 +11,11 @@ namespace AzureCostCalculatorAPI.Contexts
         public AzureCostCalculatorContext(DbContextOptions<AzureCostCalculatorContext> options) : base(options)
         {
         }
-        public DbSet<PaaSWebPlan> PaasWebs { get; set; }
-        public DbSet<PaaSAppPlan> PaasApps { get; set; }
-        public DbSet<PaaSDBPlan> PaasDbs { get; set; }
-        public DbSet<IaaSWebPlan> IaasWebs { get; set; }
-        public DbSet<IaaSAPIPlan> IaasApis { get; set; }
-        public DbSet<IaaSDBPlan> IaasDbs { get; set; }
+        public DbSet<PaasWebPlan> PaasWebs { get; set; }
+        public DbSet<PaasAppPlan> PaasApps { get; set; }
+        public DbSet<PaasDbPlan> PaasDbs { get; set; }
+        public DbSet<IaasWebPlan> IaasWebs { get; set; }
+        public DbSet<IaasApiPlan> IaasApis { get; set; }
+        public DbSet<IaasDbPlan> IaasDbs { get; set; }
     }
 }

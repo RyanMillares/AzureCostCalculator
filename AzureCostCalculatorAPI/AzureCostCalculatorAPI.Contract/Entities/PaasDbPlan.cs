@@ -1,8 +1,8 @@
-﻿namespace AzureCostCalculatorAPI.Contract
+﻿namespace AzureCostCalculatorAPI.Contract.Entities
 {
-    public class PaaSDBPlan
+    public class PaasDbPlan
     {
-        public Guid PDID { get; set; }
+        public Guid PdId { get; set; }
         public string Type { get; set; } = string.Empty;
         public string Hardware { get; set; } = string.Empty;
         public string Storage { get; set; } = string.Empty;

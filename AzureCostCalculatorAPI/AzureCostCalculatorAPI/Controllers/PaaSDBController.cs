@@ -1,5 +1,6 @@
-﻿using AzureCostCalculatorAPI.Contract;
+﻿using AzureCostCalculatorAPI.Contract.Entities;
 using Dapper;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,23 +11,23 @@ namespace AzureCostCalculatorAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaaSDBController : ControllerBase
+    public class PaasDbController : ControllerBase
     {
         [HttpGet]
         // Returns a list of all the IaaS API plans
-        public async Task<List<PaaSDBPlan>> GetPaaSDBPlan()
+        public async Task<List<PaasDbPlan>> GetPaaSDBPlan()
         {
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
 
             using IDbConnection conn = new SqlConnection(myConnectorString);
-            var PaaSDBData = await conn.QueryAsync<PaaSDBPlan>("select * from PaaS_DB");
+            var PaaSDBData = await conn.QueryAsync<PaasDbPlan>("select * from PaaS_DB");
             return PaaSDBData.ToList();
         }
         [HttpPost]
         public async Task<IActionResult> Post(string type, string hardware, string instance, string storage, int cost)
         {
-            PaaSDBPlan plan = new PaaSDBPlan();
-            plan.PDID = Guid.NewGuid();
+            PaasDbPlan plan = new PaasDbPlan();
+            plan.PdId = Guid.NewGuid();
             plan.Type = type;
             plan.Hardware = hardware;
             plan.Instance = instance;
@@ -38,7 +39,7 @@ namespace AzureCostCalculatorAPI.Controllers
             using (var conn = new SqlConnection(myConnectorString))
             {
                 await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<PaaSDBPlan>(query, plan);
+                var affectedRows = await conn.QueryAsync<PaasDbPlan>(query, plan);
 
             }
 
@@ -49,7 +50,7 @@ namespace AzureCostCalculatorAPI.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> Put(PaaSDBPlan plan)
+        public async Task<IActionResult> Put(PaasDbPlan plan)
         {
 
             string query = "UPDATE PaaS_DB SET type = @type, hardware = @hardware, instance = @instance, storage = @storage, cost = @cost WHERE pdid = @pdid";
@@ -58,7 +59,7 @@ namespace AzureCostCalculatorAPI.Controllers
             using (var conn = new SqlConnection(myConnectorString))
             {
                 await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<PaaSDBPlan>(query, plan);
+                var affectedRows = await conn.QueryAsync<PaasDbPlan>(query, plan);
 
             }
             return Ok();

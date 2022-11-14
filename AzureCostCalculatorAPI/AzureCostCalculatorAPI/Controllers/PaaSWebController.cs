@@ -1,4 +1,4 @@
-﻿using AzureCostCalculatorAPI.Contract;
+﻿using AzureCostCalculatorAPI.Contract.Entities;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -12,27 +12,27 @@ namespace AzureCostCalculatorAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaaSWebController : ControllerBase
+    public class PaasWebController : ControllerBase
     {
         [HttpGet]
         // Returns a list of all the PaaS Website plans
-        public async Task<List<PaaSWebPlan>> GetPaaSWebPlan()
+        public async Task<List<PaasWebPlan>> GetPaaSWebPlan()
         {
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
 
             using IDbConnection conn = new SqlConnection(myConnectorString);
-            var PaaSWebData = await conn.QueryAsync<PaaSWebPlan>("select * from PaaS_Web");
+            var PaaSWebData = await conn.QueryAsync<PaasWebPlan>("select * from PaaS_Web");
             return PaaSWebData.ToList();
         }
 
         [HttpGet("{id}")]
         // Returns the IaaS web plan associated with the given GUID
-        public async Task<PaaSWebPlan> Get(Guid id)
+        public async Task<PaasWebPlan> Get(Guid id)
         {
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
 
             using IDbConnection conn = new SqlConnection(myConnectorString);
-            var plan = await conn.QuerySingleAsync<PaaSWebPlan>("select * from PaaS_Web where pwid = @id", new { id });
+            var plan = await conn.QuerySingleAsync<PaasWebPlan>("select * from PaaS_Web where pwid = @id", new { id });
             return plan;
         }
         [HttpPost]
@@ -40,8 +40,8 @@ namespace AzureCostCalculatorAPI.Controllers
 
         public async Task<IActionResult> Post(string name, int cpu, int ram, int storage, int cost)
         {
-            PaaSWebPlan plan = new PaaSWebPlan();
-            plan.PWID = Guid.NewGuid();
+            PaasWebPlan plan = new PaasWebPlan();
+            plan.PwId = Guid.NewGuid();
             plan.Name = name;
             plan.CPU = cpu;
             plan.RAM = ram;
@@ -53,7 +53,7 @@ namespace AzureCostCalculatorAPI.Controllers
             using (var conn = new SqlConnection(myConnectorString))
             {
                 await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<PaaSWebPlan>(query, plan);
+                var affectedRows = await conn.QueryAsync<PaasWebPlan>(query, plan);
 
             }
  
@@ -61,16 +61,15 @@ namespace AzureCostCalculatorAPI.Controllers
 
         }
         [HttpPut]
-        public async Task<IActionResult> Put(PaaSWebPlan plan)
+        public async Task<IActionResult> Put(PaasWebPlan plan)
         {
-
             string query = "UPDATE PaaS_Web SET name = @name, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE pwid = @pwid";
 
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
             using (var conn = new SqlConnection(myConnectorString))
             {
                 await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<PaaSWebPlan>(query, plan);
+                var affectedRows = await conn.QueryAsync<PaasWebPlan>(query, plan);
 
             }
             return Ok();

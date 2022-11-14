@@ -1,11 +1,10 @@
-﻿using AzureCostCalculatorAPI.Contract;
-using Microsoft.AspNetCore.Mvc;
+﻿using AzureCostCalculatorAPI.Contract.Entities;
 
 namespace AzureCostCalculatorAPI.Respositories
 {
-    public interface IIaaSAPIRepository
+    public interface IIaasApiRepository
     {
-        Task<List<IaaSAPIPlan>> GetAllIaaSApiPlans();
-        void CreateIaaSApiPlan([FromBody] IaaSAPIPlan plan);
+        Task<IEnumerable<IaasApiPlan>> GetIaasApiPlans();
+        void CreateIaasApiPlan(IaasApiPlan plan);
     }
 }

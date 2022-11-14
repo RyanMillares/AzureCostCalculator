@@ -1,62 +1,55 @@
-﻿using AzureCostCalculatorAPI.Contract;
+﻿using AutoMapper;
+using AzureCostCalculatorAPI.DTOs;
+using AzureCostCalculatorAPI.Contract.Entities;
 using AzureCostCalculatorAPI.Respositories;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AzureCostCalculatorAPI.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
-public class IaaSAPIController : ControllerBase
+[Route("api/iaasapi")]
+public class IaasApiController : ControllerBase
 {
-    private readonly IIaaSAPIRepository _repo;
-    private readonly ILogger<IaaSAPIController> _logger;
-    
-    public IaaSAPIController(IIaaSAPIRepository repo, ILogger<IaaSAPIController> logger)
+    private readonly IIaasApiRepository _repo;
+    private readonly IMapper _mapper;
+
+    public IaasApiController(IIaasApiRepository repo, IMapper mapper)
     {
         _repo = repo;
-        _logger = logger;
+        _mapper = mapper;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        try
-        {
-            var plans = await _repo.GetAllIaaSApiPlans();
-
-            if (plans is not null && plans.Any())
-            {
-                return Ok(plans);
-            }
-                        
-            return NotFound();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "TODO: Say something useful.");
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
+    /// <summary>
+    /// Get all IAAS API Plans.
+    /// </summary>
+    /// <returns>A collection of IaasApiPlanGetDtos.</returns>
+    [HttpGet]    
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]    
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<IaasApiPlanGetDto>>> GetIaaSApiPlans()
+    {        
+        var plans = await _repo.GetIaasApiPlans();
+        return plans == null ? NotFound() : Ok(_mapper.Map<IEnumerable<IaasApiPlanGetDto>>(plans));        
     }
 
+    /// <summary>
+    /// Create an IAAS API Plan.
+    /// </summary>
+    /// <param name="plan">IAAS API Plan to create.</param>
+    /// <returns>Status Code 201 if Create succeeds.</returns>
     [HttpPost]
-    public IActionResult Create([FromBody] IaaSAPIPlan model)
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest();
-        }
-
-        try
-        {
-            _repo.CreateIaaSApiPlan(model);
-            return StatusCode(StatusCodes.Status201Created);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "TODO: Say something useful.");
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public ActionResult CreateIaaSApiPlan(IaasApiPlanCreateDto plan)
+    {        
+        _repo.CreateIaasApiPlan(_mapper.Map<IaasApiPlan>(plan));
+        return StatusCode(StatusCodes.Status201Created);     
     }
 }
