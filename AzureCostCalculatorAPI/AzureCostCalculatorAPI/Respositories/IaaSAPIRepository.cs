@@ -1,17 +1,36 @@
-﻿using AzureCostCalculatorAPI.Contract;
+﻿using AzureCostCalculatorAPI.Contract.Entities;
 using Dapper;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace AzureCostCalculatorAPI.Respositories;
 
-public class IaaSAPIRepository : IIaaSAPIRepository
+public class IaasApiRepository : IIaasApiRepository
 {
-    // Returns a list of all the IaaS API plans
-    public async Task<List<IaaSAPIPlan>> GetIaaSAPIPlans()
+    private readonly string _connectionString;
+
+    public IaasApiRepository(IConfiguration config)
     {
-        using IDbConnection conn = new SqlConnection("Server=.;Trusted_Connection=True;Database=AzureResourcesDB;TrustServerCertificate=True;");
-        var IaaSAPIData = await conn.QueryAsync<IaaSAPIPlan>("select * from IaaS_API");
-        return IaaSAPIData.ToList();
+        _connectionString = config.GetConnectionString("SqlConnection");
+    }
+
+    // Returns a list of all the IaaS API plans
+    public async Task<IEnumerable<IaasApiPlan>> GetIaasApiPlans()
+    {
+        using var conn = new SqlConnection(_connectionString);
+        var data = await conn.QueryAsync<IaasApiPlan>("select * from IaaS_API");
+        return data;
+    }
+
+    public async void CreateIaasApiPlan(IaasApiPlan plan)
+    {
+        if (plan is null)
+        {
+            throw new ArgumentNullException(nameof(plan));
+        }
+
+        var query = @"INSERT INTO dbo.IaaS_API (iaid, vm, cpu, ram, storage, cost)
+                        VALUES (default, @vm, @cpu, @ram, @storage, @cost)";
+        using var conn = new SqlConnection(_connectionString);
+        await conn.QueryAsync<IaasApiPlan>(query, plan);
     }
 }
