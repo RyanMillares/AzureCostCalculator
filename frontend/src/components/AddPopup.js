@@ -25,7 +25,7 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 
 
-import { getToggle, setToggle } from '../ToggleContext'
+import { getToggle, setToggle } from './ToggleContext'
 import globalnames from '../globalvars.json'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -34,7 +34,7 @@ import 'reactjs-popup/dist/index.css';
 
 
 
-export default function AddPopup({ createMode}) {
+export default function AddPopup({ createMode }) {
 
     const theme = createTheme({
         typography: {
@@ -108,7 +108,7 @@ export default function AddPopup({ createMode}) {
         return valueToReturn
         //return "Nothing"
     }
-    
+
     // validates whether inputs meet validations for each option
     function validToSubmit(option) {
         // return to this and validate even harder
@@ -178,7 +178,7 @@ export default function AddPopup({ createMode}) {
         console.log(postString)
         axios.post(postString)
 
-       
+
     }
 
 
@@ -226,7 +226,7 @@ export default function AddPopup({ createMode}) {
 
     return (
         <>
-            
+
             {
                 true && (
                     <Card style={{
@@ -303,7 +303,7 @@ export default function AddPopup({ createMode}) {
                                                 textAlign: 'center',
 
                                             }}>
-                                                Add { getCategory(selectedOption) } </Typography>
+                                                Add {getCategory(selectedOption)} </Typography>
                                         </Grid><br />
 
                                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr', gridRowGap: '1em', gridColumnGap: '1em' }}>
@@ -320,7 +320,7 @@ export default function AddPopup({ createMode}) {
 
                                                 }}>
                                                     {inputNames[selectedOption][0]} </Typography>&nbsp;
-                                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={ inputFirst} label={inputNames[selectedOption][0]} onChange={(e) => setFirst(e.target.value)} variant="outlined" />
+                                                <TextField style={{ flexGrow: '1' }} id="outlined-basic" value={inputFirst} label={inputNames[selectedOption][0]} onChange={(e) => setFirst(e.target.value)} variant="outlined" />
                                             </Grid>
                                             <Grid style={{
                                                 display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',
@@ -386,7 +386,7 @@ export default function AddPopup({ createMode}) {
                                 <Grid item xs={12} md={12}>
 
                                     <Typography variant="h6" align="center" color="text.secondary">
-                                       
+
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -399,9 +399,9 @@ export default function AddPopup({ createMode}) {
                         <CardActions>
                         </CardActions>
                     </Card>
-                    )
+                )
 
-            }   
+            }
 
         </>
 

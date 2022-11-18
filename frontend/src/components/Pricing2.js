@@ -26,7 +26,7 @@ import TextField from '@mui/material/TextField';
 //import Avatar from '@mui/material/Avatar';
 // import Logo from './AvanadeLogo.png';
 
-import { getToggle, setToggle } from '../ToggleContext'
+import { getToggle, setToggle } from './ToggleContext'
 import TestComponent from './TestComponent'
 
 import FormControl from '@mui/material/FormControl';

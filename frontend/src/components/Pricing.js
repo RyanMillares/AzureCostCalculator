@@ -11,7 +11,7 @@ import Popup from 'reactjs-popup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 //import 'reactjs-popup/dist/index.css';
-import './styles.css';
+import './../styles.css';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -29,18 +29,18 @@ import InputLabel from '@mui/material/InputLabel';
 import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
 //import Avatar from '@mui/material/Avatar';
-import Logo from './AvanadeLogo.png';
+import Logo from './../img/avanade-logo.png';
 
 import { getToggle, setToggle } from './ToggleContext'
-import TestComponent from './components/TestComponent'
+import TestComponent from './../components/TestComponent'
 
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
 
 //import globalnames from './globalvars.json' assert {type: 'json' };
-import globalnames from './globalvars.json'
-import AddPopup from './components/AddPopup'
-import DropdownMenu from './components/DropdownMenu'
+import globalnames from './../globalvars.json'
+import AddPopup from './../components/AddPopup'
+import DropdownMenu from './../components/DropdownMenu'
 import ClearIcon from '@mui/icons-material/Clear';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
