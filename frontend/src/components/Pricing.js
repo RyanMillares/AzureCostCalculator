@@ -214,73 +214,69 @@ function PricingContent() {
                 <Grid item xs={12} >
                     <h1 style={{ marginTop: "50px", marginBottom: "20px" }}>Azure Cost Calculator</h1>
                 </Grid>
-                <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
+                <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>               <Grid container spacing={4}>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                            <Select
+                                label="App Size"
+                                variant="outlined"
+                            >
+                                {
+
+                                    Object.keys(serverSizes).map(p => {
+                                        return <MenuItem
+                                            value={p}
+                                            selected onClick={(e) => {
+                                                setAppSize(p);
+                                                setSizeSelected(true);
+                                            }}
+                                        >
+                                            {p}
+                                        </MenuItem>
+                                    }
+                                    )}
 
 
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
+                            <Select
+                                label="Number of Servers"
+                                variant="outlined"
+                                disabled={!sizeSelected}
+                            >
+                                {
+                                    Object.keys(serverSizes).length > 0 && (
 
-                    <Grid container spacing={4}>
-                        <Grid item xs={12} md={6}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">App Size</InputLabel>
-                                <Select
-                                    label="App Size"
-                                    variant="outlined"
-                                >
-                                    {
-
-                                        Object.keys(serverSizes).map(p => {
+                                        serverSizes[appSize].map(p => {
                                             return <MenuItem
                                                 value={p}
                                                 selected onClick={(e) => {
-                                                    setAppSize(p);
-                                                    setSizeSelected(true);
+                                                    setServers(p)
                                                 }}
                                             >
                                                 {p}
                                             </MenuItem>
                                         }
-                                        )}
-
-
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
-                                <Select
-                                    label="Number of Servers"
-                                    variant="outlined"
-                                    disabled={!sizeSelected}
-                                >
-                                    {
-                                        Object.keys(serverSizes).length > 0 && (
-
-                                            serverSizes[appSize].map(p => {
-                                                return <MenuItem
-                                                    value={p}
-                                                    selected onClick={(e) => {
-                                                        setServers(p)
-                                                    }}
-                                                >
-                                                    {p}
-                                                </MenuItem>
-                                            }
-                                            )
                                         )
-                                    }
-                                    {
-                                        /* this is the old code, for reference
-                                         *<MenuItem value={numServers[appSize][0]} onClick={() => setServers(parseInt(numServers[appSize][0]))}>{numServers[appSize][0]}</MenuItem>
-                                        this goes 0, 1, 2
-                                         * */
+                                    )
+                                }
+                                {
+                                    /* this is the old code, for reference
+                                     *<MenuItem value={numServers[appSize][0]} onClick={() => setServers(parseInt(numServers[appSize][0]))}>{numServers[appSize][0]}</MenuItem>
+                                    this goes 0, 1, 2
+                                     * */
 
-                                    }
+                                }
 
-                                </Select>
-                            </FormControl>
-                        </Grid>
+                            </Select>
+                        </FormControl>
                     </Grid>
+                </Grid>
                 </Container>
                 <Container maxWidth="xl" component="main">
                     <Grid container spacing={5}>
