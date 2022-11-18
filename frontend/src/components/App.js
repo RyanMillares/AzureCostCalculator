@@ -1,23 +1,21 @@
 import * as React from "react";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
-
+import Pricing from './Pricing';
+import PricingSlider from './PricingSlider';
+import Header from './Header';
+import {
+    Container,
+    Row,
+    Col
+} from 'reactstrap';
+// For reference: https://stackblitz.com/github/remix-run/react-router/tree/main/examples/basic?file=src%2FApp.tsx
 export default function App() {
     return (
         <div>
-
-
-            {/* Routes nest inside one another. Nested route paths build upon
-            parent route paths, and nested route elements render inside
-            parent route elements. See the note about <Outlet> below. */}
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route path="about" element={<About />} />
-                    <Route path="dashboard" element={<Dashboard />} />
-
-                    {/* Using path="*"" means "match anything", so this route
-                acts like a catch-all for URLs that we don't have explicit
-                routes for. */}
+                    <Route index element={<PricingPage />} />
+                    <Route path="pricing-slider" element={<PricingSlider />} />
                     <Route path="*" element={<NoMatch />} />
                 </Route>
             </Routes>
@@ -36,50 +34,21 @@ function Layout() {
                         <Link to="/">Home</Link>
                     </li>
                     <li>
-                        <Link to="/about">About</Link>
-                    </li>
-                    <li>
-                        <Link to="/dashboard">Dashboard</Link>
-                    </li>
-                    <li>
-                        <Link to="/nothing-here">Nothing Here</Link>
+                        <Link to="/pricing-slider">Pricing Slider</Link>
                     </li>
                 </ul>
             </nav>
-
-            <hr />
-
-            {/* An <Outlet> renders whatever child route is currently active,
-          so you can think about this <Outlet> as a placeholder for
-          the child routes we defined above. */}
             <Outlet />
         </div>
     );
 }
 
-function Home() {
+function PricingPage() {
     return (
-        <div>
-            <h2>Home</h2>
-        </div>
+        <Pricing />
     );
 }
 
-function About() {
-    return (
-        <div>
-            <h2>About</h2>
-        </div>
-    );
-}
-
-function Dashboard() {
-    return (
-        <div>
-            <h2>Dashboard</h2>
-        </div>
-    );
-}
 
 function NoMatch() {
     return (
