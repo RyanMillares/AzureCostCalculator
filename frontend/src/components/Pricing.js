@@ -32,7 +32,7 @@ import TextField from '@mui/material/TextField';
 import Logo from './../img/avanade-logo.png';
 
 import { getToggle, setToggle } from './ToggleContext'
-import TestComponent from './../components/TestComponent'
+
 
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
@@ -565,12 +565,6 @@ function PricingContent() {
                                     <Button variant="outlined" onClick={() => TestToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
                                     <Button variant="outlined" onClick={() => alert(getToggle())}>Get Toggle</Button>&nbsp;&nbsp;
 
-                                    {
-                                        getToggle() == 4 && (
-                                            <TestComponent />
-
-                                        )
-                                    }
                                 </>
                             )
                         }
