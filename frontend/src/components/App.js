@@ -3,8 +3,8 @@ import {
     Row,
     Col
 } from 'reactstrap';
-import Pricing from './../components/Pricing';
-import Header from './header';
+import Pricing from './Pricing';
+import Header from './Header';
 
 const App = () => {
 
