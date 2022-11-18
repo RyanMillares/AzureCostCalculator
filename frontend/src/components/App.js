@@ -9,7 +9,7 @@ import {
     Col
 } from 'reactstrap';
 // For reference: https://stackblitz.com/github/remix-run/react-router/tree/main/examples/basic?file=src%2FApp.tsx
-export default function App() {
+const App = () => {
     return (
         <div>
             <Routes>
@@ -26,8 +26,6 @@ export default function App() {
 function Layout() {
     return (
         <div>
-            {/* A "layout route" is a good place to put markup you want to
-          share across all the pages on your site, like navigation. */}
             <nav>
                 <ul>
                     <li>
@@ -60,3 +58,4 @@ function NoMatch() {
         </div>
     );
 }
+export default App;
