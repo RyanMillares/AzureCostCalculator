@@ -29,10 +29,10 @@ import InputLabel from '@mui/material/InputLabel';
 import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
 //import Avatar from '@mui/material/Avatar';
-import logo from './../img/avanade-logo.png';
+import Logo from './AvanadeLogo.png';
 
-import { getToggle, setToggle } from '../ToggleContext'
-import TestComponent from './TestComponent'
+import { getToggle, setToggle } from './ToggleContext'
+import TestComponent from './components/TestComponent'
 
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
@@ -223,8 +223,8 @@ function PricingContent() {
                         </Typography>
                         <img src={Logo} alt="Avanade Logo" />
                         <IconButton ></IconButton>
-                    </Toolbar >
-                </AppBar >
+                    </Toolbar>
+                </AppBar>
                 <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={6}>
@@ -588,17 +588,16 @@ function PricingContent() {
                                 </>
                             )
                         }
-                        <Button variant="outlined" onClick={() => editRecord()}>Put Value</Button>&nbsp;&nbsp;
 
 
 
 
 
-                    </Grid >
-                </Container >
+                    </Grid>
+                </Container>
 
-            </ThemeProvider >
-        </React.Fragment >
+            </ThemeProvider>
+        </React.Fragment>
     );
 }
 
