@@ -1,4 +1,5 @@
 import * as React from "react";
+import Layout from "./Layout";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import Pricing from './Pricing';
 import PricingSlider from './PricingSlider';
@@ -23,23 +24,6 @@ const App = () => {
     );
 }
 
-function Layout() {
-    return (
-        <div>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/pricing-slider">Pricing Slider</Link>
-                    </li>
-                </ul>
-            </nav>
-            <Outlet />
-        </div>
-    );
-}
 
 function PricingPage() {
     return (

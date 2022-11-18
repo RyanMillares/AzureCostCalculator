@@ -211,7 +211,13 @@ function PricingContent() {
             <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
             <CssBaseline />
             <ThemeProvider theme={theme}>
+                <Grid item xs={12} >
+                    <h1 style={{ marginTop: "50px", marginBottom: "20px" }}>Azure Cost Calculator</h1>
+                </Grid>
                 <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
+
+
+
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={6}>
                             <FormControl fullWidth>
