@@ -10,6 +10,9 @@ namespace AzureCostCalculatorAPI.Mappings
         {
             CreateMap<IaasApiPlanGetDto, IaasApiPlan>().ReverseMap();
             CreateMap<IaasApiPlanCreateDto, IaasApiPlan>().ReverseMap();
+            CreateMap<IaasWebPlanGetDto, IaasWebPlan>().ReverseMap();
+            CreateMap<IaasWebPlanCreateDto, IaasWebPlan>().ReverseMap();
+            CreateMap<IaasWebPlanUpdateDto, IaasWebPlan>().ReverseMap();
         }
     }
 }
