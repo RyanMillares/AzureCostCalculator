@@ -32,17 +32,18 @@ function FetchData() {
         return <div>Loading...</div>;
     } else {
         return (
-            <ul>
-                {console.log('items:', items.toString())}
+
+            <div>
                 {items.Items.map((item, index) => (
-                    <li key={index}>
-                        <div>
-                            {(index === 5 ? item.retailPrice * 24 * 30 : null)}
-                        </div>
-                        {/* {item.productId} {item.retailPrice} */}
-                    </li>
+
+
+                    (index === 7 ? item.retailPrice * 24 * 30 : null)
+
+
+
                 ))}
-            </ul>
+
+            </div>
         );
     }
 }
