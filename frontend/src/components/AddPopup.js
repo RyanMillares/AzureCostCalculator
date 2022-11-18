@@ -27,12 +27,14 @@ import FormControl from '@mui/material/FormControl';
 
 import { getToggle, setToggle } from '../ToggleContext'
 import globalnames from '../globalvars.json'
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 //import * as MUI from '@mui/material'
 
 
 
-export default function AddPopup({ createMode }) {
+export default function AddPopup({ createMode}) {
 
     const theme = createTheme({
         typography: {
@@ -68,7 +70,7 @@ export default function AddPopup({ createMode }) {
     const AllOptions = {
         'Web Tier': 'IaaSWeb',
         'API Tier': 'IaaSApi',
-        'Database Tier': 'IaaSDB',
+        'DB Tier': 'IaaSDB',
         'Website Tier': 'PaaSWeb',
         'AppService Tier': 'PaaSApp',
         'Database Tier': 'PaaSDB'
@@ -77,7 +79,7 @@ export default function AddPopup({ createMode }) {
     const IaasOptions = {
         'Web Tier': 'IaaSWeb',
         'API Tier': 'IaaSApi',
-        'Database Tier': 'IaaSDB'
+        'DB Tier': 'IaaSDB'
     }
     const PaasOptions = {
         'Website Tier': 'PaaSWeb',
@@ -133,19 +135,19 @@ export default function AddPopup({ createMode }) {
 
             // NOTE: IaaS VMs have a specific char limit, IMPLEMENT THIS then delete this comment
             case "IaaSWeb":
-                return (inputFirst.length > 0 &&
+                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
                     (!isNaN(inputSecond) && inputSecond > 0) &&
                     (!isNaN(inputThird) && inputThird > 0) &&
                     (!isNaN(inputFourth) && inputFourth > 0) &&
                     (!isNaN(inputFifth) && inputFifth > 0))
             case "IaaSApi":
-                return (inputFirst.length > 0 &&
+                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
                     (!isNaN(inputSecond) && inputSecond > 0) &&
                     (!isNaN(inputThird) && inputThird > 0) &&
                     (!isNaN(inputFourth) && inputFourth > 0) &&
                     (!isNaN(inputFifth) && inputFifth > 0))
             case "IaaSDB":
-                return (inputFirst.length > 0 &&
+                return ((inputFirst.length > 0 && inputFirst.length < 8) &&
                     (!isNaN(inputSecond) && inputSecond > 0) &&
                     (!isNaN(inputThird) && inputThird > 0) &&
                     (!isNaN(inputFourth) && inputFourth > 0) &&
@@ -173,10 +175,12 @@ export default function AddPopup({ createMode }) {
         })
         // remove the last & at end
         const postString = postUrl.slice(0, -1)
+        console.log(postString)
         axios.post(postString)
 
        
     }
+
 
     // sends the data and clears the input fields, then closes the window
     function submitForm() {
@@ -185,7 +189,7 @@ export default function AddPopup({ createMode }) {
         alert("New Tier Added!")
 
         clearAll()
-        window.location.reload()
+        //window.location.reload()
     }
 
     // sets both the current option and category
@@ -222,30 +226,16 @@ export default function AddPopup({ createMode }) {
 
     return (
         <>
+            
             {
-                getToggle() > 0 && (
+                true && (
                     <Card style={{
 
-                        boxShadow: '0 0 0 9999px #000000b0',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 'auto',
-                        width: '51vw',
-                        backgroundColor: 'white',
-                        borderStyle: 'solid',
-                        borderColor: '#FF8800',
-                        borderWidth: '2px',
-                        borderRadius: '10px',
-
-                        paddingBottom: '3px',
-                        position: 'absolute',
-                        left: '24vw',
-                        top: '15vh',
-                        zIndex: '1'
+                        boxShadow: 'none'
 
                     }}>
                         <CardHeader
-                            title={getToggle() == 1 ? 'Create Lift-and-Shift Options' : 'Create PaaS Options'}
+                            title={createMode == 1 ? 'Create Lift-and-Shift Options' : 'Create PaaS Options'}
                             titleTypographyProps={{ align: 'center' }}
                             subheaderTypographyProps={{
                                 align: 'center',
@@ -281,7 +271,7 @@ export default function AddPopup({ createMode }) {
                                             variant="outlined"
                                         >
                                             {
-                                                getToggle() == 1 && (
+                                                createMode == 1 && (
                                                     Object.keys(IaasOptions).map(category => {
                                                         return <MenuItem value={category} onClick={() => changeOption(category)}>{category}</MenuItem>
                                                     })
@@ -289,7 +279,7 @@ export default function AddPopup({ createMode }) {
 
                                             }
                                             {
-                                                getToggle() == 2 && (
+                                                createMode == 2 && (
                                                     Object.keys(PaasOptions).map(category => {
                                                         return <MenuItem value={category} onClick={() => changeOption(category)}>{category}</MenuItem>
                                                     })
@@ -401,7 +391,6 @@ export default function AddPopup({ createMode }) {
                                 </Grid>
                             </Grid>
                             <Grid style={{ float: 'right' }}>
-                                <Button variant="outlined" onClick={() => clearAll()}>Close</Button>&nbsp;&nbsp;
                                 <Button variant="contained" disabled={validToSubmit(selectedOption) ? '' : 'disabled'} onClick={() => submitForm()}>Add Option</Button>
 
                             </Grid>

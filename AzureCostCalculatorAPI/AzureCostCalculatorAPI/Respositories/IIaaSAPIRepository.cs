@@ -1,10 +1,10 @@
-﻿using AzureCostCalculatorAPI.Contract;
+﻿using AzureCostCalculatorAPI.Contract.Entities;
 
 namespace AzureCostCalculatorAPI.Respositories
 {
-    public interface IIaaSAPIRepository
+    public interface IIaasApiRepository
     {
-        Task<List<IaaSAPIPlan>> GetIaaSAPIPlans();
-
+        Task<IEnumerable<IaasApiPlan>> GetIaasApiPlans();
+        void CreateIaasApiPlan(IaasApiPlan plan);
     }
 }

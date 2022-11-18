@@ -1,4 +1,4 @@
-﻿namespace AzureCostCalculatorAPI.Contract
+﻿namespace AzureCostCalculatorAPI.DTOs
 {
     public class ConfigurationDTO
     {

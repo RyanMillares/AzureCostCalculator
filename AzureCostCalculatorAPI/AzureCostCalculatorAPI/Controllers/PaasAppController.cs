@@ -1,5 +1,6 @@
-﻿using AzureCostCalculatorAPI.Contract;
+﻿using AzureCostCalculatorAPI.Contract.Entities;
 using Dapper;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,23 +11,23 @@ namespace AzureCostCalculatorAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaaSAppController : ControllerBase
+    public class PaasAppController : ControllerBase
     {
         [HttpGet]
         // Returns a list of all the PaaS AppService plans
-        public async Task<List<PaaSAppPlan>> GetPaaSAPIPlan()
+        public async Task<List<PaasAppPlan>> GetPaaSAPIPlan()
         {
             var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
 
             using IDbConnection conn = new SqlConnection(myConnectorString);
-            var PaaSAPIData = await conn.QueryAsync<PaaSAppPlan>("select * from PaaS_AS");
+            var PaaSAPIData = await conn.QueryAsync<PaasAppPlan>("select * from PaaS_AS");
             return PaaSAPIData.ToList();
         }
         [HttpPost]
         public async Task<IActionResult> Post(string name, int cpu, int ram, int storage, int cost)
         {
-            PaaSAppPlan plan = new PaaSAppPlan();
-            plan.PAID = Guid.NewGuid();
+            PaasAppPlan plan = new PaasAppPlan();
+            plan.PaId = Guid.NewGuid();
             plan.Name = name;
             plan.CPU = cpu;
             plan.RAM = ram;
@@ -38,13 +39,27 @@ namespace AzureCostCalculatorAPI.Controllers
             using (var conn = new SqlConnection(myConnectorString))
             {
                 await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<PaaSAppPlan>(query, plan);
+                var affectedRows = await conn.QueryAsync<PaasAppPlan>(query, plan);
 
             }
 
             return Ok();
 
         }
-    }
+        [HttpPut]
+        public async Task<IActionResult> Put(PaasAppPlan plan)
+        {
 
+            string query = "UPDATE PaaS_AS SET name = @name, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE paid = @paid";
+
+            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+            using (var conn = new SqlConnection(myConnectorString))
+            {
+                await conn.OpenAsync();
+                var affectedRows = await conn.QueryAsync<PaasAppPlan>(query, plan);
+
+            }
+            return Ok();
+        }
+    }
 }

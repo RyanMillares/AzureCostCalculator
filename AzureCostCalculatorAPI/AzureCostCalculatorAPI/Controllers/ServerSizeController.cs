@@ -2,7 +2,8 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Dapper;
-using AzureCostCalculatorAPI.Contract;
+using AzureCostCalculatorAPI.Contract.Entities;
+using Microsoft.AspNetCore.Diagnostics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
