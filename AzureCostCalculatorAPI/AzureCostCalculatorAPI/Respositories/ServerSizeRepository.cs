@@ -1,0 +1,36 @@
+﻿using AzureCostCalculatorAPI.Contract.Entities;
+using Dapper;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+
+namespace AzureCostCalculatorAPI.Respositories
+{
+    public class ServerSizeRepository : IServerSizeRepository
+    {
+        private readonly string _connectionString;
+        public ServerSizeRepository(IConfiguration config)
+        {
+            _connectionString = config.GetConnectionString("SqlConnection");
+        }
+
+        // Returns a list of all the Server Sizes
+        public async Task<IEnumerable<ServerSize>> GetServerSizes()
+        {
+            using var conn = new SqlConnection(_connectionString);
+            var data = await conn.QueryAsync<ServerSize>("select * from ServerSizes");
+            return data;
+        }
+
+        public async void CreateServerSize(ServerSize serversize)
+        {
+            if (serversize is null)
+            {
+               throw new ArgumentNullException(nameof(serversize));
+            }
+            var query = @"INSERT INTO dbo.ServerSizes(ssid, size, servers)
+                            VALUES(default, @size, @servers)";
+            using var conn = new SqlConnection(_connectionString);
+            await conn.QueryAsync<ServerSize>(query,serversize);
+        }
+    }
+}

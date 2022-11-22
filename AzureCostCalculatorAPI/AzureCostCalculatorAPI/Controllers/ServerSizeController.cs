@@ -4,6 +4,10 @@ using Microsoft.Data.SqlClient;
 using Dapper;
 using AzureCostCalculatorAPI.Contract.Entities;
 using Microsoft.AspNetCore.Diagnostics;
+using AzureCostCalculatorAPI.Respositories;
+using AutoMapper;
+using AzureCostCalculatorAPI.DTOs;
+using System.Net.Mime;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,17 +17,46 @@ namespace AzureCostCalculatorAPI.Controllers
     [ApiController]
     public class ServerSizeController : ControllerBase
     {
-        // GET: api/<DatabaseController>
-        [HttpGet]
-        // Returns a list of all the server sizes (objects include 'small' and '3')
-        public async Task<List<ServerSize>> Get()
-        {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+        private readonly IServerSizeRepository _repo;
+        private readonly IMapper _mapper;
 
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var serverData = await conn.QueryAsync<ServerSize>("select * from ServerSizes");
-            return serverData.ToList();
+        public ServerSizeController(IServerSizeRepository repo, IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
         }
+
+        ///<summary>
+        /// Get all Server Sizes
+        /// </summary>
+        /// <returns> A collection of ServerSizeGetDtos.</returns>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetServerSize()
+        {
+            var serversizes = await _repo.GetServerSizes();
+            return serversizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serversizes));
+        }
+
+        ///<summary>
+        /// Create a Server Size
+        /// </summary>
+        /// <param name="serversize"> ServerSize to create.</param>
+        /// <return>Status Code 201 If Create succeeds.</return>
+        /// 
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult CreateServerSize(ServerSizeCreateDto serversize)
+        {
+            _repo.CreateServerSize(_mapper.Map<ServerSize>(serversize));
+            return StatusCode(StatusCodes.Status201Created);
+        }
+                
         // GET api/<DatabaseController>/Sorted
         [HttpGet("Sorted")]
         // Returns a list all the server sizes sorted by servers in ascending order (3, 6, 9, etc.)
@@ -48,8 +81,6 @@ namespace AzureCostCalculatorAPI.Controllers
             return sizeData.ToList();
         }
 
- 
-
         // GET api/<DatabaseController>/5
         [HttpGet("{id}")]
         // Returns a list of server numbers associated with given size ('small', etc)
@@ -60,13 +91,6 @@ namespace AzureCostCalculatorAPI.Controllers
             using IDbConnection conn = new SqlConnection(myConnectorString);
             var serverData = await conn.QueryAsync<int>("select * from ServerSizes where size = @serverSize", new { serverSize });
             return serverData.ToList();
-        }
-
-
-        // PUT api/<DatabaseController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
         }
 
         // DELETE api/<DatabaseController>/5
