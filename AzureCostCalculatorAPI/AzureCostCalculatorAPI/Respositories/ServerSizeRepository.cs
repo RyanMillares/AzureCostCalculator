@@ -32,5 +32,21 @@ namespace AzureCostCalculatorAPI.Respositories
             using var conn = new SqlConnection(_connectionString);
             await conn.QueryAsync<ServerSize>(query,serversize);
         }
+
+        // Returns a list of all the Server Sizes
+        public async Task<IEnumerable<ServerSize>> GetSorted()
+        {
+            using var conn = new SqlConnection(_connectionString);
+            var data = await conn.QueryAsync<ServerSize>("select * from ServerSizes order by servers");
+            return data;
+        }
+
+        // Returns a list of Sizes of the Servers  
+        public async Task<IEnumerable<ServerSize>> GetDistinctSize()
+        {
+            using var conn = new SqlConnection(_connectionString);
+            var data = await conn.QueryAsync<ServerSize>("SELECT DISTINCT SIZE FROM dbo.ServerSizes");
+            return data;
+        }
     }
 }

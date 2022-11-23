@@ -6,5 +6,7 @@ namespace AzureCostCalculatorAPI.Respositories
     {
         Task<IEnumerable<ServerSize>> GetServerSizes();
         void CreateServerSize(ServerSize newServerSize);
+        Task<IEnumerable<ServerSize>> GetSorted();
+        Task<IEnumerable<ServerSize>> GetDistinctSize();
     }
 }
