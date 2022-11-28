@@ -21,18 +21,6 @@ namespace AzureCostCalculatorAPI.Respositories
             return data;
         }
 
-        public async void CreateServerSize(ServerSize serversize)
-        {
-            if (serversize is null)
-            {
-               throw new ArgumentNullException(nameof(serversize));
-            }
-            var query = @"INSERT INTO dbo.ServerSizes(ssid, size, servers)
-                            VALUES(default, @size, @servers)";
-            using var conn = new SqlConnection(_connectionString);
-            await conn.QueryAsync<ServerSize>(query,serversize);
-        }
-
         // Returns a list of all the Server Sizes
         public async Task<IEnumerable<ServerSize>> GetSorted()
         {
@@ -47,6 +35,26 @@ namespace AzureCostCalculatorAPI.Respositories
             using var conn = new SqlConnection(_connectionString);
             var data = await conn.QueryAsync<ServerSize>("SELECT DISTINCT SIZE FROM dbo.ServerSizes");
             return data;
+        }
+
+        // Returns a list of Servers by Size 
+        public async Task<IEnumerable<ServerSize>> GetServerBySize(string serverSize)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            var data = await conn.QueryAsync<ServerSize>("select * from ServerSizes where size = @serverSize", new { serverSize });
+            return data;
+        }
+        // Creates a Servers
+        public async void CreateServerSize(ServerSize serversize)
+        {
+            if (serversize is null)
+            {
+                throw new ArgumentNullException(nameof(serversize));
+            }
+            var query = @"INSERT INTO dbo.ServerSizes(ssid, size, servers)
+                            VALUES(default, @size, @servers)";
+            using var conn = new SqlConnection(_connectionString);
+            await conn.QueryAsync<ServerSize>(query, serversize);
         }
     }
 }

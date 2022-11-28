@@ -30,6 +30,7 @@ namespace AzureCostCalculatorAPI.Controllers
         /// Get all Server Sizes
         /// </summary>
         /// <returns> A collection of ServerSizeGetDtos.</returns>
+        /// <!--This API will be combined with HttpGetSorted -->
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -37,6 +38,50 @@ namespace AzureCostCalculatorAPI.Controllers
         public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetServerSize()
         {
             var serversizes = await _repo.GetServerSizes();
+            return serversizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serversizes));
+        }
+
+        ///<summary>
+        /// Get all Server Sizes Sorted
+        /// </summary>
+        /// <returns> A collection of Sorted ServerSizeGetDtos.</returns>
+        /// <!--This API will combined with HttpGet-->
+        [HttpGet("Sorted")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetSorted()
+        {
+            var serversizes = await _repo.GetSorted();
+            return serversizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serversizes));
+        }
+
+        ///<summary>
+        /// Get all Sizes of the Servers
+        /// </summary>
+        /// <returns> A collection of the Sizes of ServerSizeGetDtos.</returns>
+        /// <!--I get Sizes but in format of the ServerSizeGetDto with blank ssid and servers, but it works!-->
+        [HttpGet("Sizes")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetDistinctSize()
+        {
+            var serversizes = await _repo.GetDistinctSize();
+            return serversizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serversizes));
+        }
+
+        ///<summary>
+        /// Get Servers filtered by Distinct Sizes (small, medium, large, XL)
+        /// </summary>
+        /// <returns> A collection of ServerSizeGetDtos filtered by Distinct size.</returns>
+        [HttpGet("FilteredBySize")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetServerBySize(string serverSize)
+        {
+            var serversizes = await _repo.GetServerBySize(serverSize);
             return serversizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serversizes));
         }
 
@@ -56,61 +101,6 @@ namespace AzureCostCalculatorAPI.Controllers
         {
             _repo.CreateServerSize(_mapper.Map<ServerSize>(serversize));
             return StatusCode(StatusCodes.Status201Created);
-        }
-
-        ///<summary>
-        /// Get all Server Sizes Sorted
-        /// </summary>
-        /// <returns> A collection of Sorted ServerSizeGetDtos.</returns>
-        [HttpGet("Sorted")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetSorted()
-        {
-            var serversizes = await _repo.GetSorted();
-            return serversizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serversizes));
-        }
-        /*
-       
-        //- Note -> I get Sizes but in the format of the ServerSizeGetDto with blank ssid and servers, but it works!  
-        ///<summary>
-        /// Get all Sizes of the Servers
-        /// </summary>
-        /// <returns> A collection of the Sizes of ServerSizeGetDtos.</returns>
-        [HttpGet("Sizes")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetDistinctSize()
-        {
-            var serversizes = await _repo.GetDistinctSize();
-            return serversizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serversizes));
-        }
-        */
-
-        [HttpGet("Sizes")]
-        // Returns a list of distinct sizes: small, medium, large, XL
-        public async Task<List<string>> GetDistinctSize()
-        {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var sizeData = await conn.QueryAsync<string>("SELECT DISTINCT SIZE FROM dbo.ServerSizes");
-            return sizeData.ToList();
-        }
-
-        // - Note -> Not sure how Get Id and Delete Id works 
-        // GET api/<DatabaseController>/5
-        [HttpGet("{id}")]
-        // Returns a list of server numbers associated with given size ('small', etc)
-        public async Task<List<int>> Get(string serverSize)
-        {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var serverData = await conn.QueryAsync<int>("select * from ServerSizes where size = @serverSize", new { serverSize });
-            return serverData.ToList();
         }
 
         // DELETE api/<DatabaseController>/5
