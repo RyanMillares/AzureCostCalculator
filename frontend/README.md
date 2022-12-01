@@ -2,6 +2,7 @@
 # for demo
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project uses [React_Strap](https://reactstrap.github.io/) for the front-end UI framework.
 
 ## Available Scripts
 

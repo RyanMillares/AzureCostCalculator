@@ -11,7 +11,7 @@ import Popup from 'reactjs-popup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 //import 'reactjs-popup/dist/index.css';
-import './styles.css';
+import './../styles.css';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -29,18 +29,18 @@ import InputLabel from '@mui/material/InputLabel';
 import IconButton from "@mui/material/IconButton";
 import TextField from '@mui/material/TextField';
 //import Avatar from '@mui/material/Avatar';
-import Logo from './AvanadeLogo.png';
+import Logo from './../img/avanade-logo.png';
 
 import { getToggle, setToggle } from './ToggleContext'
-import TestComponent from './components/TestComponent'
+
 
 import FormControl from '@mui/material/FormControl';
 //import NetworkInfo from 'react-native-network-info';
 
 //import globalnames from './globalvars.json' assert {type: 'json' };
-import globalnames from './globalvars.json'
-import AddPopup from './components/AddPopup'
-import DropdownMenu from './components/DropdownMenu'
+import globalnames from './../globalvars.json'
+import AddPopup from './../components/AddPopup'
+import DropdownMenu from './../components/DropdownMenu'
 import ClearIcon from '@mui/icons-material/Clear';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -211,84 +211,72 @@ function PricingContent() {
             <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
             <CssBaseline />
             <ThemeProvider theme={theme}>
-                <AppBar
-                    position="static"
-                    color="primary"
-                    elevation={0}
-                    sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-                >
-                    <Toolbar sx={{ flexWrap: 'wrap' }}>
-                        <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                            Azure Cost Calculator
-                        </Typography>
-                        <img src={Logo} alt="Avanade Logo" />
-                        <IconButton ></IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>
-                    <Grid container spacing={4}>
-                        <Grid item xs={12} md={6}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">App Size</InputLabel>
-                                <Select
-                                    label="App Size"
-                                    variant="outlined"
-                                >
-                                    {
+                <Grid item xs={12} >
+                    <h1 style={{ marginTop: "50px", marginBottom: "20px" }}>Azure Cost Calculator</h1>
+                </Grid>
+                <Container disableGutters maxWidth="md" sx={{ pt: 4, pb: 4 }}>               <Grid container spacing={4}>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">App Size</InputLabel>
+                            <Select
+                                label="App Size"
+                                variant="outlined"
+                            >
+                                {
 
-                                        Object.keys(serverSizes).map(p => {
+                                    Object.keys(serverSizes).map(p => {
+                                        return <MenuItem
+                                            value={p}
+                                            selected onClick={(e) => {
+                                                setAppSize(p);
+                                                setSizeSelected(true);
+                                            }}
+                                        >
+                                            {p}
+                                        </MenuItem>
+                                    }
+                                    )}
+
+
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
+                            <Select
+                                label="Number of Servers"
+                                variant="outlined"
+                                disabled={!sizeSelected}
+                            >
+                                {
+                                    Object.keys(serverSizes).length > 0 && (
+
+                                        serverSizes[appSize].map(p => {
                                             return <MenuItem
                                                 value={p}
                                                 selected onClick={(e) => {
-                                                    setAppSize(p);
-                                                    setSizeSelected(true);
+                                                    setServers(p)
                                                 }}
                                             >
                                                 {p}
                                             </MenuItem>
                                         }
-                                        )}
-
-
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Number of Servers</InputLabel>
-                                <Select
-                                    label="Number of Servers"
-                                    variant="outlined"
-                                    disabled={!sizeSelected}
-                                >
-                                    {
-                                        Object.keys(serverSizes).length > 0 && (
-
-                                            serverSizes[appSize].map(p => {
-                                                return <MenuItem
-                                                    value={p}
-                                                    selected onClick={(e) => {
-                                                        setServers(p)
-                                                    }}
-                                                >
-                                                    {p}
-                                                </MenuItem>
-                                            }
-                                            )
                                         )
-                                    }
-                                    {
-                                        /* this is the old code, for reference
-                                         *<MenuItem value={numServers[appSize][0]} onClick={() => setServers(parseInt(numServers[appSize][0]))}>{numServers[appSize][0]}</MenuItem>
-                                        this goes 0, 1, 2
-                                         * */
+                                    )
+                                }
+                                {
+                                    /* this is the old code, for reference
+                                     *<MenuItem value={numServers[appSize][0]} onClick={() => setServers(parseInt(numServers[appSize][0]))}>{numServers[appSize][0]}</MenuItem>
+                                    this goes 0, 1, 2
+                                     * */
 
-                                    }
+                                }
 
-                                </Select>
-                            </FormControl>
-                        </Grid>
+                            </Select>
+                        </FormControl>
                     </Grid>
+                </Grid>
                 </Container>
                 <Container maxWidth="xl" component="main">
                     <Grid container spacing={5}>
@@ -579,12 +567,6 @@ function PricingContent() {
                                     <Button variant="outlined" onClick={() => TestToggle(testVal)}>Push Value</Button>&nbsp;&nbsp;
                                     <Button variant="outlined" onClick={() => alert(getToggle())}>Get Toggle</Button>&nbsp;&nbsp;
 
-                                    {
-                                        getToggle() == 4 && (
-                                            <TestComponent />
-
-                                        )
-                                    }
                                 </>
                             )
                         }

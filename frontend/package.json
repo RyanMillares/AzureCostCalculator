@@ -2,6 +2,7 @@
   "name": "frontent",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://localhost:7056",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -18,8 +19,13 @@
     "react-native-device-info": "^10.1.2",
     "react-native-network-info": "^5.2.1",
     "react-native-web": "^0.18.9",
+    "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "react-slider": "^2.0.4",
     "reactjs-popup": "^2.0.5",
+    "reactstrap": "^9.1.4",
+    "sass": "^1.56.0",
+    "styled-components": "^5.3.6",
     "use-force-update": "^1.0.10",
     "web-vitals": "^2.1.4"
   },

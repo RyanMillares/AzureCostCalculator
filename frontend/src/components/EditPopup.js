@@ -25,7 +25,7 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 
 import EditForm from './EditForm';
-import { getToggle, setToggle } from '../ToggleContext'
+import { getToggle, setToggle } from './ToggleContext'
 import globalnames from '../globalvars.json'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -87,7 +87,7 @@ export default function EditPopup({ createMode }) {
 
     const [data, setData] = useState({})
 
-    
+
     // chooses which option to pull tiers from (paasweb, paasdb, etc)
     function changeOption(category) {
         setTier({})
@@ -95,7 +95,7 @@ export default function EditPopup({ createMode }) {
         setOption(AllOptions[category])
         console.log(AllOptions[category])
     }
-    
+
 
     useEffect(() => {
         // find future solution for rerendering
@@ -135,13 +135,13 @@ export default function EditPopup({ createMode }) {
 
 
             })
-   
+
             //setServerSizes(values[6].data);
         })
 
     }, [])
     return (
-        
+
         <Card style={{
 
             boxShadow: 'none'
@@ -257,7 +257,7 @@ export default function EditPopup({ createMode }) {
                                 option={selectedOption}
                             />
                         </>
-                        )
+                    )
 
                 }
 
@@ -265,7 +265,7 @@ export default function EditPopup({ createMode }) {
                     <Grid item xs={12} md={12}>
 
                         <Typography variant="h6" align="center" color="text.secondary">
-                            
+
                         </Typography>
                     </Grid>
                 </Grid>
@@ -274,5 +274,5 @@ export default function EditPopup({ createMode }) {
             <CardActions>
             </CardActions>
         </Card>
-        )
+    )
 }

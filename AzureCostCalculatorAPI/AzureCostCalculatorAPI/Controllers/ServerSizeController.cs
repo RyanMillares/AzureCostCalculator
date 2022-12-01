@@ -1,78 +1,102 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using Microsoft.Data.SqlClient;
-using Dapper;
 using AzureCostCalculatorAPI.Contract.Entities;
-using Microsoft.AspNetCore.Diagnostics;
+using AzureCostCalculatorAPI.Respositories;
+using AutoMapper;
+using AzureCostCalculatorAPI.DTOs;
+using System.Net.Mime;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AzureCostCalculatorAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/ServerSize")]
     public class ServerSizeController : ControllerBase
     {
-        // GET: api/<DatabaseController>
-        [HttpGet]
-        // Returns a list of all the server sizes (objects include 'small' and '3')
-        public async Task<List<ServerSize>> Get()
-        {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+        private readonly IServerSizeRepository _repo;
+        private readonly IMapper _mapper;
 
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var serverData = await conn.QueryAsync<ServerSize>("select * from ServerSizes");
-            return serverData.ToList();
+        public ServerSizeController(IServerSizeRepository repo, IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
         }
-        // GET api/<DatabaseController>/Sorted
+
+        ///<summary>
+        /// Get all Server Sizes
+        /// </summary>
+        /// <param name="sorted"> boolean for whether or not to sort server sizes.</param>
+        /// <returns> A collection of ServerSizeGetDtos.</returns>
         [HttpGet("Sorted")]
-        // Returns a list all the server sizes sorted by servers in ascending order (3, 6, 9, etc.)
-        public async Task<List<ServerSize>> GetSorted()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetServerSizes(bool sorted)
         {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-
-            var sortedData = await conn.QueryAsync<ServerSize>("select * from ServerSizes order by servers");
-
-            return sortedData.ToList();
+            var serverSizes = await _repo.GetServerSizes(sorted);
+            return serverSizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serverSizes));
         }
 
+        ///<summary>
+        /// Get all Sizes of the Servers
+        /// </summary>
+        /// <returns> A collection of the Sizes of ServerSizeGetDtos.</returns>
         [HttpGet("Sizes")]
-        // Returns a list of distinct sizes: small, medium, large, XL
-        public async Task<List<string>> GetDistinctSize()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetDistinctSizes()
         {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var sizeData = await conn.QueryAsync<string>("SELECT DISTINCT SIZE FROM dbo.ServerSizes");
-            return sizeData.ToList();
+            var sizes = await _repo.GetDistinctSizes();
+            return sizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(sizes));
         }
 
- 
-
-        // GET api/<DatabaseController>/5
-        [HttpGet("{id}")]
-        // Returns a list of server numbers associated with given size ('small', etc)
-        public async Task<List<int>> Get(string serverSize)
+        ///<summary>
+        /// Get Servers filtered by Distinct Sizes (small, medium, large, XL)
+        /// </summary>
+        /// <returns> A collection of ServerSizeGetDtos filtered by Distinct size.</returns>
+        [HttpGet("FilterBySize")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<ServerSizeGetDto>>> GetServersBySize(string size)
         {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var serverData = await conn.QueryAsync<int>("select * from ServerSizes where size = @serverSize", new { serverSize });
-            return serverData.ToList();
+            var serverSizes = await _repo.GetServersBySize(size);
+            return serverSizes == null ? NotFound() : Ok(_mapper.Map<IEnumerable<ServerSizeGetDto>>(serverSizes));
         }
 
-
-        // PUT api/<DatabaseController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        ///<summary>
+        /// Create a Server Size
+        /// </summary>
+        /// <param name="serverSize"> ServerSize to create.</param>
+        /// <return>Status Code 201 If Create succeeds.</return>
+        ///
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult CreateServerSize(ServerSizeCreateDto serverSize)
         {
+            _repo.CreateServerSize(_mapper.Map<ServerSize>(serverSize));
+            return StatusCode(StatusCodes.Status201Created);
         }
 
-        // DELETE api/<DatabaseController>/5
+        ///<summary>
+        /// Delete a Server Size
+        /// </summary>
+        /// <param name="id"> Guid id to remove Server Size.</param>
+        /// <return>Status Code 200 If Delete succeeds.</return>
+        ///
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult DeleteServerSize(Guid id)
         {
+            _repo.DeleteServerSize(id);
+            return StatusCode(StatusCodes.Status200OK);
         }
     }
 }
