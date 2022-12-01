@@ -41,8 +41,6 @@ namespace AzureCostCalculatorAPI.Controllers
         /// Get all Sizes of the Servers
         /// </summary>
         /// <returns> A collection of the Sizes of ServerSizeGetDtos.</returns>
-        /// <!--I get Sizes in format of the ServerSizeGetDto with blank ssid and servers
-        ///     but it works with the ACC -->
         [HttpGet("AvailableSizes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -72,7 +70,6 @@ namespace AzureCostCalculatorAPI.Controllers
         /// </summary>
         /// <param name="serverSize"> ServerSize to create.</param>
         /// <return>Status Code 201 If Create succeeds.</return>
-        /// TEST DATA Large 28, Small 8 
         ///
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -85,7 +82,12 @@ namespace AzureCostCalculatorAPI.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        // DELETE api/<DatabaseController>/5
+        ///<summary>
+        /// Delete a Server Size
+        /// </summary>
+        /// <param name="id"> Guid id to remove Server Size.</param>
+        /// <return>Status Code 200 If Delete succeeds.</return>
+        ///
         [HttpDelete("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
