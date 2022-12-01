@@ -32,6 +32,7 @@ builder.Services.AddAutoMapper(typeof(DefaultMappingProfile));
 builder.Services.AddScoped<IIaasApiRepository, IaasApiRepository>();
 builder.Services.AddScoped<IPaasWebRepository, PaasWebRepository>();
 builder.Services.AddScoped<IServerSizeRepository, ServerSizeRepository>();
+builder.Services.AddScoped<IIaasWebRepository, IaasWebRepository>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
