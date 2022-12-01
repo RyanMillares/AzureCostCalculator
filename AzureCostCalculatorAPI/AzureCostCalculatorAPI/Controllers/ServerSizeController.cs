@@ -27,7 +27,7 @@ namespace AzureCostCalculatorAPI.Controllers
         /// </summary>
         /// <param name="sorted"> boolean for whether or not to sort server sizes.</param>
         /// <returns> A collection of ServerSizeGetDtos.</returns>
-        [HttpGet]
+        [HttpGet("Sorted")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -41,7 +41,7 @@ namespace AzureCostCalculatorAPI.Controllers
         /// Get all Sizes of the Servers
         /// </summary>
         /// <returns> A collection of the Sizes of ServerSizeGetDtos.</returns>
-        [HttpGet("AvailableSizes")]
+        [HttpGet("Sizes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
