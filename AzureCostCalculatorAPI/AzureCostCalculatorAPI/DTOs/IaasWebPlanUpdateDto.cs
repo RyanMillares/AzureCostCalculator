@@ -5,6 +5,8 @@ namespace AzureCostCalculatorAPI.DTOs
 {
     public class IaasWebPlanUpdateDto
     {
+        public Guid IaId { get; set; }
+
         [Required]
         [MaxLength(7)]
         public string VM { get; set; } = string.Empty;

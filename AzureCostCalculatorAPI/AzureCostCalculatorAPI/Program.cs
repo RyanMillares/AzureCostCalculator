@@ -30,7 +30,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(DefaultMappingProfile));
 builder.Services.AddScoped<IIaasApiRepository, IaasApiRepository>();
-builder.Services.AddScoped<IIaasWebRepository, IaaSWebRepository>();
+builder.Services.AddScoped<IIaasWebRepository, IaasWebRepository>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();

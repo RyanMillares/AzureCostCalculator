@@ -8,11 +8,11 @@ using System.Runtime.Intrinsics.Arm;
 
 namespace AzureCostCalculatorAPI.Respositories;
 
-public class IaaSWebRepository : IIaasWebRepository
+public class IaasWebRepository : IIaasWebRepository
 {
     private readonly string _connectionString;
 
-    public IaaSWebRepository(IConfiguration config)
+    public IaasWebRepository(IConfiguration config)
     {
         _connectionString = config.GetConnectionString("SqlConnection");
     }

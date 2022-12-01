@@ -13,7 +13,7 @@ using AutoMapper;
 namespace AzureCostCalculatorAPI.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/iaasweb")]
 public class IaasWebController : ControllerBase
 {
     private readonly IIaasWebRepository _repo;
@@ -34,7 +34,7 @@ public class IaasWebController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<IEnumerable<IaasWebPlanGetDto>>> GetIaaSWebPlans()
+    public async Task<ActionResult<IEnumerable<IaasWebPlanGetDto>>> GetIaasWebPlans()
     {
         var plans = await _repo.GetIaasWebPlans();
         return plans == null ? NotFound() : Ok(_mapper.Map<IEnumerable<IaasWebPlanGetDto>>(plans));
@@ -47,9 +47,10 @@ public class IaasWebController : ControllerBase
     /// <returns>A single IaasWebPlanGetDto</returns>
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<IEnumerable<IaasApiPlanGetDto>>> GetIaaSWebPlan(Guid id)
+    public async Task<ActionResult<IEnumerable<IaasApiPlanGetDto>>> GetIaasWebPlan(Guid id)
     {
         var plan = await _repo.GetIaasWebPlan(id);
         return plan == null ? NotFound() : Ok(_mapper.Map<IEnumerable<IaasWebPlanGetDto>>(plan));
@@ -63,9 +64,9 @@ public class IaasWebController : ControllerBase
     /// <returns>Status Code 201 if Create succeeds.</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult CreateIaaSWebPlan(IaasWebPlanCreateDto plan)
+    public ActionResult CreateIaasWebPlan(IaasWebPlanCreateDto plan)
     {
         _repo.CreateIaasWebPlan(_mapper.Map<IaasWebPlan>(plan));
         return StatusCode(StatusCodes.Status201Created);
@@ -78,10 +79,18 @@ public class IaasWebController : ControllerBase
     /// <returns>Status code 200 if Update succeeds.</returns>
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult UpdateIaaSWebPlan(IaasWebPlanUpdateDto plan)
+    public ActionResult UpdateIaasWebPlan(IaasWebPlanUpdateDto plan)
     {
+        var webPlan = _repo.GetIaasWebPlan(plan.IaId);
+
+        if (plan is null)
+        {
+            return NotFound();
+        }
+
         _repo.UpdateIaasWebPlan(_mapper.Map<IaasWebPlan>(plan));
         return StatusCode(StatusCodes.Status201Created);
     }
