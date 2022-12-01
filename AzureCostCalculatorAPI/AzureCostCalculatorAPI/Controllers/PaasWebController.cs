@@ -1,8 +1,12 @@
-﻿using AzureCostCalculatorAPI.Contract.Entities;
+﻿using AutoMapper;
+using AzureCostCalculatorAPI.Contract.Entities;
+using AzureCostCalculatorAPI.DTOs;
+using AzureCostCalculatorAPI.Respositories;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net.Mime;
 using static System.Data.IDbConnection;
 
 
@@ -10,69 +14,48 @@ using static System.Data.IDbConnection;
 
 namespace AzureCostCalculatorAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/paasweb")]
     public class PaasWebController : ControllerBase
     {
+        private readonly IPaasWebRepository _repo;
+        private readonly IMapper _mapper;
+
+        public PaasWebController(IPaasWebRepository repo, IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Get all PaaS Web Plans
+        /// </summary>
+        /// <returns>A collection of PaaSWebPlanGetDtos</returns>
+
         [HttpGet]
-        // Returns a list of all the PaaS Website plans
-        public async Task<List<PaasWebPlan>> GetPaaSWebPlan()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<PaasWebPlanGetDto>>> GetPaasWebPlans()
         {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var PaaSWebData = await conn.QueryAsync<PaasWebPlan>("select * from PaaS_Web");
-            return PaaSWebData.ToList();
+            var plans = await _repo.GetPaasWebPlans();
+            return plans == null ? NotFound() : Ok(_mapper.Map<IEnumerable<PaasWebPlanGetDto>>(plans));
         }
 
-        [HttpGet("{id}")]
-        // Returns the IaaS web plan associated with the given GUID
-        public async Task<PaasWebPlan> Get(Guid id)
-        {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var plan = await conn.QuerySingleAsync<PaasWebPlan>("select * from PaaS_Web where pwid = @id", new { id });
-            return plan;
-        }
+        /// <summary>
+        /// Create a PaaS Web Plan
+        /// </summary>
+        /// <param name="plan">PaaS Web Plan to create</param>
+        /// <returns>Status Code 201 if Create succeds</returns>
         [HttpPost]
-        //public async Task<IActionResult> Post(Guid pwid, String name, int cpu, int ram, int storage, int cost)
-
-        public async Task<IActionResult> Post(string name, int cpu, int ram, int storage, int cost)
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult CreatePaasWebPlan(PaasWebPlanCreateDTO plan)
         {
-            PaasWebPlan plan = new PaasWebPlan();
-            plan.PwId = Guid.NewGuid();
-            plan.Name = name;
-            plan.CPU = cpu;
-            plan.RAM = ram;
-            plan.Storage = storage;
-            plan.Cost = cost;
-            String query = "INSERT INTO PaaS_Web (pwid, name,cpu,ram,storage,cost) VALUES (default, @name, @cpu, @ram, @storage, @cost)";
-
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-            using (var conn = new SqlConnection(myConnectorString))
-            {
-                await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<PaasWebPlan>(query, plan);
-
-            }
- 
-            return Ok();
-
-        }
-        [HttpPut]
-        public async Task<IActionResult> Put(PaasWebPlan plan)
-        {
-            string query = "UPDATE PaaS_Web SET name = @name, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE pwid = @pwid";
-
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-            using (var conn = new SqlConnection(myConnectorString))
-            {
-                await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<PaasWebPlan>(query, plan);
-
-            }
-            return Ok();
+            _repo.CreatePaasWebPlan(_mapper.Map<PaasWebPlan>(plan));
+            return StatusCode(StatusCodes.Status201Created);
         }
     }
 }

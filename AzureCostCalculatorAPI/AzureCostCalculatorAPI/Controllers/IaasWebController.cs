@@ -4,84 +4,95 @@ using System.Data;
 using System.Data.SqlClient;
 using AzureCostCalculatorAPI.Contract.Entities;
 using Microsoft.AspNetCore.Diagnostics;
+using AzureCostCalculatorAPI.DTOs;
+using AzureCostCalculatorAPI.Respositories;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace AzureCostCalculatorAPI.Controllers
+namespace AzureCostCalculatorAPI.Controllers;
+
+[ApiController]
+[Route("api/iaasweb")]
+public class IaasWebController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class IaasWebController : ControllerBase
+    private readonly IIaasWebRepository _repo;
+    private readonly IMapper _mapper;
+
+    public IaasWebController(IIaasWebRepository repo, IMapper mapper)
     {
-        // GET: api/<DatabaseController>
-        [HttpGet]
-        // Returns a list of all the IaaS Web plans
-        public async Task<List<IaasWebPlan>> GetIaaSWebPlan()
-        {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
+        _repo = repo;
+        _mapper = mapper;
+    }
 
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var IaaSWebData = await conn.QueryAsync<IaasWebPlan>("select * from IaaS_Web");
-            return IaaSWebData.ToList();
+    // GET: api/<DatabaseController>
+    /// <summary>
+    /// Get all IAAS Web plans
+    /// </summary>
+    /// <returns>A collection of IaasWebPlanGetDtos</returns>
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<IaasWebPlanGetDto>>> GetIaasWebPlans()
+    {
+        var plans = await _repo.GetIaasWebPlans();
+        return plans == null ? NotFound() : Ok(_mapper.Map<IEnumerable<IaasWebPlanGetDto>>(plans));
+    }
+
+    /// <summary>
+    /// Fetches IAAS Web Plan from specified GUID.
+    /// </summary>
+    /// <param name="id">IAAS Web Plan to fetch</param>
+    /// <returns>A single IaasWebPlanGetDto</returns>
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<IEnumerable<IaasApiPlanGetDto>>> GetIaasWebPlan(Guid id)
+    {
+        var plan = await _repo.GetIaasWebPlan(id);
+        return plan == null ? NotFound() : Ok(_mapper.Map<IEnumerable<IaasWebPlanGetDto>>(plan));
+    }
+
+
+    /// <summary>
+    /// Create an IAAS Web Plan.
+    /// </summary>
+    /// <param name="plan">IAAS Web Plan to create.</param>
+    /// <returns>Status Code 201 if Create succeeds.</returns>
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public ActionResult CreateIaasWebPlan(IaasWebPlanCreateDto plan)
+    {
+        _repo.CreateIaasWebPlan(_mapper.Map<IaasWebPlan>(plan));
+        return StatusCode(StatusCodes.Status201Created);
+    }
+
+    /// <summary>
+    /// Updates a specified IAAS Web Plan.
+    /// </summary>
+    /// <param name="plan">IAAS API Plan to update.</param>
+    /// <returns>Status code 200 if Update succeeds.</returns>
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public ActionResult UpdateIaasWebPlan(IaasWebPlanUpdateDto plan)
+    {
+        var webPlan = _repo.GetIaasWebPlan(plan.IaId);
+
+        if (plan is null)
+        {
+            return NotFound();
         }
 
-        [HttpGet("{id}")]
-        // Returns the IaaS web plan associated with the given GUID
-        public async Task<IaasWebPlan> Get(Guid id)
-        {
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-
-            using IDbConnection conn = new SqlConnection(myConnectorString);
-            var plan = await conn.QuerySingleAsync<IaasWebPlan>("select * from IaaS_Web where iwid = @id", new { id });
-            return plan;
-        }
-        [HttpPost]
-        public async Task<IActionResult> Post(string vm, int cpu, int ram, int storage, int cost)
-        {
-            /**
-            PaaSWebPlan plan = new PaaSWebPlan();
-            plan.PWID = Guid.NewGuid();
-            plan.Name = name;
-            plan.CPU = cpu;
-            plan.RAM = ram;
-            plan.Storage = storage;
-            plan.Cost = cost;
-            **/
-
-            IaasWebPlan plan = new IaasWebPlan();
-            plan.IwId = Guid.NewGuid();
-            plan.VM = vm;
-            plan.CPU = cpu;
-            plan.RAM = ram;
-            plan.Storage = storage;
-            plan.Cost = cost;
-            String query = "INSERT INTO IaaS_Web (iwid, vm,cpu,ram,storage,cost) VALUES (default, @vm, @cpu, @ram, @storage, @cost)";
-
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-            using (var conn = new SqlConnection(myConnectorString))
-            {
-                await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<IaasWebPlan>(query, plan);
-
-            }
-
-            return Ok();
-
-        }
-        [HttpPut]
-        public async Task<IActionResult> Put(IaasWebPlan plan)
-        {
-
-            string query = "UPDATE IaaS_Web SET vm = @vm, cpu = @cpu, ram = @ram, storage = @storage, cost = @cost WHERE iwid = @iwid";
-
-            var myConnectorString = ConfigHandler.GetByName("SqlConnectorString");
-            using (var conn = new SqlConnection(myConnectorString))
-            {
-                await conn.OpenAsync();
-                var affectedRows = await conn.QueryAsync<IaasWebPlan>(query, plan);
-
-            }
-            return Ok();
-        }
+        _repo.UpdateIaasWebPlan(_mapper.Map<IaasWebPlan>(plan));
+        return StatusCode(StatusCodes.Status201Created);
     }
 }
+
