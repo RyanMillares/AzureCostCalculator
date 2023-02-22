@@ -67,10 +67,7 @@ export default function DropdownMenu({state}) {
                                 <button className="close" onClick={close} >
                                     &times;
                                 </button>
-                                <AddPopup
-                                    createMode={state}
-
-                                />
+                                <>Fields here</>
 
                                 <br />
                                 {
@@ -105,7 +102,7 @@ export default function DropdownMenu({state}) {
                         nested
                     >
                         {close => (
-                            <div className="modal1">
+                            <div className="modal1">    
                                 <button className="close" onClick={close} >
                                     &times;
                                 </button>
